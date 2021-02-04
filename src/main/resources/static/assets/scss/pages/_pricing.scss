@@ -1,0 +1,79 @@
+
+.sprice{
+    h4{
+        @extend .m-t-0;
+    }
+    .sprice-circle{
+        font-size: 50px;
+        height:140px;
+        width: 140px;        
+        border: 1px solid;
+        display: inline-block;
+        border-radius: 80px;
+        padding: 35px 30px 5px 30px;
+        transition: all .4s;
+        span{
+            vertical-align: top;
+            font-size: 28px;
+            position: relative;
+            top: 10px;
+        }
+    }
+    li{
+        @extend .displayblock;
+        @extend .p-t-10;
+        @extend .p-b-10;
+        border-bottom: 1px solid $grey-200;
+    }
+}
+
+.sprice2{
+    background: transparent;
+    h4{
+        @extend .m-t-0;
+    }
+    .data{
+        background: $white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 30px 10px;
+        width: calc(100% - 25px);
+        box-shadow: 0 22px 43px rgba(0, 0, 0, 0.15);
+        @extend .m-r-25;
+        z-index: 2;
+        border-radius: $border-radius-small;        
+        
+        i{
+            font-size: 27px;            
+        }
+
+        li{
+            @extend .displayblock;
+            @extend .p-t-10;
+            @extend .p-b-10;
+            border-bottom: 1px solid $grey-200;
+        }
+    }
+    .name{
+        padding-top: 385px;
+        @extend .p-l-30;
+        @extend .p-b-10;
+        @extend .p-r-30;
+        @extend .m-l-30;
+        @extend .m-t-30;
+        position: relative;
+        z-index: 1;
+        border-radius: $border-radius-small; 
+               
+        
+        h5{            
+            margin: 0;
+            color: $white;
+            font-size: 18px;
+        }
+    }
+}
+  
+
+

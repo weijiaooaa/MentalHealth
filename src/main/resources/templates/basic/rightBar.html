@@ -1,0 +1,407 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+    <title>MHeal</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" href="/assets/css/main.css">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}" href="/assets/css/color_skins.css">
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+
+</head>
+<body>
+<!-- Right Sidebar -->
+<aside th:fragment="rightBar" id="rightsidebar" class="right-sidebar">
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#setting"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#chat"><i class="zmdi zmdi-comments"></i></a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#activity">Activity</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane slideRight active" id="setting">
+            <div class="slim_scroll">
+                <div class="card">
+                    <h6>General Settings</h6>
+                    <ul class="setting-list list-unstyled">
+                        <li>
+                            <div class="checkbox">
+                                <input id="checkbox1" type="checkbox">
+                                <label for="checkbox1">Report Panel Usage</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <input id="checkbox2" type="checkbox" checked="">
+                                <label for="checkbox2">Email Redirect</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <input id="checkbox3" type="checkbox" checked="">
+                                <label for="checkbox3">Notifications</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <input id="checkbox4" type="checkbox" checked="">
+                                <label for="checkbox4">Auto Updates</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h6>Skins</h6>
+                    <ul class="choose-skin list-unstyled">
+                        <li data-theme="purple" class="active">
+                            <div class="purple"></div>
+                        </li>
+                        <li data-theme="blue">
+                            <div class="blue"></div>
+                        </li>
+                        <li data-theme="cyan">
+                            <div class="cyan"></div>
+                        </li>
+                        <li data-theme="green">
+                            <div class="green"></div>
+                        </li>
+                        <li data-theme="orange">
+                            <div class="orange"></div>
+                        </li>
+                        <li data-theme="blush">
+                            <div class="blush"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h6>Account Settings</h6>
+                    <ul class="setting-list list-unstyled">
+                        <li>
+                            <div class="checkbox">
+                                <input id="checkbox5" type="checkbox" checked="">
+                                <label for="checkbox5">Offline</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <input id="checkbox6" type="checkbox" checked="">
+                                <label for="checkbox6">Location Permission</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card theme-light-dark">
+                    <h6>Left Menu</h6>
+                    <button class="t-light btn btn-default btn-simple btn-round btn-block">Light</button>
+                    <button class="t-dark btn btn-default btn-round btn-block">Dark</button>
+                    <button class="m_img_btn btn btn-primary btn-round btn-block">Sidebar Image</button>
+                </div>
+                <div class="card">
+                    <h6>Information Summary</h6>
+                    <div class="row m-b-20">
+                        <div class="col-7">
+                            <small class="displayblock">MEMORY USAGE</small>
+                            <h5 class="m-b-0 h6">512</h5>
+                        </div>
+                    </div>
+                    <div class="row m-b-20">
+                        <div class="col-7">
+                            <small class="displayblock">CPU USAGE</small>
+                            <h5 class="m-b-0 h6">90%</h5>
+                        </div>
+                    </div>
+                    <div class="row m-b-20">
+                        <div class="col-7">
+                            <small class="displayblock">DAILY TRAFFIC</small>
+                            <h5 class="m-b-0 h6">25 142</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <small class="displayblock">DISK USAGE</small>
+                            <h5 class="m-b-0 h6">60.10%</h5>
+                        </div>
+                        <div class="col-5">
+                            <div class="sparkline" data-type="bar" data-width="97%" data-height="25px" data-bar-Width="5" data-bar-Spacing="3" data-bar-Color="#457fca">7,5,2,5,6,7,6,4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane right_chat stretchLeft" id="chat">
+            <div class="slim_scroll">
+                <div class="card">
+                    <div class="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h6>Recent</h6>
+                    <ul class="list-unstyled">
+                        <li class="online">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar4.jpg}" src="/assets/images/xs/avatar4.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="name">Sophia</span>
+                                        <span class="message">There are many variations of passages of Lorem Ipsum available</span>
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h6>Contacts</h6>
+                    <ul class="list-unstyled">
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar10.jpg}" src="/assets/images/xs/avatar10.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar6.jpg}" src="/assets/images/xs/avatar6.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar7.jpg}" src="/assets/images/xs/avatar7.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar8.jpg}" src="/assets/images/xs/avatar8.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar9.jpg}" src="/assets/images/xs/avatar9.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="online inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar5.jpg}" src="/assets/images/xs/avatar5.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar4.jpg}" src="/assets/images/xs/avatar4.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar3.jpg}" src="/assets/images/xs/avatar3.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="online inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar2.jpg}" src="/assets/images/xs/avatar2.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="offline inlineblock">
+                            <a href="javascript:void(0);">
+                                <div class="media">
+                                    <img class="media-object " th:src="@{/assets/images/xs/avatar1.jpg}" src="/assets/images/xs/avatar1.jpg" alt="">
+                                    <div class="media-body">
+                                        <span class="badge badge-outline status"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane slideLeft" id="activity">
+            <div class="slim_scroll">
+                <div class="card user_activity">
+                    <h6>Recent Activity</h6>
+                    <div class="streamline b-accent">
+                        <div class="sl-item">
+                            <img class="user rounded-circle" th:src="@{/assets/images/xs/avatar4.jpg}" src="/assets/images/xs/avatar4.jpg" alt="">
+                            <div class="sl-content">
+                                <h5 class="m-b-0">Admin Birthday</h5>
+                                <small>Jan 21 <a href="javascript:void(0);" class="text-info">Sophia</a>.</small>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <img class="user rounded-circle" th:src="@{/assets/images/xs/avatar5.jpg}" src="/assets/images/xs/avatar5.jpg" alt="">
+                            <div class="sl-content">
+                                <h5 class="m-b-0">Add New Contact</h5>
+                                <small>30min ago <a href="javascript:void(0);">Alexander</a>.</small>
+                                <small><strong>P:</strong> +264-625-2323</small>
+                                <small><strong>E:</strong> maryamamiri@gmail.com</small>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <img class="user rounded-circle" th:src="@{/assets/images/xs/avatar6.jpg}" src="/assets/images/xs/avatar6.jpg" alt="">
+                            <div class="sl-content">
+                                <h5 class="m-b-0">Code Change</h5>
+                                <small>Today <a href="javascript:void(0);">Grayson</a>.</small>
+                                <small>The standard chunk of Lorem Ipsum used since the 1500s is reproduced</small>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <img class="user rounded-circle" th:src="@{/assets/images/xs/avatar7.jpg}" src="/assets/images/xs/avatar7.jpg" alt="">
+                            <div class="sl-content">
+                                <h5 class="m-b-0">New Email</h5>
+                                <small>45min ago <a href="javascript:void(0);" class="text-info">Fidel Tonn</a>.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h6>Recent Attachments</h6>
+                    <ul class="list-unstyled activity">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="zmdi zmdi-collection-pdf l-blush"></i>
+                                <div class="info">
+                                    <h4>info_258.pdf</h4>
+                                    <small>2MB</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="zmdi zmdi-collection-text l-amber"></i>
+                                <div class="info">
+                                    <h4>newdoc_214.doc</h4>
+                                    <small>900KB</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="zmdi zmdi-image l-parpl"></i>
+                                <div class="info">
+                                    <h4>MG_4145.jpg</h4>
+                                    <small>5.6MB</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="zmdi zmdi-image l-parpl"></i>
+                                <div class="info">
+                                    <h4>MG_4100.jpg</h4>
+                                    <small>5MB</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="zmdi zmdi-collection-text l-amber"></i>
+                                <div class="info">
+                                    <h4>Reports_end.doc</h4>
+                                    <small>780KB</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="zmdi zmdi-videocam l-turquoise"></i>
+                                <div class="info">
+                                    <h4>movie2018.MKV</h4>
+                                    <small>750MB</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}" src="/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="/assets/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/morrisscripts.bundle.js}" src="/assets/bundles/morrisscripts.bundle.js"></script><!-- Morris Plugin Js -->
+<script th:src="@{/assets/bundles/jvectormap.bundle.js}" src="/assets/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+<script th:src="@{/assets/bundles/knob.bundle.js}" src="/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="/assets/bundles/mainscripts.bundle.js"></script>
+<script th:src="@{/assets/js/pages/index.js}" src="/assets/js/pages/index.js"></script>
+</body>
+</html>

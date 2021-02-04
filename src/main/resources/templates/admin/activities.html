@@ -1,0 +1,163 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <link rel="icon" th:href="@{/favicon.ico}" href="/favicon.ico" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Dropzone Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/dropzone/dropzone.css}" href="/assets/plugins/dropzone/dropzone.css">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" href="/assets/css/main.css">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}"  href="/assets/css/color_skins.css">
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+</head>
+
+<body class="theme-purple ls-toggle-menu">
+    <!-- Page Loader -->
+    <div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+
+    <!-- Top Bar -->
+    <div th:replace="/basic/topBar :: topBar"></div>
+
+    <!-- Left Sidebar -->
+    <div th:replace="/basic/leftBar :: leftBar"></div>
+
+    <!-- Right Sidebar -->
+    <div th:replace="/basic/rightBar :: rightBar"></div>
+
+    <section class="content">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>&nbsp;</h2>
+                    <h2>校园活动</h2>
+                </div>
+                <!-- <div class="col-lg-5 col-md-6 col-sm-12">
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> MHeal</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Forms</a></li>
+                    <li class="breadcrumb-item active">File Upload</li>
+                </ul>
+            </div> -->
+            </div>
+        </div>
+        <div class="container-fluid">
+
+            <div th:if="${session.admin} != null" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <a th:href="@{/admin/toActivitiesUpload}">
+                                <h2><strong>活动上传</strong></h2>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文章管理 -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>活动列表</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>活动</th>
+                                            <th>日期</th>
+                                            <th>地点</th>
+                                            <th>已报人数/总人数</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>校园招聘</td>
+                                            <td>2020.2.28</td>
+                                            <td>西区体育馆</td>
+                                            <td>15/200</td>
+                                            <td>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">查看</button>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">报名</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>校运会</td>
+                                            <td>2020.2.28</td>
+                                            <td>南区操场</td>
+                                            <td>15/200</td>
+                                            <td>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">查看</button>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">报名</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>讲座</td>
+                                            <td>2020.2.28</td>
+                                            <td>西区新主楼</td>
+                                            <td>15/200</td>
+                                            <td>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">查看</button>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">报名</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
+        </div>
+
+
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}" src="/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="/assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+
+    <script th:src="@{/assets/plugins/dropzone/dropzone.js}" src="/assets/plugins/dropzone/dropzone.js"></script> <!-- Dropzone Plugin Js -->
+
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="/assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+</body>
+
+</html>

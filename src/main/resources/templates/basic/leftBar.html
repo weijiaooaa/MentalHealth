@@ -1,0 +1,148 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+    <title>MHeal</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" href="/assets/css/main.css">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}" href="/assets/css/color_skins.css">
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- Left Sidebar -->
+<aside th:fragment="leftBar" id="leftsidebar" class="sidebar">
+    <div class="tab-content">
+        <div class="tab-pane stretchLeft active" id="user">
+            <div class="menu">
+                <ul class="list">
+                    <li>
+                        <div class="user-info m-b-20 p-b-15">
+                            <div class="image"><a href="profile.html"><img th:src="@{/assets/images/profile_av.jpg}" src="/assets/images/profile_av.jpg" alt="User"></a></div>
+                            <div class="detail">
+                                <h4 th:if="${session.student} != null">[[${session.student.accountName}]]</h4>
+                                <h4 th:if="${session.doctor} != null">[[${session.doctor.username}]]</h4>
+                                <h4 th:if="${session.admin} != null">[[${session.admin.username}]]</h4>
+                            </div>
+                            <p class="text-muted">16级-软件工程-8班</p>
+                            <div class="container">
+                                <div class="row clearfix">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div id="rank">
+                                            等级:
+                                            <div id="edit" style="color: #ff7b08">
+                                                LV5
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <samll style="color: #d3d3d3">16036/28800</samll>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="progress m-b-20">
+                                <div class="progress-bar l-amber" role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" style="width: 56%"> <span class="sr-only">32% Complete</span> </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <small class="text-muted">邮箱：</small>
+                        <div style="padding-left: 0px" class="container">
+                            <div class="row no-gutters">
+                                <div id="edit1" class="col-lg-10 col-md-10 col-sm-10">
+                                    <div th:if="${session.student} != null" th:text="${session.student.email}"></div>
+                                    <div th:if="${session.doctor} != null" th:text="${session.doctor.email}"></div>
+                                </div>
+                                <div id="edit1" class="col-lg-2 col-md-2 col-sm-2">
+                                    <button id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color: #d3d3d3">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <small class="text-muted">电话号码： </small>
+                        <div style="padding-left: 0px" class="container">
+                            <div class="row no-gutters">
+                                <div id="edit1" class="col-lg-10 col-md-10 col-sm-10">
+                                    <div>17603621936</div>
+                                </div>
+                                <div id="edit1" class="col-lg-2 col-md-2 col-sm-2">
+                                    <button id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color: #d3d3d3">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li>
+                                <div>Photoshop</div>
+                                <div class="progress m-b-20">
+                                    <div class="progress-bar l-blue " role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" style="width: 89%"> <span class="sr-only">62% Complete</span> </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>Wordpress</div>
+                                <div class="progress m-b-20">
+                                    <div class="progress-bar l-green " role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" style="width: 56%"> <span class="sr-only">87% Complete</span> </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>HTML 5</div>
+                                <div class="progress m-b-20">
+                                    <div class="progress-bar l-amber" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" style="width: 78%"> <span class="sr-only">32% Complete</span> </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>Angular</div>
+                                <div class="progress m-b-20">
+                                    <div class="progress-bar l-blush" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100" style="width: 43%"> <span class="sr-only">56% Complete</span> </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}" src="/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="/assets/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/morrisscripts.bundle.js}" src="/assets/bundles/morrisscripts.bundle.js"></script><!-- Morris Plugin Js -->
+<script th:src="@{/assets/bundles/jvectormap.bundle.js}" src="/assets/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+<script th:src="@{/assets/bundles/knob.bundle.js}" src="/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="/assets/bundles/mainscripts.bundle.js"></script>
+<script th:src="@{/assets/js/pages/index.js}" src="/assets/js/pages/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿//Margin
+@for $i from -25 through 25 {
+    .m-l-#{$i * 5} {
+        margin-left: #{$i * 5}px;
+    }
+
+    .m-t-#{$i * 5} {
+        margin-top: #{$i * 5}px;
+    }
+
+    .m-r-#{$i * 5} {
+        margin-right: #{$i * 5}px;
+    }
+
+    .m-b-#{$i * 5} {
+        margin-bottom: #{$i * 5}px;
+    }
+}
+
+.margin-0 {
+    margin: 0 !important;
+}
+
+@for $i from 0 through 25 {
+    .p-l-#{$i * 5} {
+        padding-left: #{$i * 5}px;
+    }
+
+    .p-t-#{$i * 5} {
+        padding-top: #{$i * 5}px;
+    }
+
+    .p-r-#{$i * 5} {
+        padding-right: #{$i * 5}px;
+    }
+
+    .p-b-#{$i * 5} {
+        padding-bottom: #{$i * 5}px;
+    }
+}
+
+.padding-0 {
+    padding: 0 !important;
+}
+
+@for $i from 5 through 49 {
+    .font-#{$i + 1} {
+        font-size: #{$i + 1}px;
+    }
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-justify {
+    text-align: justify;
+}
+
+.no-resize {
+    resize: none;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.font-italic {
+    font-style: italic;
+}
+
+.font-underline {
+    text-decoration: underline;
+}
+
+.font-line-through {
+    text-decoration: line-through;
+}
+
+.font-overline {
+    text-decoration: overline;
+}
+
+.block-header {
+    padding: 15px;
+
+    h2 {
+        margin: 0 !important;       
+        font-size: 20px;        
+
+        small {
+            display: block;            
+            margin-top: 8px;
+            color: $grey-700;
+            font-size: 13px;
+
+            a {                
+                color: $grey-300;
+            }
+        }
+    }
+    .breadcrumb{
+        @extend .m-b-0;
+        @include border-radius(50px);
+        background: rgba(255,255,255,0.3);
+        a{
+            color: $white;
+        }
+    }
+    
+}
+
+@each $key, $val in $colors {
+    .bg-#{$key} {
+        background-color: $val !important;
+        color: $white;
+
+        .content {
+            .text,
+            .number {
+                color: $white !important;
+            }
+        }
+    }
+}
+
+@each $key, $val in $colors {
+    .col-#{$key} {
+        color: $val !important;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    
+}

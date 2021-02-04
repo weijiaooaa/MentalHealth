@@ -1,0 +1,96 @@
+﻿$white: #ffffff;
+$blue-300: #78c4fd !default;
+$blue-400: #60bafd !default;
+$blue-500: #3eacff !default;
+$blue-600: #0d97ff !default;
+$blue-700: #1976d2 !default;
+
+.theme-blue .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-blue .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $blue-400;
+}
+
+.theme-blue{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $blue-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $blue-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $blue-400;
+        }
+        &.btn-simple{
+            border-color: $blue-500;
+            color: $blue-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $blue-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$blue-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$blue-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$blue-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $blue-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $blue-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $blue-500;
+                }
+                strong{
+                    color: $blue-500;
+                }
+            }
+        }
+    }
+}
+
+

@@ -1,0 +1,378 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+<title>MHeal</title>
+<link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+<link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+<link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
+<!-- Custom Css -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}" href="/assets/css/main.css">
+<link rel="stylesheet" th:href="@{/assets/css/color_skins.css}" href="/assets/css/color_skins.css">
+
+<script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+<script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+<script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+<style>
+    #buttonTop{
+        top:-14px;
+    }
+
+    #rank{
+        position: relative;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+    }
+
+    #edit{
+        padding:1px;
+        display: inline-block;
+    }
+
+    #edit1{
+        height:15px;
+        padding-top: 2px;
+    }
+</style>
+
+</head>
+<body class="theme-blue ls-toggle-menu">
+<!-- Page Loader -->
+<div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+<!-- Main Content -->
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <h2>我的主页
+                <small>欢迎来到MHeal</small>
+                </h2>
+            </div>            
+            <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                                <div class="body">
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="501" data-speed="1000" data-fresh-interval="700">501</p>
+                                    <a th:href="@{/admin/toUserManager}">
+                                        <h2 style="font-size: 1.5rem" class="text-muted">用户管理</h2>
+                                    </a>
+                                    <span id="linecustom1">1,4,2,6,5,2,3,8,5,2</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                                <div class="body">
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="501" data-speed="1000" data-fresh-interval="700">501</p>
+                                    <a th:href="@{/admin/toResourceManager}">
+                                        <h2 style="font-size: 1.5rem" class="text-muted">资源管理</h2>
+                                    </a>
+                                    <span id="linecustom2">1,4,2,6,5,2,3,8,5,2</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                                <div class="body">
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="2501" data-speed="2000" data-fresh-interval="700">2501</p>
+                                    <a th:href="@{/admin/toAnsHood}">
+                                        <h2 style="font-size: 1.5rem" class="text-muted ">问答社区</h2>
+                                    </a>
+                                    <span id="linecustom3">2,9,5,5,8,5,4,2,6</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                                <div class="body">
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="6051" data-speed="2000" data-fresh-interval="700">6051</p>
+                                    <a th:href="@{/admin/toAcitvities}">
+                                        <h2 style="font-size: 1.5rem" class="text-muted">活动管理</h2>
+                                    </a>
+                                    <span id="linecustom4">1,5,3,6,6,3,6,8,4,2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+
+            <div id="app" class="col-lg-8 col-md-12">
+                <!--在线咨询-->
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>医生在线</strong><small>同一时间只允许与一个医生交流</small> </h2>
+                    </div>
+                    <div class="body table-responsive members_profiles">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width:60px;"></th>
+                                    <th>姓名</th>
+                                    <th>性别</th>
+                                    <th>教龄</th>
+                                    <th>电话</th>
+                                    <th>邮箱</th>
+                                    <th>咨询</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" th:src="@{/assets/images/xs/avatar1.jpg}" src="/assets/images/xs/avatar1.jpg" alt="user" width="40"> </td>
+                                    <td>
+                                        <a href="javascript:;">小黑</a>
+                                    </td>
+                                    <td>男</td>
+                                    <td>3年</td>
+                                    <td>
+                                        <small>1046474088</small>
+                                    </td>
+                                    <td>
+                                        <small>1046474088@qq.com</small>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/stu/toChatPage}">
+                                            <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" th:src="@{/assets/images/xs/avatar2.jpg}" src="/assets/images/xs/avatar2.jpg" alt="user" width="40"> </td>
+                                    <td>
+                                        <a href="javascript:;">小黑</a>
+                                    </td>
+                                    <td>男</td>
+                                    <td>3年</td>
+                                    <td>
+                                        <small>1046474088</small>
+                                    </td>
+                                    <td>
+                                        <small>1046474088@qq.com</small>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/stu/toChatPage}">
+                                            <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" th:src="@{/assets/images/xs/avatar5.jpg}" src="/assets/images/xs/avatar5.jpg" alt="user" width="40"> </td>
+                                    <td>
+                                        <a href="javascript:;">小黑</a>
+                                    </td>
+                                    <td>男</td>
+                                    <td>3年</td>
+                                    <td>
+                                        <small>1046474088</small>
+                                    </td>
+                                    <td>
+                                        <small>1046474088@qq.com</small>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/stu/toChatPage}">
+                                            <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" th:src="@{/assets/images/xs/avatar4.jpg}" src="/assets/images/xs/avatar4.jpg" alt="user" width="40"> </td>
+                                    <td>
+                                        <a href="javascript:;">小黑</a>
+                                    </td>
+                                    <td>男</td>
+                                    <td>3年</td>
+                                    <td>
+                                        <small>1046474088</small>
+                                    </td>
+                                    <td>
+                                        <small>1046474088@qq.com</small>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/stu/toChatPage}">
+                                            <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" th:src="@{/assets/images/xs/avatar5.jpg}" src="/assets/images/xs/avatar5.jpg" alt="user" width="40"> </td>
+                                    <td>
+                                        <a href="javascript:;">小黑</a>
+                                    </td>
+                                    <td>男</td>
+                                    <td>3年</td>
+                                    <td>
+                                        <small>1046474088</small>
+                                    </td>
+                                    <td>
+                                        <small>1046474088@qq.com</small>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/stu/toChatPage}">
+                                            <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" th:src="@{/assets/images/xs/avatar5.jpg}" src="/assets/images/xs/avatar5.jpg" alt="user" width="40"> </td>
+                                    <td>
+                                        <a href="javascript:;">小黑</a>
+                                    </td>
+                                    <td>男</td>
+                                    <td>3年</td>
+                                    <td>
+                                        <small>1046474088</small>
+                                    </td>
+                                    <td>
+                                        <small>1046474088@qq.com</small>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/stu/toChatPage}">
+                                            <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- weather -->
+            <div id="app1" class="col-lg-4 col-md-12">
+                <div class="card weather2">
+                    <div class="city-selected body l-khaki">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="city"><span>城市&nbsp;&nbsp;</span>{{weather.city}}</div>
+                                <div class="night">{{weather.forecast[0].date}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped m-b-0">
+                        <tbody>
+                            <tr>
+                            <td>风力</td>
+                            <td class="font-medium">{{fengli}}</td>
+                        </tr>
+                        <tr>
+                            <td>风向</td>
+                            <td class="font-medium">{{weather.forecast[0].fengxiang}}</td>
+                        </tr>
+                        <tr>
+                            <td>高温</td>
+                            <td class="font-medium">{{weather.forecast[0].high}}</td>
+                        </tr>
+                        <tr>
+                            <td>低温</td>
+                            <td class="font-medium">{{weather.forecast[0].low}}</td>
+                        </tr>
+                        <tr>
+                            <td>天气</td>
+                            <td class="font-medium">{{weather.forecast[0].type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item text-center active">
+                                <div class="col-12">
+                                    <ul class="row days-list list-unstyled">
+                                        <li class="day col-4">
+                                            <p>{{weather.forecast[1].date}}</p>
+                                            <img th:src="@{/assets/images/weather/rain.svg}" src="/assets/images/weather/rain.svg" alt="">
+                                        </li>
+                                        <li class="day col-4">
+                                            <p>{{weather.forecast[2].date}}</p>
+                                            <img th:src="@{/assets/images/weather/cloudy.svg}" src="/assets/images/weather/cloudy.svg" alt="">
+                                        </li>
+                                        <li class="day col-4">
+                                            <p>{{weather.forecast[3].date}}</p>
+                                            <img th:src="@{/assets/images/weather/wind.svg}" src="/assets/images/weather/wind.svg" alt="">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:include="/basic/leaderboard :: leaderBoard"></div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Jquery Core Js --> 
+<script th:src="@{/assets/bundles/libscripts.bundle.js}" src="/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="/assets/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/morrisscripts.bundle.js}" src="/assets/bundles/morrisscripts.bundle.js"></script><!-- Morris Plugin Js -->
+<script th:src="@{/assets/bundles/jvectormap.bundle.js}" src="/assets/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+<script th:src="@{/assets/bundles/knob.bundle.js}" src="/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="/assets/bundles/mainscripts.bundle.js"></script>
+<script th:src="@{/assets/js/pages/index.js}" src="/assets/js/pages/index.js"></script>
+
+<script th:inline="javascript">
+
+    var app = new Vue({
+        el: "#app1",
+
+        data :{
+           weather: [],
+           fengli:{}
+        },
+
+        created : async function () {
+
+//            alert("你好")
+            try{
+                _this = this
+                await axios.get("http://wthrcdn.etouch.cn/weather_mini?city=西安")
+                    .then(res => {_this.weather = res.data.data})
+            }catch (err){
+                console.log(err)
+            }
+
+//            alert(this.weather.city)
+
+            let temp = this.weather.forecast[0].fengli
+
+            this.fengli = temp.substring(10,12)
+            console.log(this.weather)
+        }
+    })
+
+</script>
+
+</body>
+</html>

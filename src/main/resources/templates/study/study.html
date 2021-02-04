@@ -1,0 +1,253 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+<title>:: MHeal Bootstrap4 Admin ::</title>
+<!-- Favicon-->
+<link rel="icon" th:href="@{favicon.ico}" type="image/x-icon">
+<!-- Font Icon -->
+<link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+<!-- Custom Css -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+<script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+<script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+<script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+</head>
+
+<style>
+    #buttonTop{
+        top:-14px;
+    }
+
+    #rank{
+        position: relative;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+    }
+
+    #edit{
+        padding:1px;
+        display: inline-block;
+    }
+
+    #edit1{
+        height:15px;
+        padding-top: 2px;
+    }
+</style>
+
+<body class="theme-purple ls-toggle-menu">
+<!-- Page Loader -->
+<div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+<!--Main Content-->
+<section class="content file_manager">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-5 col-sm-12">
+                <!-- <h2>Documents
+                <small>Welcome to MHeal</small>
+                </h2> -->
+                <h2>&nbsp;</h2>
+                <h2>&nbsp;</h2>
+            </div>
+            <div class="col-lg-5 col-md-7 col-sm-12">
+                <!-- <button class="btn btn-white btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
+                    <i class="zmdi zmdi-upload"></i>bread
+                </button>
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a th:href="index.html"><i class="zmdi zmdi-home"></i> MHeal</a></li>
+                    <li class="breadcrumb-item"><a th:href="file-dashboard.html">File Manager</a></li>
+                    <li class="breadcrumb-item active">Documents</li>                    
+                </ul> -->
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="app">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#doc">文章</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#video">视频</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#music">音乐</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="doc">
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="hover">
+                                                <button type="button" class="btn btn-icon btn-icon-mini btn-round btn-danger">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </button>
+                                            </div>
+                                            <div class="icon">
+                                                <a th:href="@{/document/toDocPage}">
+                                                    <img  th:src="@{/assets/images/image-gallery/1.jpg}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">Document_2017.doc</p>
+                                                <small>Size: 42KB <span class="date text-muted">Nov 02, 2017</span></small>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="video">
+                        <div class="row clearfix">
+                            <div v-for="video in videos">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card" style="width: auto">
+                                        <div class="file">
+                                            <a href="javascript:void(0);">
+                                                <!--视频封面-->
+                                                <a th:href="@{/video/toVideoPage}">
+                                                    <iframe :src="video.href"  scrolling="no" border="0" frameborder="no"
+                                                            style="width:300px;height:180px;align:center;" framespacing="0" allowfullscreen="true"> </iframe>
+                                                </a>
+
+                                                <!--视频标题-->
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted" v-text="video.title"></p>
+                                                </div>
+
+                                                <!--视频作者-->
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <small v-text="video.author"></small>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <span class="date text-muted" v-text="video.updateTime"></span>
+                                                    </div>
+                                                </div>
+
+                                                <!--点击观看-->
+                                                <div class="file-name">
+                                                    <a href="#" @click="viewVideo(video.id)">点击观看</a>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="music">
+                        <div class="row clearfix">
+                            <div v-for="music in musics">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card" style="width: auto">
+                                        <div class="file">
+                                            <a href="javascript:void(0);">
+                                                <!--音乐播放器-->
+                                                <audio :src="music.bgm" controls="controls">
+                                                    Your browser does not support the audio element.
+                                                </audio>
+
+                                                <!--音乐标题-->
+                                                <p class="m-b-5 text-muted" v-text="music.title"></p>
+
+                                                <!--音乐作者-->
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <small v-text="music.author"></small>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <span class="date text-muted" v-text="music.updateTime"></span>
+                                                    </div>
+                                                </div>
+
+                                                <!--音乐原链接-->
+                                                <div class="file-name">
+                                                    <a :href="music.href">音乐原链接</a>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--href: https://music.163.com/#/song?id=1368371706-->
+                            <!--src:  music.163.com/song/media/outer/url?id=1345368792.mp3-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}"></script>
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script>
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script>
+
+<script th:inline="javascript">
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            videos:[],
+            musics:[]
+        },
+        created:async function() {
+            _this = this;
+
+            //得到所有视频
+            try{
+                await axios.get("/mheal/resource/getVideoAll").then(res =>{
+                    _this.videos = res.data;
+                    console.log(_this.videos)
+                })
+            }catch (err){
+                console.log(err);
+            }
+
+            //得到所有的音乐
+            try{
+                await axios.get("/mheal/resource/getMusicAll").then(res =>{
+                    _this.musics = res.data;
+                    console.log(_this.musics);
+                })
+            }catch (err) {
+                console.log(err);
+            }
+        },
+        methods:{
+            viewVideo:function (v_id) {
+                location.href = "/mheal/video/toVideoPage?id=" + v_id;
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

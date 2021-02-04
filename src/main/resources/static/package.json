@@ -1,0 +1,21 @@
+{
+  "name": "Oreo",
+  "version": "1.0",
+  "description": "Oreo Bootstrap 4 Admin Dashboard",
+  "main": "mainscripts.bundle.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "keywords": [
+    "SaSS",
+    "Test"
+  ],
+  "author": "Theme Makker",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-sass": "^4",
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-sass": "^1.2.0"
+  }
+}

@@ -1,0 +1,171 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+<title>:: MHeal Bootstrap4 Admin ::</title>
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<!-- Favicon-->
+<link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/plugins/fullcalendar/fullcalendar.min.css}">
+<!-- Custom Css -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+</head>
+
+<body class="theme-blush ls-toggle-menu">
+
+<!-- Page Loader -->
+<div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+
+<section class="content page-calendar">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <small>&nbsp;</small>
+                <h2>日程安排</h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <!-- <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> MHeal</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">App</a></li>
+                    <li class="breadcrumb-item active">Calendar</li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-12 col-lg-4 col-xl-4">
+                    <div class="body">
+                        <button type="button" class="btn btn-round btn-info waves-effect" data-toggle="modal" data-target="#addevent">添加事件</button>
+                        <button class="btn btn-default hidden-lg-up m-t-0 float-right" data-toggle="collapse" data-target="#open-events" aria-expanded="false" aria-controls="collapseExample"><i class="zmdi zmdi-chevron-down"></i></button>
+                        <div class="collapse-xs collapse-sm collapse" id="open-events">
+                            <hr>
+                            <div class="event-name b-primary row">
+                                <div class="col-2 text-center">
+                                    <h4>2020<span>4</span><span>14</span></h4>
+                                </div>
+                                <div class="col-10">
+                                    <h6>校园招聘</h6>
+                                    <p>各位应届生请踊跃参加</p>
+                                    <address><i class="zmdi zmdi-pin"></i> 西区新主楼321</address>
+                                </div>
+                            </div>                            
+                            <div class="event-name b-primary row">
+                                <div class="col-2 text-center">
+                                    <h4>2020<span>4</span><span>1</span></h4>
+                                </div>
+                                <div class="col-10">
+                                    <h6>系统后台编码</h6>
+                                    <p>已完成系统页面设计，继续实现后台逻辑</p>
+                                    <address><i class="zmdi zmdi-pin"></i> 在家办公</address>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="event-name b-lightred row">
+                                <div class="col-2 text-center">
+                                    <h4>2020<span>3</span><span>15</span></h4>
+                                </div>
+                                <div class="col-10">
+                                    <h6>系统页面设计</h6>
+                                    <p>已完成系统详细设计，继续实现页面设计</p>
+                                    <address><i class="zmdi zmdi-pin"></i> 在家办公</address>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="event-name b-greensea row">
+                                <div class="col-2 text-center">
+                                    <h4>2020<span>3</span><span>1</span></h4>
+                                </div>
+                                <div class="col-10">
+                                    <h6>系统详细设计</h6>
+                                    <p>已完成系统概要设计，继续实现详细设计</p>
+                                    <address><i class="zmdi zmdi-pin"></i> 在家办公</address>
+                                </div>
+                            </div>
+                            <div class="event-name b-greensea row">
+                                <div class="col-2 text-center">
+                                    <h4>2020<span>2</span><span>16</span></h4>
+                                </div>
+                                <div class="col-10">
+                                    <h6>系统概要设计</h6>
+                                    <p>已完成系统需求分析，继续实现概要设计</p>
+                                    <address><i class="zmdi zmdi-pin"></i> 在家办公</address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-8 col-xl-8">
+                    <div class="body">
+                        <button class="btn btn-default btn-simple btn-round waves-effect" id="change-view-today">今天</button>
+                        <button class="btn btn-primary btn-default btn-round waves-effect" id="change-view-day" >日</button>
+                        <button class="btn btn-default btn-simple btn-round waves-effect" id="change-view-week">周</button>
+                        <button class="btn btn-default btn-simple btn-round waves-effect" id="change-view-month">月</button>
+                        <div id="calendar" class="m-t-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Default Size -->
+<div class="modal fade" id="addevent" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="defaultModalLabel">添加事件</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="number" class="form-control" placeholder="事件日期">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="text" class="form-control" placeholder="事件标题">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-line">
+                        <textarea class="form-control no-resize" placeholder="事件描述"></textarea>
+                    </div>
+                </div>       
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-round waves-effect">添加</button>
+                <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Jquery Core Js --> 
+<script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/fullcalendarscripts.bundle.js}"></script><!--/ calender javascripts -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script><!-- Custom Js -->
+<script th:src="@{/assets/js/pages/calendar/calendar.js}"></script>
+</body>
+</html>

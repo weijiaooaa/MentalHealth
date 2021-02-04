@@ -1,0 +1,283 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+<title>:: MHeal Bootstrap4 Admin ::</title>
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<!-- Favicon-->
+<link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+<!-- Custom Css -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" th:href="@{/assets/css/chatapp.css}">
+<link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+<script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+<script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+<script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+<style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+    
+</head>
+<body class="theme-cyan ls-toggle-menu">
+<!-- Page Loader -->
+<div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+
+<!--Main Content-->
+<section class="content">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>在线咨询</h2>
+                <h2>&nbsp;</h2>
+                <h2>&nbsp;</h2>
+                <button @click="send">发消息</button>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">                
+                <!-- <button class="btn btn-white btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Home</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">App</a></li>
+                    <li class="breadcrumb-item active">Chat</li> -->
+                </ul>                
+            </div>
+        </div>
+    </div>
+    <div id="app" class="container-fluid">
+        <div class="row clearfix">           
+            <div class="col-lg-12 col-xl-12">
+                <div class="card chat-app">
+                    <div id="plist" class="people-list">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="查找...">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-search"></i>
+                            </span>
+                        </div>
+                        <ul class="nav nav-tabs p-l-0 p-r-0" role="tablist">
+                            <li class="nav-item inlineblock"><a class="nav-link active" data-toggle="tab" href="#people">医生</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane slideRight active" id="people">
+                                <ul class="chat-list list-unstyled m-b-0">
+
+                                    <!--获取当前咨询的医生-->
+                                    <li class="clearfix active">
+                                        <img th:src="@{'/assets/images/xs/avatar' + ${iconNum} + '.jpg'}" alt="avatar" />
+                                        <div class="about">
+                                            <div class="name">[[${doctor.username}]]</div>
+                                            <div class="status"> <i class="zmdi zmdi-circle online"></i> online </div>
+                                        </div>
+                                    </li>
+
+                                    <!--在线-->
+                                    <div v-for="(doctor,index) in doctorsOnline">
+                                        <li class="clearfix">
+                                            <img :src="'/mheal/assets/images/xs/avatar' + (index + 1) + '.jpg'" alt="avatar" />
+                                            <div class="about">
+                                                <div class="name" v-text="doctor.username"></div>
+                                                <div class="status"> <i class="zmdi zmdi-circle online"></i> online </div>
+                                            </div>
+                                        </li>
+                                    </div>
+
+                                    <div v-for="(doctor,index) in doctorsOffline">
+                                        <!--离线-->
+                                        <li class="clearfix">
+                                            <img :src="'/mheal/assets/images/xs/avatar' + (index + 1) + '.jpg'" alt="avatar" />
+                                            <div class="about">
+                                                <div class="name" v-text="doctor.username"></div>
+                                                <div class="status"> <i class="zmdi zmdi-circle offline"></i> offline </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <img th:src="@{'/assets/images/xs/avatar' + ${iconNum} + '.jpg'}" alt="avatar" />
+                            <div class="chat-about">
+                                <div class="chat-with">[[${doctor.username}]]</div>
+                                <!--<div class="chat-num-messages">already 8 messages</div>-->
+                            </div>
+                            <a href="javascript:void(0);" class="list_btn btn btn-primary btn-round float-md-right"><i class="zmdi zmdi-comments"></i></a>
+                        </div>
+                        <div class="chat-history">
+                            <ul v-for="perContent in contentList">
+                                <!--学生的发言-->
+                                <li v-if="perContent.from_id == 0" class="clearfix">
+                                    <div class="message-data text-right">
+                                        <span class="message-data-time">{{perContent.date}},{{perContent.time}}</span> &nbsp; &nbsp;
+                                        <span class="message-data-name" v-text="perContent.student.username"></span> <i class="zmdi zmdi-circle me"></i>
+                                    </div>
+                                    <div class="message other-message float-right" v-text="perContent.content"></div>
+                                </li>
+                                <!--医生的发言-->
+                                <li v-if="perContent.from_id == 1">
+                                    <div class="message-data">
+                                        <span class="message-data-name" v-text="perContent.doctor.username"><i class="zmdi zmdi-circle online"></i></span>
+                                        <span class="message-data-time">{{perContent.date}},{{perContent.time}}</span>
+                                    </div>
+                                    <div class="message my-message">
+                                        <p v-text="perContent.content"></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="chat-message clearfix">
+                            <div class="input-group p-t-15">
+                                <input type="text" class="form-control" placeholder="请在这里输入" v-model="content">
+                                <span class="input-group-addon">
+                                    <i class="zmdi zmdi-mail-send" @click="submitContent"></i>
+                                </span>
+                            </div>
+                            <!-- <a href="javascript:void(0);" class="btn btn-raised btn-warning btn-round"><i class="zmdi zmdi-camera"></i></a> -->
+                            <!-- <a href="javascript:void(0);" class="btn btn-raised btn-info btn-round"><i class="zmdi zmdi-file-text"></i></a>                             -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script><!-- Custom Js -->
+
+<script th:inline="javascript">
+
+    var app = new Vue({
+            el: "#app",
+
+            data :{
+                doctorsOnline:[],
+                doctorsOffline:[],
+                contentList:[],
+                d_id:"",
+                s_id:"",
+                content:""
+            },
+
+            methods:{
+
+                submitContent : async function(){
+
+                    let formdata = new FormData()
+                    formdata.append("date","2020-2-27")
+                    formdata.append("s_id",this.s_id)
+                    formdata.append("d_id",this.d_id)
+                    formdata.append("content",this.content)
+
+                    this.content = "";
+                    let config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+
+                    //回复消息
+                    await axios.post('/mheal/stu/submitContent',formdata,config).then(res => {
+                        alert("提交表单")
+                    })
+
+                    try{
+                        _this = this
+                        await axios.get("/mheal/stu/getContentList?s_id=" + _this.s_id + "&d_id=" + _this.d_id,datatype="json").then(res => {
+                                _this.contentList = res.data
+                                console.log(_this.contentList)
+                            }
+                        )
+                    }catch (err){
+                        console.log(err)
+                    }
+                }
+            },
+
+            created : async function () {
+
+                this.d_id = [[${doctor.id}]]
+                this.s_id = [[${session.student.id}]]
+
+                //获取在线医生
+                try{
+                    _this = this
+//                alert(_this.d_id)
+                    await axios.get("/mheal/stu/getDoctorsOnline?doctorId=" + _this.d_id, datatype="json").then(res => {
+                            _this.doctorsOnline = res.data
+//                    console.log(_this.doctorsOnline)
+                        }
+                    )
+                }catch (err){
+                    console.log(err)
+                }
+
+                //获取离线医生
+                try{
+                    _this = this
+                    await axios.get("/mheal/stu/getDoctorsOffline",datatype="json").then(res => {
+                            _this.doctorsOffline = res.data
+//                        console.log(_this.doctorsOffline)
+                        }
+                    )
+                }catch (err){
+                    console.log(err)
+                }
+
+                //获取学生和医生的聊天记录
+                try{
+                    _this = this
+                    await axios.get("/mheal/stu/getContentList?s_id=" + _this.s_id + "&d_id=" + _this.d_id,datatype="json").then(res => {
+                            _this.contentList = res.data
+                            console.log(_this.contentList)
+                        }
+                    )
+                }catch (err){
+                    console.log(err)
+                }
+
+            }
+    })
+</script>
+</body>
+</html>

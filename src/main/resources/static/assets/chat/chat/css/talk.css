@@ -1,0 +1,209 @@
+.talk_show {
+	width: auto;
+	height: 449px;
+	background: #fff;
+	margin: 0 auto;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	border: 0.5px solid #EAEAEA;
+}
+
+.talk_show::-webkit-scrollbar {
+	width: 0px;
+	height: 4px;
+	background-color: #61B6EB;
+}
+
+.talk_show::-webkit-scrollbar-track {
+	background: #FFFFFF;
+	border-radius: 2px;
+}
+
+.talk_show::-webkit-scrollbar-thumb {
+	background: #898989;
+	border-radius: 8px;
+}
+
+.talk_show::-webkit-scrollbar-thumb:hover {
+	background: #898989;
+}
+
+.talk_show::-webkit-scrollbar-corner {
+	background: #898989;
+}
+
+.ltalk {
+	margin: 10px;
+}
+
+.ltalk span {
+	display: inline-block;
+	background: #E2E2E2;
+	color: #0C0C0C;
+    border-radius: 10px;
+	padding: 5px 5px;
+	font-size: 16px;
+}
+
+.rtalk {
+	margin: 10px;
+	text-align: right;
+}
+
+.rtalk span {
+	display: inline-block;
+	background: #5FB878;
+    border-radius: 10px;
+	color: #FFFFFF;
+	padding: 5px 5px;
+	font-size: 16px;
+}
+
+.ctalk {
+	text-align: center;
+}
+
+.ctalk span {
+	display: inline-block;
+	background: #EEEEEE;
+	border-radius: 10px;
+	color: #000000;
+	padding: 5px 10px;
+}
+.talkimg img{
+	cursor:pointer;
+	max-width:300px;
+}
+
+/*没有被选择的样式*/
+
+.unactive {
+    padding: 1px;
+    display: block;
+    background-color: #FAFAFA;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+
+/*被选择的样式*/
+
+.active {
+    padding: 1px;
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: #EBEBEC;
+    cursor: pointer;
+}
+
+
+/*左侧的昵称的样式*/
+
+.leftnickename p {
+    width: 150px;
+    height: 60px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+/*响应式 当网页宽度小于900px的时候让两边的div消失*/
+
+@media screen and (max-width: 900px) {
+    .leff {
+        display: none;
+    }
+    .layui-col-xs10 {
+        width: 100%;
+        margin: 0px;
+    }
+}
+/*左侧的聊天窗口的滑动样式*/
+.alluser {
+    width: 15%;
+    float: left;
+    height: 648px;
+    border: 0.5px solid gainsboro;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    border-radius: 6px;
+}
+
+.alluser::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: #898989;
+}
+
+.alluser::-webkit-scrollbar-track {
+    background: #FFFFFF;
+    border-radius: 2px;
+}
+
+.alluser::-webkit-scrollbar-thumb {
+    background: #898989;
+    border-radius: 2px;
+}
+
+.alluser::-webkit-scrollbar-thumb:hover {
+    background: #898989;
+}
+
+.alluser::-webkit-scrollbar-corner {
+    background: #898989;
+}
+
+
+.spinner {
+    margin: 100px auto;
+    width: 50px;
+    height: 60px;
+    text-align: center;
+    font-size: 10px;
+}
+.spinner > div {
+    background-color: #81BCBA;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+    animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchdelay {
+    0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+    20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }  20% {
+           transform: scaleY(1.0);
+           -webkit-transform: scaleY(1.0);
+       }
+}

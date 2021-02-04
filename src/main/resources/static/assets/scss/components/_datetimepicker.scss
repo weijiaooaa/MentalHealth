@@ -1,0 +1,49 @@
+﻿.dtp {
+    div.dtp-date,
+    div.dtp-time {
+        background: $grey-800;
+    }
+
+    > .dtp-content {
+        max-height: 530px !important;
+        > .dtp-date-view {
+            > header.dtp-header {
+                background: $grey-800;
+            }
+        }
+    }
+
+    .dtp-buttons {
+
+        text-align: center !important;
+        .dtp-btn-ok {
+            margin-left: 10px;
+        }
+
+        .dtp-btn-clear {
+            margin-right: 10px !important;
+        }
+    }
+
+    .p10 {
+        > a {
+            color: $white;
+        }
+    }
+
+    div.dtp-actual-year {
+        font-size: 1.5em;
+        color: $white;
+    }
+
+    table.dtp-picker-days {
+        tr {
+            td {
+                a.selected {
+                    background: $grey-800;
+                    color: $white;
+                }
+            }
+        }
+    }
+}

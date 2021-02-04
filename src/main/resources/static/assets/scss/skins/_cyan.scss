@@ -1,0 +1,94 @@
+﻿$white: #ffffff;
+$blue-grey-400: #78909c !default;
+$cyan-400: #01d8da !default;
+$cyan-500: #00cfd1 !default;
+$cyan-600: #00acc1 !default;
+$cyan-700: #0097a7 !default;
+
+.theme-cyan .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-cyan .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $cyan-400;
+}
+
+.theme-cyan{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $cyan-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $cyan-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $cyan-400;
+        }
+        &.btn-simple{
+            border-color: $cyan-500;
+            color: $cyan-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $cyan-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$cyan-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$cyan-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$cyan-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $cyan-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $cyan-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $cyan-500;
+                }
+                strong{
+                    color: $cyan-500;
+                }
+            }
+        }
+    }
+}

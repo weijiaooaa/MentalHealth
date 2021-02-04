@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>:: Oreo Bootstrap4 Admin ::</title>
+    <!-- Favicon-->
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/authentication.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+</head>
+
+<body class="theme-purple authentication sidebar-collapse">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent">
+    <div class="container">        
+        <div class="navbar-translate n_logo">
+            <a class="navbar-brand" href="javascript:void(0);" title="" target="_blank"><h4>MHeal</h4></a>
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <h4></h4>
+                    <a class="nav-link btn btn-white btn-round" th:href="@{/stu}" href="sign-up.html">SIGN IN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navbar -->
+<div class="page-header">
+    <div class="page-header-image" style="background-image:url(/mheal/assets/images/login.jpg)"></div>
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div id="sign_up" class="card-plain">
+                <form class="form" method="post" th:action="@{/stu/register}">
+                    <div class="header">
+                        <div class="logo-container">
+                            <img th:src="@{/assets/images/logo.svg}" alt="">
+                        </div>
+                        <h5>学生注册</h5>
+                        <!-- <span>Register a new membership</span> -->
+                    </div>
+                    <div class="content">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入学生号" name="id" v-model="id">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-account-circle"></i>
+                            </span>
+                        </div>
+                        <div style="color: #ff7878" v-model="text1">{{text1}}</div>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入用户名" name="username" v-model="username">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-account-circle"></i>
+                            </span>
+                        </div>
+                        <div style="color: #ff7878" v-model="text2">{{text2}}</div>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入邮箱" name="email" v-model="email">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-email"></i>
+                            </span>
+                        </div>
+                        <div style="color: #ff7878" v-model="text3">{{text3}}</div>
+
+                        <div class="input-group">
+                            <input type="password" placeholder="请输入密码" class="form-control" name="password1"  v-model="password1"/>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                        </div>
+                        <div style="color: #ff7878" v-model="text4">{{text4}}</div>
+
+                        <div class="input-group">
+                            <input type="password" placeholder="重新确认密码" class="form-control" v-model="password2"/>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                        </div>
+                        <div style="color: #ff7878" v-model="text5">{{text5}}</div>
+                    </div>
+
+                    <div class="footer text-center">
+                        <!--注意使用b-button,否则vue不能操作bootstrap-->
+                        <b-button class="btn btn-primary btn-round btn-lg btn-block waves-effect waves-light" @click="submitForm">SIGN UP</b-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="http://thememakker.com/contact/" target="_blank">Contact Us</a></li>
+                    <li><a href="http://thememakker.com/about/" target="_blank">About Us</a></li>
+                    <li><a href="javascript:void(0);">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>,
+                <span>Designed by <a href="http://thememakker.com/" target="_blank">王小希</a></span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- Jquery Core Js -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+<script th:src="@{/doc/js/stu.js}"></script>
+
+</body>
+</html>

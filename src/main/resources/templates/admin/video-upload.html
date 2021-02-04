@@ -1,0 +1,410 @@
+﻿<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- Dropzone Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/dropzone/dropzone.css}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/tagsinput.css}">
+
+    <!--注意引入axios的cdn源-->
+    <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <style>
+        #upload_Img {
+            padding: 0px;
+            font-size: 14px;
+        }
+        #header_Padding{
+            padding: 10px;
+        }
+        .modal-backdrop.show {
+            opacity: .0;
+        }
+
+        .modal-backdrop{
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body class="theme-purple ls-toggle-menu">
+
+    <!-- Page Loader -->
+    <div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+
+    <!-- Top Bar -->
+    <div th:replace="/basic/topBar :: topBar"></div>
+
+    <!-- Left Sidebar -->
+    <div th:replace="/basic/leftBar :: leftBar"></div>
+
+    <!-- Right Sidebar -->
+    <div th:replace="/basic/rightBar :: rightBar"></div>
+
+
+    <section id="app" class="content">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>&nbsp;</h2>
+                    <h2>视频上传</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="container-fluid">
+
+                <div id="upload_Padding" class="row clearfix">
+                    <div class="col-lg-9 col-md-9 col-sm-9">
+
+                        <div id="header_Padding" class="header">
+                            <h2><strong>基本信息</strong></h2>
+
+                            <!--视频标题-->
+                            <div class="header">
+                                <h2><strong>标题</strong></h2>
+                                <input v-model="title" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+
+                            <!--视频作者-->
+                            <div class="header">
+                                <h2><strong>作者</strong></h2>
+                                <input v-model="author" name="author" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+
+                            <!--视频连接-->
+                            <div class="header">
+                                <h2><strong>视频链接</strong></h2>
+                                <input v-model="href" name="href" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+
+                            <!--标签-->
+                            <div class="header">
+                                <h2><strong>视频标签</strong></h2>
+                                <div class="col-lg-10 col-md-10 col-sm-10">
+
+                                    <!-- 添加已有标签 -->
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="zmdi zmdi-label"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right pullDown">
+                                                <!--遍历标签-->
+                                                <div v-for="tag in tags">
+                                                    <b-dropdown-item @click="tagSelect(tag.id,tag.tagName)">{{tag.tagName}}</b-dropdown-item>
+                                                </div>
+
+                                                <b-dropdown-item data-toggle="modal" data-target="#myModal" @click="openModal">创建标签</b-dropdown-item>
+                                            </ul>
+
+                                            <div v-for="(tagName,index) in tagNames">
+                                                <a href="#" class="btn btn-raised btn-primary btn-simple btn-round" @click="del(index)">
+                                                    {{tagName}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--创建标签-->
+                                    <div v-if="show" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">×
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel">
+                                                        创建标签
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="text" autofocus class="form-control" v-model="label" placeholder="请输入标签名">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">关闭
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary" @click="createLabel">
+                                                        更新
+                                                    </button>
+                                                    <div style="color:#ff7878;" v-text="msg"></div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <strong style="color: #0d97ff">参考链接：</strong>
+                                <table class="table table-striped m-b-0">
+                                    <tbody>
+                                    <tr>
+                                        <td><a  href="https://space.bilibili.com/203230674/" style="color: red">Psych2go中文站</a></td>
+                                        <td class="font-medium"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://space.bilibili.com/14005706/" style="color:orange">ONE字幕组</a></td>
+                                        <td class="font-medium"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://space.bilibili.com/8188433/" style="color: #ff00dc">TED君学演讲</a></td>
+                                        <td class="font-medium"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a  href="https://space.bilibili.com/14108265/" style="color:#6000cb">杨本尼</a></td>
+                                        <td class="font-medium"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://space.bilibili.com/311117856/" style="color:black">人人短视频精选</a></td>
+                                        <td class="font-medium"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <hr>
+                <hr>
+
+                <!-- 提交，删除 -->
+                <div id="upload_Padding" class="row clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="card">
+                            <div class="header">
+                                <button type="submit" href="#" class="btn btn-raised btn-simple btn-round" value="submit" @click="submitFile">立即上传</button>
+                                &nbsp;
+                                <button type="submit" href="#" class="btn btn-raised btn-simple btn-round" value="delete">放弃上传</button>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+    <script th:src="@{/assets/plugins/dropzone/dropzone.js}"></script> <!-- Dropzone Plugin Js -->
+
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script><!-- Custom Js -->
+
+    <script th:inline="javascript">
+
+        var app = new Vue({
+            el:"#app",
+            data:{
+                title:'',
+                author:'',
+                href:'',
+                tagSelected:[],  //选中的标签的id
+
+                //判断href链接是否有效
+                isVideoHref:false,
+
+                //注意vue中可以写thymeleaf的插值表达式
+                question_id:"",
+                student_id:"",
+                label:"",
+                tags:[],
+                msg:"",
+                msg1:"",
+                show:true,
+                url:"",
+
+                //选中的标签的名字
+                tagNames:[],
+            },
+
+            //得到tags信息
+            created : async function () {
+                _this = this;
+                await axios.get("/mheal/question/getTags").then(res => {
+                    _this.tags = res.data;
+                    console.log(_this.tags);
+                })
+            },
+
+            methods:{
+
+                //提交回答，并向后台发送问题id和医生id
+                submitFile: async function () {
+
+                    this.href = this.href + "&high_quality=1";
+                    //player.bilibili.com/player.html?aid=93733260&bvid=BV1KE411x7oc&cid=160036375&page=1
+
+                    //表单不为空，才可以提交
+                    if(!$.isEmptyObject(this.title) && !$.isEmptyObject(this.tagSelected)
+                        && !$.isEmptyObject(this.href) && !$.isEmptyObject(this.author)){
+
+//                        try{
+//                            _this = this;
+//                            axios.defaults.timeout =  2000;
+////                            alert(_this.href)
+//                            await axios.get(_this.href).then(res => {
+//                                _this.isVideoHref = res.data;
+//                            })
+//                        }catch (err){
+//                            console.log(err)
+//                        }
+
+//                        通过后台判断该网址是否可以访问
+                        try{
+                            _this = this;
+                            axios.defaults.timeout =  2000;
+                            await axios.get("/mheal/resource/UrlTest?url=" + this.href).then(res => {
+                                _this.isVideoHref = res.data;
+                            })
+                        }catch (err){
+                            console.log(err)
+                        }
+
+                        if(this.isVideoHref){
+                            let formdata = new FormData();
+                            formdata.append("href",this.href);
+                            formdata.append("author",this.author);
+                            formdata.append("title",this.title);
+                            formdata.append("tags",this.tagSelected);
+
+                            let config = {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }
+
+                            //异步提交表单，即使有返回页面，也不会实现页面跳转
+                            try{
+                                await axios.post('/mheal/admin/postVideo',formdata,config).then(res => {
+                                    alert("提交回答")
+                                })
+                            }catch (err){
+                                console.log(err)
+                            }
+
+                            location.href="/mheal/admin/toResourceManager";
+                        }else{
+                            alert("网址不可访问，请正确填写")
+                            this.href = "";
+                        }
+                    }else{
+                        alert("输入不能为空")
+                    }
+                },
+
+                //选定标签
+                tagSelect:function (t_id,tagName) {
+
+                    let flag = 1;
+                    //如果tagName存在，则不加入tagNames
+                    for(var i = 0; i < this.tagNames.length; ++i){
+                        if(this.tagNames[i] === tagName){
+                            flag = 0;
+                        }
+                    }
+
+                    if(flag == 1){
+                        this.tagSelected =  this.tagSelected.concat(t_id) ;
+                        this.tagNames = this.tagNames.concat(tagName);
+                    }
+//                    this.shows[index] = this.shows.concat(true);
+//                    alert(this.shows[index])
+//                    alert(this.tagNames)
+                },
+
+                del:function(index){
+                    this.tagNames.splice(index,1);
+                    this.tagSelected.splice(index,1);
+                },
+
+
+                //打开modal框
+                openModal:function () {
+                    this.show = true;
+                },
+
+                //创建label
+                createLabel: async function (){
+
+                    if(!$.isEmptyObject(this.label)){
+
+                        //检测该label名是否存在
+                        let temp  = "";
+                        try{
+                            await axios.get('/mheal/question/getTagByName?tagName=' + _this.label).then(res=>{
+                                temp = res;
+                            })
+                        }catch(err){
+                            console.log(err);
+                        }
+
+                        if($.isEmptyObject(temp)){
+                            alert(temp);
+                            let formdata = new FormData();
+                            formdata.append("tagName",this.label);
+
+                            let config = {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }
+                            try{
+                                axios.post('/mheal/question/submitTag',formdata,config).then(res=>{
+                                        alert("提交标签");
+                                    }
+                                )
+                            }catch (err){
+                                console.log(err);
+                            }
+                            this.show = false;
+                            location.href="/mheal/admin/toVideoUpload";
+                        }else{
+                            this.msg = "标签名已存在"
+                        }
+                    }else{
+                        this.msg = "标签名不能为空"
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

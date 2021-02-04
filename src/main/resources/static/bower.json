@@ -1,0 +1,19 @@
+{
+  "name": "Oreo",
+  "version": "1.0.0",
+  "description": "Oreo Bootstrap 4 Admin Dashboard",
+  "main": "assets/bundles/mainscripts.bundle.js",
+  "authors": [
+    "Thememakker"
+  ],
+  "license": "",
+  "homepage": "",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,70 @@
+﻿
+
+.authentication{
+    .n_logo{
+        display: inline-block;        
+    }
+
+    .navbar{
+        width: 100%;
+        background: transparent !important;
+        a{
+            &:not(.btn){
+                font-size: 14px !important;
+                text-transform: none !important;
+            }
+        }
+    }
+
+    .navbar-nav{
+        li{
+            a{  
+                i{
+                    vertical-align: middle;
+                }
+            }
+            .btn{
+                line-height: 20px !important;
+            }
+        }
+    }
+
+    .checkbox{
+        label{
+            font-size: 13px;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .authentication{
+    
+        .navbar-collapse{        
+            float: right;
+    
+            .navbar-nav{
+                display: inline-block;
+                li{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+      
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+   
+    
+}
+
+@media only screen and (max-width: 767px) {
+    .authentication {
+        .footer{
+            nav{
+                display: block;
+                float: none;
+            }
+        }
+    }
+}

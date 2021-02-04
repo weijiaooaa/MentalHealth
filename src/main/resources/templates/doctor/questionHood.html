@@ -1,0 +1,285 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <!-- Favicon-->
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Font Icon -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/inbox.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <style>
+        #problem {
+            font-size: 15px;
+            color: #0d97ff;
+        }
+
+        #answer {
+            padding: 0px;
+        }
+
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+
+    </style>
+</head>
+
+<body class="theme-blue ls-toggle-menu">
+    <!-- Page Loader -->
+    <div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+
+    <!-- Top Bar -->
+    <div th:replace="/basic/topBar :: topBar"></div>
+
+    <!-- Left Sidebar -->
+    <div th:replace="/basic/leftBar :: leftBar"></div>
+
+    <!-- Right Sidebar -->
+    <div th:replace="/basic/rightBar :: rightBar"></div>
+    <section class="content inbox">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>在线问答</h2>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div id="app" class="container-fluid">
+                <div class="header row clearfix">
+                    <h2><strong>日期</strong></h2>
+                    <!-- row1 -->
+                    <div id="answer" class="body col-lg-12 col-md-12 col-sm-12">
+                        <!-- 问 -->
+                        <ul class="mail_list list-group list-unstyled">
+                            <li class="list-group-item" v-for="question in questions">
+
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <small style="color: #0d97ff">{{question.updateTime}}</small>
+                                        <div class="thumb hidden-sm-down m-r-20"><img
+                                                th:src="@{/assets/images/xs/avatar1.jpg}" class="rounded-circle" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.username}}</a>
+
+                                            <span v-for="questionAndTag in question.questionAndTags" class="badge bg-blue">
+                                                {{questionAndTag.tag.tagName}}
+                                            </span>
+
+                                            <a href="#" style="color:#3eacff;" class="pull-right" @click="toAnsPage(question)"><small class="float-right">点击回答</small></a>
+                                        </div>
+                                        <p class="msg">{{question.content}}</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="card m-t-5">
+                    <!--报错-->
+                    <!--<div id="app1" class="body">-->
+                    <div class="body">
+                        <ul class="pagination pagination-primary m-b-0">
+                            <li v-if="prePage" class="page-item"><a class="page-link" @click="prePage">Previous</a></li>
+
+                            <!--注意三元表达式和数组对象语法的区别-->
+                            <li v-bind:class="[{active:isActive == count},pageItem]" v-for="count in pageCount">
+                                <a class="page-link" @click="pageSelect(count)" v-text="count"></a>
+                            </li>
+
+                            <li v-if="nextPage" class="page-item"><a class="page-link" @click="nextPage">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+    <script th:src="@{/assets/plugins/ckeditor/ckeditor.js}"></script> <!-- Ckeditor -->
+
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script><!-- Custom Js -->
+    <script th:src="@{/assets/js/pages/forms/editors.js}"></script>
+
+    <script th:inline="javascript">
+
+        var app = new Vue({
+
+            //注意el只能对一个顶层元素以及其后代元素有效
+            el:"#app",
+            data: {
+                pageCount:{},
+                questions:[],
+
+                isActive:1,
+                pageItem: 'page-item',
+
+                prePage: false,
+                nextPage: false
+            },
+            methods:{
+
+                //返回question.id到toAnsPage控制器
+                toAnsPage : function (questionParam) {
+                    location.href="/mheal/doctor/toAnsPage?id=" + questionParam.id;
+                },
+
+                pageSelect : async function (pageNo) {
+
+                    //如果页面数为1，不显示next，pre
+                    if(this.pageCount == 1){
+                        this.nextPage= false;
+                        this.prePage = false;
+                    }
+                    //如果页面数不为1，分情况讨论next，pre显示情况
+                    else{
+                        if(pageNo == this.pageCount){
+                            this.prePage = true;
+                            this.nextPage= false;
+                        }
+                        else if(pageNo == 1){
+                            this.prePage = false;
+                            this.nextPage= true;
+                        }else{
+                            this.prePage = true;
+                            this.nextPage= true;
+                        }
+                    }
+
+
+//                    alert(pageNo)
+                    _this = this;
+                    try{
+                        await axios.get("/mheal/question/pageData?pageNo=" + pageNo)
+                        //lambda表达式如何写
+                            .then(res => {
+                                _this.questions = res.data.result;
+                            })
+                    }catch (err){
+                        console.log(err)
+                    }
+
+                    this.isActive = pageNo;
+                },
+
+                //下一页
+                nextPage : async function(){
+
+                    if(this.isActive + 1 <= this.pageCount){
+
+                        if(this.isActive + 1 == this.pageCount){
+                            this.nextPage = false;
+                        }
+
+                        this.isActive = this.isActive + 1;
+                        _this = this;
+                        try{
+                            await axios.get("/mheal/question/pageData?pageNo=" + this.isActive )
+                            //lambda表达式如何写
+                                .then(res => {
+                                    _this.questions = res.data.result;
+                                })
+                        }catch (err){
+                            console.log(err)
+                        }
+                    }
+                },
+
+                // 上一页
+                prePage: async function(){
+
+                    if(this.isActive - 1 >= 0){
+
+                        if(this.isActive - 1 == 0){
+                            this.prePage = false;
+                        }
+
+                        this.isActive = this.isActive - 1;
+                        _this = this;
+                        try{
+                            await axios.get("/mheal/question/pageData?pageNo=" + this.isActive )
+                            //lambda表达式如何写
+                                .then(res => {
+                                    _this.questions = res.data.result;
+                                })
+                        }catch (err){
+                            console.log(err)
+                        }
+                    }
+                }
+            },
+
+            //created同步方法如何写
+            created: async function(){
+                _this = this;
+                try{
+                    await axios.get("/mheal/question/pageData?pageNo=1")
+                        //lambda表达式如何写
+                        .then(res => {
+                            _this.pageCount = res.data.pageCount;
+                            _this.questions = res.data.result
+                        })
+                }catch (err){
+                    console.log(err)
+                }
+                console.log(this.questions)
+
+                this.prePage = false;
+                if(this.pageCount == 1){
+                    this.nextPage = false;
+                }else{
+                    this.nextPage = true;
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

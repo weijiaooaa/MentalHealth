@@ -1,0 +1,98 @@
+﻿$white: #ffffff;
+$blue-grey-700: #455a64 !default;
+$blue-grey-900: #263238 !default;
+$orange-300: #fec734 !default;
+$orange-400: #ffc323 !default;
+$orange-500: #ff9f00 !default;
+$orange-600: #fb8c00 !default;
+$orange-700: #f57c00 !default;
+
+
+
+.theme-orange .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-orange .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $orange-400;
+}
+
+.theme-orange{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $orange-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $orange-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $orange-400;
+        }
+        &.btn-simple{
+            border-color: $orange-500;
+            color: $orange-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $orange-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$orange-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$orange-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$orange-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $orange-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $orange-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $orange-500;
+                }
+                strong{
+                    color: $orange-500;
+                }
+            }
+        }
+    }
+}

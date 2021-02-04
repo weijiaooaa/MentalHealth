@@ -1,0 +1,97 @@
+﻿$white: #ffffff;
+$blue-grey-900: #263238 !default;
+$blush-300: #ffc2a0 !default;
+$blush-400: #ffbba4 !default;
+$blush-500: #ffafbd !default;
+$blush-900: #ff6681 !default;
+
+
+.theme-blush .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-blush .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $blush-400;
+}
+
+.theme-blush{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $blush-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $blush-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $blush-400;
+        }
+        &.btn-simple{
+            border-color: $blush-500;
+            color: $blush-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $blush-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$blush-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$blush-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$blush-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $blush-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $blush-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $blush-500;
+                }
+                strong{
+                    color: $blush-500;
+                }
+            }
+        }
+    }
+}
+
+

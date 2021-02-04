@@ -1,0 +1,143 @@
+﻿.panel-group {
+    @each $key, $val in $colors {
+        .panel-col-#{$key} {
+            border: 1px solid $val;
+
+            .panel-title {
+                background-color: $val !important;
+                color: #fff;
+                @extend .margin-0;
+            }
+
+            .panel-body {
+                border-top-color: transparent !important;
+            }
+        }
+    }
+
+    .panel {
+        @include border-radius(0);
+        margin-bottom:1px;
+
+        .panel-title {
+            font-weight: normal;
+            font-size: 16px;
+            @extend .margin-0;
+
+            a{
+                color: inherit;
+            }
+            .material-icons {
+                float: left;
+                line-height: 16px;
+                margin-right: 8px;
+            }
+        }
+
+        .panel-heading {
+            padding: 0;
+            @include border-radius(0);
+
+            a {
+                display: block;
+                padding: 10px 15px;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .panel-body {
+            //color: #555;
+            padding: 20px;
+            //background: #fff;
+        }
+    }
+
+    .panel-primary {
+       // border: 1px solid #1f91f3;
+
+        .panel-title {
+            background-color: $grey-100;
+            border-bottom: 1px solid $grey-200;
+			color: $grey-600;
+            font-weight: 400;
+            font-size: 16px;
+            @extend .margin-0;
+        }
+    }
+
+    .panel-success {
+        //border: 1px solid #2b982b;
+
+        .panel-title {
+            background-color: #2b982b;
+            color: #fff;
+        }
+    }
+
+    .panel-warning {
+       // border: 1px solid #ff9600;
+
+        .panel-title {
+            background-color: #ff9600;
+            color: #fff;
+        }
+    }
+
+    .panel-danger {
+       // border: 1px solid #fb483a;
+
+        .panel-title {
+            background-color: #fb483a;
+            color: #fff;
+        }
+    }
+}
+
+.full-body {
+    @each $key, $val in $colors {
+        .panel-col-#{$key} {
+            .panel-body {
+                border-top-color: #fff !important;
+                background-color: $val;
+                color: #fff;
+            }
+        }
+    }
+
+    .panel-primary {
+        .panel-body {
+            border-top-color: #fff !important;
+            background-color: #1f91f3;
+            color: #fff;
+        }
+    }
+
+    .panel-success {
+        .panel-body {
+            border-top-color: #fff !important;
+            background-color: #2b982b;
+            color: #fff;
+        }
+    }
+
+    .panel-warning {
+        .panel-body {
+            border-top-color: #fff !important;
+            background-color: #ff9600;
+            color: #fff;
+        }
+    }
+
+    .panel-danger {
+        .panel-body {
+            border-top-color: #fff !important;
+            background-color: #fb483a;
+            color: #fff;
+        }
+    }
+}

@@ -1,0 +1,351 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- JQuery DataTable Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+</head>
+
+<body class="theme-purple">
+    <!-- Page Loader -->
+    <div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+
+    <!-- Top Bar -->
+    <div th:replace="/basic/topBar :: topBar"></div>
+
+    <!-- Left Sidebar -->
+    <div th:replace="/basic/leftBar :: leftBar"></div>
+
+    <!-- Right Sidebar -->
+    <div th:replace="/basic/rightBar :: rightBar"></div>
+    
+     <!--Main Content-->
+    <section class="content">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <!-- <h2>Jquery DataTables
+                <small>Welcome to MHeal</small>
+                </h2> -->
+                    <h2>&nbsp;</h2>
+                    <h2>用户个人信息管理</h2>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <!-- <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a th:href="index.html}"><i class="zmdi zmdi-home"></i> MHeal</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Tables</a></li>
+                    <li class="breadcrumb-item active">Jquery DataTables</li>
+                </ul> -->
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>学生信息</strong></h2>
+                            <!-- <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul> -->
+                        </div>
+                        <div class="body">
+                             <div class="table-responsive">
+                                <table>
+                                    class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>学生号</th>
+                                            <th>用户名</th>
+                                            <th>性别</th>
+                                            <th>年龄</th>
+                                            <th>电话</th>
+                                            <th>邮箱</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Office</th>
+                                        <th>Age</th>
+                                        <th>Start date</th>
+                                        <th>Salary</th>
+                                    </tr>
+                                </tfoot> -->
+                                    <tbody>
+                                        <tr>
+                                            <td>1614010801</td>
+                                            <td>小红</td>
+                                            <td>女</td>
+                                            <td>21</td>
+                                            <td>11111111</td>
+                                            <td>11111111@qq.com</td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1614010802</td>
+                                            <td>小黑</td>
+                                            <td>男</td>
+                                            <td>22</td>
+                                            <td>11111112</td>
+                                            <td>11111112@qq.com</td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1614010803</td>
+                                            <td>小白</td>
+                                            <td>女</td>
+                                            <td>22</td>
+                                            <td>11111113</td>
+                                            <td>11111113@qq.com</td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1614010804</td>
+                                            <td>小罗</td>
+                                            <td>男</td>
+                                            <td>23</td>
+                                            <td>11111114</td>
+                                            <td>11111114@qq.com</td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #END# Basic Examples -->
+            <!-- Exportable Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>医生信息</strong></h2>
+                            <!-- <ul class="header-dropdown">
+                           <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul> -->
+                        </div>
+                        <div class="body">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>工号</th>
+                                        <th>用户名</th>
+                                        <th>性别</th>
+                                        <th>年龄</th>
+                                        <th>电话</th>
+                                        <th>邮箱</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <!-- <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot> -->
+                                <tbody>
+                                    <tr>
+                                        <td>1617010101</td>
+                                        <td>小铭</td>
+                                        <td>男</td>
+                                        <td>43</td>
+                                        <td>11111115</td>
+                                        <td>11111115@qq.com</td>
+                                        <td>
+                                            <button
+                                                class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1614010804</td>
+                                        <td>小粉</td>
+                                        <td>女</td>
+                                        <td>33</td>
+                                        <td>11111116</td>
+                                        <td>11111116@qq.com</td>
+                                        <td>
+                                            <button
+                                                class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>管理员信息</strong></h2>
+                            <!-- <ul class="header-dropdown">
+                           <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp float-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul> -->
+                        </div>
+                        <div class="body">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>工号</th>
+                                        <th>用户名</th>
+                                        <th>性别</th>
+                                        <th>年龄</th>
+                                        <th>电话</th>
+                                        <th>邮箱</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <!-- <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot> -->
+                                <tbody>
+                                    <tr>
+                                        <td>1617010101</td>
+                                        <td>小铭</td>
+                                        <td>男</td>
+                                        <td>43</td>
+                                        <td>11111115</td>
+                                        <td>11111115@qq.com</td>
+                                        <td>
+                                            <button
+                                                class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1614010804</td>
+                                        <td>小粉</td>
+                                        <td>女</td>
+                                        <td>33</td>
+                                        <td>11111116</td>
+                                        <td>11111116@qq.com</td>
+                                        <td>
+                                            <button
+                                                class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #END# Exportable Table -->
+        </div>
+    </section>
+
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script th:src="@{/assets/bundles/datatablescripts.bundle.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.print.min.js}"></script>
+
+    <!-- Custom Js -->
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script>
+    <!-- <script th:src="assets/js/pages/tables/jquery-datatable.js}"></script> -->
+</body>
+
+</html>

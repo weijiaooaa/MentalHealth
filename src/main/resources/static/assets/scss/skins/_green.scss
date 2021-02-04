@@ -1,0 +1,95 @@
+﻿$white: #ffffff;
+$blue-grey-900: #263238 !default;
+$green-300: #8de4af !default;
+$green-400: #5cdb94 !default;
+$green-500: #50d38a !default;
+$green-600: #43a047 !default;
+$green-900: #1b5e20 !default;
+
+.theme-green .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-green .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $green-400;
+}
+
+.theme-green{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $green-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $green-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $green-400;
+        }
+        &.btn-simple{
+            border-color: $green-500;
+            color: $green-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $green-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$green-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$green-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$green-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $green-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $green-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $green-500;
+                }
+                strong{
+                    color: $green-500;
+                }
+            }
+        }
+    }
+}

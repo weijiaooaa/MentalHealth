@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+    <title>MHeal</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" href="/assets/css/main.css">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}" href="/assets/css/color_skins.css">
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+
+</head>
+<body>
+<!-- Page Loader -->
+<div th:fragment="pageLoader" class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img class="zmdi-hc-spin" th:src="@{/assets/images/logo.svg}" src="assets/images/logo.svg" width="48" height="48" alt="MHeal"></div>
+        <p th:if="${success} == null">Please wait...</p>
+        <p th:if="${success} != null">提交成功</p>
+    </div>
+</div>
+
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}" src="/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="/assets/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/morrisscripts.bundle.js}" src="/assets/bundles/morrisscripts.bundle.js"></script><!-- Morris Plugin Js -->
+<script th:src="@{/assets/bundles/jvectormap.bundle.js}" src="/assets/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+<script th:src="@{/assets/bundles/knob.bundle.js}" src="/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="/assets/bundles/mainscripts.bundle.js"></script>
+<script th:src="@{/assets/js/pages/index.js}" src="/assets/js/pages/index.js"></script>
+</body>
+</html>

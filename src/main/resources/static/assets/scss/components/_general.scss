@@ -1,0 +1,141 @@
+﻿body {
+    background-color: #f4f6f9;
+    @include transition(all .5s);
+    font-family: 'Montserrat', Arial, Tahoma, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+
+button,
+input,
+select,
+a {
+    outline: none !important;    
+}
+a:hover{text-decoration: none;}
+.no-animate {
+    -o-transition-property: none !important;
+    -moz-transition-property: none !important;
+    -ms-transition-property: none !important;
+    -webkit-transition-property: none !important;
+    transition-property: none !important;
+    -o-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    -ms-animation: none !important;
+    animation: none !important;
+}
+
+section {
+    &.content {
+        margin: 60px 0px 15px 250px;
+        @include transition(.5s);
+        z-index: 9;
+        position: relative;
+        @include border-radius(3px);
+        @extend .p-l-10;
+        @extend .p-r-10;
+
+        &:before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+        }
+
+    }
+    small{
+        font-size: 90%;
+    }
+}
+
+.g-bg-cyan {
+    background: linear-gradient(60deg, #136a8a, #00cfd1);
+    color: $white !important;
+}
+
+.g-bg-blue {
+    background: linear-gradient(60deg, #00adef, #0094da);
+    color: $white !important;
+}
+
+.g-bg-gy {
+    background: linear-gradient(60deg, #94d23b, #fcb711);
+    color: $white !important;
+}
+
+.g-bg-cgreen {
+    background: linear-gradient(60deg, #16c99f, #12a682);
+    color: $white !important;
+}
+
+.g-bg-blush2 {
+    background: linear-gradient(325deg, #dd5e89, #f7bb97);
+    color: $white !important;
+}
+
+.g-bg-soundcloud {
+    background: linear-gradient(60deg, #f83600, #fe8c00);
+    color: $white !important;
+}
+
+.g-bg-soundcloud2 {
+    background: linear-gradient( 135deg, rgba(243, 71, 75, .9) 0%, rgba(255, 152, 0, .9) 100%);
+    color: $white !important;
+}
+
+.l-green { background: linear-gradient(45deg, #9ce89d, #cdfa7e) !important;}
+.l-pink {background: linear-gradient(45deg, #ffc0cb, #fbc1cb) !important;}
+.l-turquoise {background: linear-gradient(45deg, #00ced1, #08e5e8) !important;color: $white !important;}
+.l-cyan {background: linear-gradient(45deg, #49cdd0, #00bcd4) !important;color: $white !important;}
+.l-khaki {background: linear-gradient(45deg, #f0e68c, #fdf181) !important;}
+.l-coral {background: linear-gradient(45deg, #f08080, #f58787) !important;color: $white !important;}
+.l-salmon {background: linear-gradient(45deg, #ec74a1, #fbc7c0) !important;color: $white !important;}
+.l-blue {background: linear-gradient(45deg, #72c2ff, #86f0ff) !important;color: $white !important;}
+.l-seagreen {background: linear-gradient(45deg, #8ed8ec, #85f7b5) !important;color: $white !important;}
+.l-amber {background: linear-gradient(45deg, #fda582, #f7cf68) !important;color: $white !important;}
+.l-blush {background: linear-gradient(45deg, #dd5e89, #f7bb97) !important;color: $white !important;}
+.l-parpl {background: linear-gradient(45deg, #a890d3, #edbae7) !important;color: $white !important;}
+.l-slategray {background: linear-gradient(45deg, #708090, #7c8ea0) !important;color: $white !important;}
+
+.xl-pink{background: #f9edee !important;}
+.xl-turquoise{background: #bdf3f5 !important;}
+.xl-khaki{background: #f9f1d8 !important;}
+.xl-parpl{background: #efebf4 !important;}
+.xl-salmon{background: #ffd4c3 !important;}
+.xl-blue{background: #e0eff5 !important;}
+.xl-seagreen{background: #ebf2e8 !important;}
+.xl-slategray{background: #eceeef !important;}
+
+.btn-white { background-color: $white; color: $black; }
+
+.inlineblock {display: inline-block;}
+.displayblock {display: block;}
+
+.fullscreen{    
+    &.is-fullscreen{
+        .zmdi-fullscreen{
+            &::before{
+                content: '\f16c';
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    section {
+        &.content {
+            margin-left: 0 !important;
+            margin-right: 0px;
+            padding: 0;
+        }
+    }
+}
