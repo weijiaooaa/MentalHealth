@@ -222,8 +222,8 @@
         </li>
         <li class="float-right">
             <a href="javascript:void(0);" class="fullscreen hidden-sm-down" data-provide="fullscreen" data-close="true"><i class="zmdi zmdi-fullscreen"></i></a>
-            <a th:if="${session.student != null}" th:href="@{/stu/return}" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
-            <a th:if="${session.doctor != null}" th:href="@{/doctor/return}" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+            <a th:if="${session.student != null}" th:href="@{/stu/return(id=${session.student.id})}" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+            <a th:if="${session.doctor != null}" th:href="@{/doctor/return(id=${session.doctor.id})}" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
             <a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a>
         </li>
     </ul>

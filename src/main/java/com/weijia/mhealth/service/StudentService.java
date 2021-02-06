@@ -14,4 +14,6 @@ public interface StudentService {
     Student stuChecked(Integer id, String password);
 
     Student getStuById(Integer id);
+
+    Boolean updateStudentState(Integer id);
 }

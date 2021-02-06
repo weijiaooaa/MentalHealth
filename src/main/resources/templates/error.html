@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mantel Health</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body style="background-color: #efefef">
+<div th:replace="navigation :: head"></div>
+<div class="jumbotron" style="margin: 50px">
+    <h1>出错了！！！</h1>
+    <p th:text="${message}">服务太热啦，要不然等会儿再来试试~</p>
+    <p><a class="btn btn-primary btn-lg" th:href="@{/}" role="button">回到主页</a></p>
+</div>
+<div th:insert="navigation :: foot"></div>
+</body>
+</html>

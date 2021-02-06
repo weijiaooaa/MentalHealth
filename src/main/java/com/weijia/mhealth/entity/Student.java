@@ -21,6 +21,7 @@ public class Student {
     private Integer age;
     private String tel;
     private String email;
+    private Boolean state;
     private Long gmtCreate;
     private Long gmtModified;
 }

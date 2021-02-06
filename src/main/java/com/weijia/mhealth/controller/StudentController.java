@@ -5,12 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.weijia.mhealth.entity.Doctor;
 import com.weijia.mhealth.entity.Login;
 import com.weijia.mhealth.entity.Student;
+import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.LoginService;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
 import com.weijia.mhealth.service.StudentService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @Autowired
     private UserRedisService userRedisService;
@@ -134,25 +138,42 @@ public class StudentController {
 
         //个人信息注册到redis中
         try{
-            if(!userRedisService.isStuExist(student.getId())){
-                userRedisService.insertStu(student.getId());
+            if(!userRedisService.isStuExist(student)){
+                userRedisService.insertStu(student);
             }
         }catch (Exception e){
             logger.error("个人信息存入Redis失败");
         }
 
-
-        //获取在线医生
+        //获取在线医生,先在Redis中去拿，如果找不到，再去数据库拿
         List<Doctor> doctorsOnline = userRedisService.getDoctorsOnline();
-        logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
-        request.setAttribute("doctorsOnline",doctorsOnline);
+        if (doctorsOnline != null){
+            logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
+            request.setAttribute("doctorsOnline",doctorsOnline);
+        }else{
+            logger.info("Redis查无结果，即将查询数据库");
+            doctorService.getDoctorState(true);
+        }
 
         //获取离线医生
-        List<Doctor> doctorsOffline = userRedisService.getDoctorsOffline();
+        List<Doctor> doctorsOffline = doctorService.getDoctorState(false);
         logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
         request.setAttribute("doctorsOffline",doctorsOffline);
-
         return "/stu/home";
+    }
+
+    @GetMapping(value = "/stu/return")
+    public String returnPage(Student student,HttpServletRequest request){
+        Integer id = student.getId();
+        Boolean state = studentService.updateStudentState(id);
+        if (state){
+            request.getSession().setAttribute("student",null);
+            logger.info("学生注销成功！");
+            return "redirect:/stu";
+        }else{
+            logger.error("修改学生状态失败！");
+            return "/error";
+        }
     }
 
 }

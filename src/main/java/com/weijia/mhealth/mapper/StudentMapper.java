@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface StudentMapper {
 
-    @Insert("insert into student(id,name,gender,age,tel,email,password,gmt_create,gmt_modified) values (#{id},#{name}, #{gender}, #{age},#{tel},#{email},#{password},#{gmtCreate},#{gmtModified})")
+    @Insert("insert into student(id,name,gender,age,tel,email,password,state,gmt_create,gmt_modified) values (#{id},#{name}, #{gender}, #{age},#{tel},#{email},#{password},#{state},#{gmtCreate},#{gmtModified})")
     void insertStu(Student student);
 
     @Select("select * from student where id = #{id}")
@@ -20,4 +20,5 @@ public interface StudentMapper {
     @Select("select * from student where id = #{id} and password = #{password}")
     Student selectStu(Integer id, String password);
 
+    Integer updateStudentState(Integer id);
 }

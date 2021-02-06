@@ -7,8 +7,11 @@ import com.weijia.mhealth.entity.Student;
 import com.weijia.mhealth.entity.UserInfo;
 import com.weijia.mhealth.mapper.LoginMapper;
 import com.weijia.mhealth.mapper.StudentMapper;
+import com.weijia.mhealth.service.RedisService.UserRedisService;
 import com.weijia.mhealth.service.StudentService;
 import com.weijia.mhealth.utils.Md5Util;
+import com.weijia.mhealth.utils.exception.CMSException;
+import com.weijia.mhealth.utils.exception.ResultCodeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +26,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StudentServiceImp implements StudentService {
 
-    private final static Logger logger = LoggerFactory.getLogger(StudentController.class);
+    private final static Logger logger = LoggerFactory.getLogger(StudentServiceImp.class);
 
     @Autowired
     StudentMapper studentMapper;
 
     @Autowired
     LoginMapper loginMapper;
+
+    @Autowired
+    UserRedisService userRedisService;
 
     @Transactional
     @Override
@@ -66,5 +72,22 @@ public class StudentServiceImp implements StudentService {
         Student student = studentMapper.selectStuById(id);
         logger.info("select student by id is ->{}",JSONUtils.toJSONString(student));
         return student;
+    }
+
+    @Override
+    public Boolean updateStudentState(Integer id) {
+        //先删除Redis中的在线状态
+        try{
+            userRedisService.removeStudentByValue(id);
+        }catch (Exception e){
+            throw new CMSException(ResultCodeEnum.UPDATE_STU_STATE_IN_REDIS);
+        }
+
+        //再修改数据库中的状态为离线
+        Integer res = studentMapper.updateStudentState(id);
+        if (res == 0)
+            throw new CMSException(ResultCodeEnum.UPDATE_STU_STATE_IN_DB);
+        else
+            return true;
     }
 }
