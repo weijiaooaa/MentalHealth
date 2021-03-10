@@ -36,4 +36,9 @@ public class LoginServiceImp implements LoginService {
         login.setPassword(Md5Util.StringInMd5(student.getPassword()));
         return login;
     }
+
+    @Override
+    public String lkUseridByUsername(String username) {
+        return null;
+    }
 }

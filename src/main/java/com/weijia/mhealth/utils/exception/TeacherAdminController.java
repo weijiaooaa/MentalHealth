@@ -1,7 +1,8 @@
 package com.weijia.mhealth.utils.exception;
 
-import com.wangxiaoxi.mheal.service.ChatFriendsService;
-import com.wangxiaoxi.mheal.service.LoginService;
+
+import com.weijia.mhealth.service.ChatFriendsService;
+import com.weijia.mhealth.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

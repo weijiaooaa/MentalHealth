@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: Oreo Bootstrap4 Admin ::</title>
+    <title>学生注册</title>
     <!-- Favicon-->
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     <!-- Custom Css -->
@@ -44,7 +44,7 @@
 </nav>
 <!-- End Navbar -->
 <div class="page-header">
-    <div class="page-header-image" style="background-image:url(/mheal/assets/images/login.jpg)"></div>
+    <div class="page-header-image" style="background-image:url(/mhealth/assets/images/login.jpg)"></div>
     <div class="container">
         <div class="col-md-12 content-center">
             <div id="sign_up" class="card-plain">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="content">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入学生号" name="id" v-model="id">
+                            <input type="text" class="form-control" placeholder="请输入学生号" name="stuNumber" v-model="stuNumber">
                             <span class="input-group-addon">
                                 <i class="zmdi zmdi-account-circle"></i>
                             </span>
@@ -120,15 +120,15 @@
                 <script>
                     document.write(new Date().getFullYear())
                 </script>,
-                <span>Designed by <a href="http://thememakker.com/" target="_blank">王小希</a></span>
+                <span><a href="#" target="_blank">网工1703魏佳</a>&nbsp设计</span>
             </div>
         </div>
     </footer>
 </div>
 
 <!-- Jquery Core Js -->
-<script src="assets/bundles/libscripts.bundle.js"></script>
-<script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}"></script>
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
 <script th:src="@{/doc/js/stu.js}"></script>
 
 </body>

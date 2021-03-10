@@ -9,7 +9,6 @@ import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.LoginService;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
 import com.weijia.mhealth.service.StudentService;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +77,7 @@ public class StudentController {
      * @return
      */
     @PostMapping(value = "/stu/register")
+    @ResponseBody
     public void register(Student student){
         logger.info("student->{}", JSON.toJSON(student));
 
@@ -90,6 +90,7 @@ public class StudentController {
             }
         }catch (Exception e){
                 logger.error("插入数据失败");
+                logger.error(String.valueOf(e.getCause()));
         }
 
     }
@@ -101,9 +102,9 @@ public class StudentController {
     @GetMapping(value = "/stu/stuChecked1")
     @ResponseBody
     public Student stuCheckedById(Student student){
-        logger.info("student's id is ->{}",student.getId());
-        Integer id = student.getId();
-        return studentService.getStuById(id);
+        logger.info("student's stuNumber is ->{}",student.getStuNumber());
+        String stuNumber = student.getStuNumber();
+        return studentService.getStuByStuNumber(stuNumber);
     }
 
     /**
@@ -164,8 +165,8 @@ public class StudentController {
 
     @GetMapping(value = "/stu/return")
     public String returnPage(Student student,HttpServletRequest request){
-        Integer id = student.getId();
-        Boolean state = studentService.updateStudentState(id);
+        logger.info("删除redis中学生在线状态->{}",JSONUtils.toJSONString(student));
+        Boolean state = studentService.updateStudentState(student);
         if (state){
             request.getSession().setAttribute("student",null);
             logger.info("学生注销成功！");

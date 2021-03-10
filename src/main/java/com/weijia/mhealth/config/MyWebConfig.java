@@ -39,11 +39,12 @@ public class MyWebConfig extends WebMvcConfigurerAdapter {
         //允许访问的静态资源
         registration.excludePathPatterns("/assets/**");
         registration.excludePathPatterns("/doc/**");
+//      registration.excludePathPatterns("/static/**");
 
         //允许访问的controller
         registration.excludePathPatterns("/stu","/doctor","/admin");
-        registration.excludePathPatterns("/stu1","/doctor1","/admin1");
-        registration.excludePathPatterns("/stu/toReg","/doctor/toReg","/admin/toReg");
+//        registration.excludePathPatterns("/stu1","/doctor1","/admin1");
+        registration.excludePathPatterns("/stu/toRegister","/doctor/toRegister","/admin/toRegister");
         registration.excludePathPatterns("/stu/register","/doctor/register","/admin/register");
         registration.excludePathPatterns("/stu/stuChecked","/doctor/doctorChecked","/admin/adminChecked");
         registration.excludePathPatterns("/stu/stuChecked1","/doctor/doctorChecked1","/admin/adminChecked1");

@@ -1,6 +1,7 @@
 package com.weijia.mhealth.service.Imp;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import com.weijia.mhealth.controller.StudentController;
 import com.weijia.mhealth.entity.Login;
 import com.weijia.mhealth.entity.Student;
@@ -42,19 +43,24 @@ public class StudentServiceImp implements StudentService {
     public int insertStudentAndLogin(Student student) {
         studentMapper.insertStu(student);
 
+        String stuNumber = student.getStuNumber();
+        Integer accountId = studentMapper.selectIdByStuNumber(stuNumber);
+
         //插入login
         Login login = new Login();
-        login.setAccountId(student.getId());
+        login.setAccountId(accountId);
         login.setAccountName(student.getName());
         login.setPassword(Md5Util.StringInMd5(student.getPassword()));
-        logger.info("login is->{}",JSONUtils.toJSONString(login));
+        login.setGmtCreate(System.currentTimeMillis());
+        logger.info("login is->{}",JSON.toJSON(login));
         loginMapper.insertLogin(login);
 
         //插入userInfo
         UserInfo userinfo = new UserInfo();
         userinfo.setNickName(student.getName());
-        userinfo.setUserId(student.getId());
-        logger.info("userinfo is->{}",JSONUtils.toJSONString(userinfo));
+        userinfo.setUserId(accountId);
+        userinfo.setGmtCreate(System.currentTimeMillis());
+        logger.info("userinfo is->{}",JSON.toJSON(userinfo));
         loginMapper.insertUserInfo(userinfo);
 
         return 1;
@@ -63,26 +69,32 @@ public class StudentServiceImp implements StudentService {
     @Override
     public Student stuChecked(Integer id, String password) {
         Student student = studentMapper.selectStu(id,password);
-        logger.info("get student is->{}", JSONUtils.toJSONString(student));
+        logger.info("get student is->{}", JSON.toJSON(student));
         return student;
     }
 
     @Override
     public Student getStuById(Integer id) {
-        Student student = studentMapper.selectStuById(id);
-        logger.info("select student by id is ->{}",JSONUtils.toJSONString(student));
+        return null;
+    }
+
+    @Override
+    public Student getStuByStuNumber(String stuNumber) {
+        Student student = studentMapper.selectStuByStuNumber(stuNumber);
+        logger.info("select student by id is ->{}",JSON.toJSON(student));
         return student;
     }
 
     @Override
-    public Boolean updateStudentState(Integer id) {
+    public Boolean updateStudentState(Student student) {
         //先删除Redis中的在线状态
         try{
-            userRedisService.removeStudentByValue(id);
+            userRedisService.removeStudentByValue(student);
         }catch (Exception e){
             throw new CMSException(ResultCodeEnum.UPDATE_STU_STATE_IN_REDIS);
         }
 
+        Integer id = student.getId();
         //再修改数据库中的状态为离线
         Integer res = studentMapper.updateStudentState(id);
         if (res == 0)

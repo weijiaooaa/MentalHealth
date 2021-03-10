@@ -15,4 +15,7 @@ public interface LoginService {
     String justLogin(Login login);
 
     Login getLoginFromStu(Student student);
+
+    String lkUseridByUsername(String username);
+
 }

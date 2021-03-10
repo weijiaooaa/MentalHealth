@@ -1,9 +1,9 @@
 package com.weijia.mhealth.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.weijia.mhealth.entity.Doctor;
 import com.weijia.mhealth.entity.Question;
+import com.weijia.mhealth.entity.Student;
 import com.weijia.mhealth.entity.Tag;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +11,9 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.net.UnknownHostException;
 import java.time.Duration;
 
 /**
@@ -37,67 +36,67 @@ public class RedisConfig {
     }
 
     @Bean
-    @ConditionalOnMissingBean(
-            name = {"redisTemplate"}
-    )
-    public RedisTemplate<String, Question> quesRedisTemplate(RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
-        RedisTemplate redisTemplate = new RedisTemplate();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-
-        // 解决key的序列化方式，使用String。
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        redisTemplate.setKeySerializer(stringRedisSerializer);
-
-        //解决hash和value的序列化方式，使用string
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(stringRedisSerializer);
-
-        // 解决value的序列化方式，使用Json。其中的日期再另外处理。
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        // 如果序列化对象中有日期格式，可以自定义日期的序列化类，处理日期的序列化方式。其他需要序列化的类型，也可以按此处理。
-        ObjectMapper objectMapper = new ObjectMapper();
-//        SimpleModule simpleModule = new SimpleModule();
-//        simpleModule.addSerializer(DateTime.class, new JodaDateTimeJsonSerializer());
-//        simpleModule.addDeserializer(DateTime.class, new JodaDateTimeJsonDeserializer());
-
-        // 在序列化中增加类信息，否则无法反序列化。
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-//        objectMapper.registerModule(simpleModule);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        return redisTemplate;
+    public RedisTemplate<String, Student> studentRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Student> template = new RedisTemplate<String, Student>();
+        template.setConnectionFactory(factory);
+        // key采用String的序列化方式
+        template.setKeySerializer(new StringRedisSerializer());
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        // value序列化方式采用jackson
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // hash的value序列化方式采用jackson
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
     }
 
     @Bean
-    @ConditionalOnMissingBean(
-            name = {"redisTemplate"}
-    )
-    public RedisTemplate<String, Tag> tagRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate redisTemplate = new RedisTemplate();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
+    public RedisTemplate<String, Doctor> doctorRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Doctor> template = new RedisTemplate<String, Doctor>();
+        template.setConnectionFactory(factory);
+        // key采用String的序列化方式
+        template.setKeySerializer(new StringRedisSerializer());
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        // value序列化方式采用jackson
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // hash的value序列化方式采用jackson
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
+    }
 
-        // 解决key的序列化方式，使用String。
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        redisTemplate.setKeySerializer(stringRedisSerializer);
+    @Bean
+    public RedisTemplate<String, Question> questionRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Question> template = new RedisTemplate<String, Question>();
+        template.setConnectionFactory(factory);
+        // key采用String的序列化方式
+        template.setKeySerializer(new StringRedisSerializer());
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        // value序列化方式采用jackson
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // hash的value序列化方式采用jackson
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
+    }
 
-        //解决hash和value的序列化方式，使用string
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(stringRedisSerializer);
-
-        // 解决value的序列化方式，使用Json。其中的日期再另外处理。
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        // 如果序列化对象中有日期格式，可以自定义日期的序列化类，处理日期的序列化方式。其他需要序列化的类型，也可以按此处理。
-        ObjectMapper objectMapper = new ObjectMapper();
-//        SimpleModule simpleModule = new SimpleModule();
-//        simpleModule.addSerializer(DateTime.class, new JodaDateTimeJsonSerializer());
-//        simpleModule.addDeserializer(DateTime.class, new JodaDateTimeJsonDeserializer());
-
-        // 在序列化中增加类信息，否则无法反序列化。
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-//        objectMapper.registerModule(simpleModule);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        return redisTemplate;
+    @Bean
+    public RedisTemplate<String, Tag> tagRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Tag> template = new RedisTemplate<String, Tag>();
+        template.setConnectionFactory(factory);
+        // key采用String的序列化方式
+        template.setKeySerializer(new StringRedisSerializer());
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        // value序列化方式采用jackson
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // hash的value序列化方式采用jackson
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
     }
 
 }

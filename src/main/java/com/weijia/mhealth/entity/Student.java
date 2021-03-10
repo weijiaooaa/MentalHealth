@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class Student {
 
     private Integer id;
+    private String stuNumber;
     private String name;
     private String password;
     private Integer gender;

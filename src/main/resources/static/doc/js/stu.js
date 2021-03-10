@@ -37,7 +37,7 @@ var app = new Vue({
                 });
 
                 try{
-                    await axios.get("/mheal/stu/stuChecked?id="+this.id +"&password="+this.password).
+                    await axios.get("/mhealth/stu/stuChecked?id="+this.id +"&password="+this.password).
                     then(res => {
                         //注意回调函数的this和vue的this会产生歧义
                         _this.student = res.data;
@@ -52,7 +52,7 @@ var app = new Vue({
                 console.log(this.student)
                 if (!($.isEmptyObject(this.student))) {
                     this.content = ""
-                    location.href = "/mheal/stu/toHomePage?id=" + this.id
+                    location.href = "/mhealth/stu/toHomePage?id=" + this.id
                 }else {
                     this.content = "用户名或密码错误"
                 }
@@ -67,6 +67,7 @@ var app = new Vue({
     data:{
         flag: 0,
         id: "",
+        stuNumber: "",
         username: "",
         email: "",
         password1: "",
@@ -83,7 +84,7 @@ var app = new Vue({
 
             this.flag = 0;
 //                注意加this,表示vue与页面绑定的对象,以及如何判空
-            if($.isEmptyObject(this.id)){
+            if($.isEmptyObject(this.stuNumber)){
                 this.text1 = "学生号不能为空"
             }else {
                 this.flag++;
@@ -111,7 +112,7 @@ var app = new Vue({
                 this.text4 = ""
             }
 
-            if(!(this.password1 == this.password2)){
+            if(!(this.password1 === this.password2)){
                 this.text5 = "密码输入不正确"
             }else{
                 this.flag++
@@ -121,7 +122,7 @@ var app = new Vue({
 
                 _this = this
                 try{
-                    await axios.get("/mheal/stu/stuChecked1?id=" + this.id)
+                    await axios.get("/mhealth/stu/stuChecked1?stuNumber=" + this.stuNumber)
                         .then(res => {
                             _this.student = res.data
                         })
@@ -136,15 +137,18 @@ var app = new Vue({
                     alert($.isEmptyObject(this.student))
                     this.text1 = "该学生号已注册"
                 }else{
-                    alert("注册成功")
+                    // alert("注册成功")
 //                      location.href="/mheal/stu/register?"
 //                      post提交表单
 
                     let formdata = new FormData()
-                    formdata.append("id",this.id)
-                    formdata.append("username",this.username)
+                    formdata.append("stuNumber",this.stuNumber)
+                    formdata.append("name",this.username)
                     formdata.append("password",this.password1)
                     formdata.append("email",this.email)
+                    for (var value of formdata.values()) {
+                        console.log(value);
+                    }
 
                     let config = {
                         headers: {
@@ -153,11 +157,11 @@ var app = new Vue({
                     }
 
                     //异步提交表单，即使有返回页面，也不会实现页面跳转
-                    axios.post('/mheal/stu/register',formdata,config).then(res => {
+                    axios.post('/mhealth/stu/register',formdata,config).then(res => {
                         alert("提交表单")
                     })
 
-                    location.href="/mheal/stu";
+                    location.href="/mhealth/stu";
                 }
             }
         }
