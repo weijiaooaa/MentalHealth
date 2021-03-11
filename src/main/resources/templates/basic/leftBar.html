@@ -49,7 +49,7 @@
                         <div class="user-info m-b-20 p-b-15">
                             <div class="image"><a href="profile.html"><img th:src="@{/assets/images/profile_av.jpg}" src="/assets/images/profile_av.jpg" alt="User"></a></div>
                             <div class="detail">
-                                <h4 th:if="${session.student} != null">[[${session.student.accountName}]]</h4>
+                                <h4 th:if="${session.student} != null">[[${session.student.name}]]</h4>
                                 <h4 th:if="${session.doctor} != null">[[${session.doctor.username}]]</h4>
                                 <h4 th:if="${session.admin} != null">[[${session.admin.username}]]</h4>
                             </div>

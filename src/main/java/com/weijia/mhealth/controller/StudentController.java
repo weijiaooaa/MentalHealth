@@ -113,26 +113,25 @@ public class StudentController {
      */
     @GetMapping(value = "/stu/stuChecked")
     @ResponseBody
-    public Student stuChecked(Student student){
-        Integer id = student.getId();
-        String password = student.getPassword();
-        logger.info("id->{},password->{}",id,password);
-        return studentService.stuChecked(id,password);
+    public Student stuChecked(String stuNumber,String password){
+
+        logger.info("stuNumber->{},password->{}",stuNumber,password);
+        return studentService.stuChecked(stuNumber,password);
     }
 
     /**
      * 跳转到学生主页
-     * @param student
+     * @param stuNumber
      * @return
      */
     @GetMapping(value = "/stu/toHomePage")
-    public String toHomePage(Student student, HttpServletRequest request){
-        logger.info("跳转到学生主页,student->{}",JSONUtils.toJSONString(student));
-        student = studentService.getStuById(student.getId());
+    public String toHomePage(String stuNumber, HttpServletRequest request){
+        logger.info("跳转到学生主页,student->{}",stuNumber);
+        Student student = studentService.getStuByStuNumber(stuNumber);
 
         //往session中存入学生聊天帐号
         Login login = loginService.getLoginFromStu(student);
-        logger.info("login from Stu->{}",JSONUtils.toJSONString(login) );
+        logger.info("login from Stu->{}",JSON.toJSON(login) );
         String userid = loginService.justLogin(login);
         request.getSession().setAttribute("userid",userid);
         request.getSession().setAttribute("student",student);
@@ -148,7 +147,7 @@ public class StudentController {
 
         //获取在线医生,先在Redis中去拿，如果找不到，再去数据库拿
         List<Doctor> doctorsOnline = userRedisService.getDoctorsOnline();
-        if (doctorsOnline != null){
+        if (doctorsOnline.size() != 0){
             logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
             request.setAttribute("doctorsOnline",doctorsOnline);
         }else{
@@ -160,7 +159,7 @@ public class StudentController {
         List<Doctor> doctorsOffline = doctorService.getDoctorState(false);
         logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
         request.setAttribute("doctorsOffline",doctorsOffline);
-        return "/stu/home";
+        return "stu/home";
     }
 
     @GetMapping(value = "/stu/return")

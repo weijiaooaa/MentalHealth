@@ -17,8 +17,8 @@ public interface StudentMapper {
     @Select("select * from student where id = #{id}")
     Student selectStuById(Integer id);
 
-    @Select("select * from student where id = #{id} and password = #{password}")
-    Student selectStu(Integer id, String password);
+    @Select("select * from student where stu_number = #{stuNumber} and password = #{password}")
+    Student selectStu(String stuNumber, String password);
 
     Integer updateStudentState(Integer id);
 

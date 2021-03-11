@@ -2,7 +2,7 @@
 var app = new Vue({
     el: "#sign_in",
     data: {
-        id: "",
+        stuNumber: "",
         password: "",
         content: "",
         student: {},
@@ -12,7 +12,7 @@ var app = new Vue({
 
             this.student = {}
 //                用户名或密码为空
-            if (this.id.split(" ").join("").length === 0
+            if (this.stuNumber.split(" ").join("").length === 0
                 || this.password.split(" ").join("").length === 0) {
                 this.content = "用户名或密码不能为空"
                 return false
@@ -26,7 +26,7 @@ var app = new Vue({
                     method: "GET",
                     url: "stu/stuChecked",
                     data: {
-                        id: this.id,
+                        stuNumber: this.stuNumber,
                         password: this.password
                     }
                 }).then(function (res) {
@@ -37,7 +37,9 @@ var app = new Vue({
                 });
 
                 try{
-                    await axios.get("/mhealth/stu/stuChecked?id="+this.id +"&password="+this.password).
+                    console.log(this.stuNumber);
+                    console.log(this.password);
+                    await axios.get("/mhealth/stu/stuChecked?stuNumber="+this.stuNumber +"&password="+this.password).
                     then(res => {
                         //注意回调函数的this和vue的this会产生歧义
                         _this.student = res.data;
@@ -52,7 +54,7 @@ var app = new Vue({
                 console.log(this.student)
                 if (!($.isEmptyObject(this.student))) {
                     this.content = ""
-                    location.href = "/mhealth/stu/toHomePage?id=" + this.id
+                    location.href = "/mhealth/stu/toHomePage?stuNumber=" + this.stuNumber
                 }else {
                     this.content = "用户名或密码错误"
                 }

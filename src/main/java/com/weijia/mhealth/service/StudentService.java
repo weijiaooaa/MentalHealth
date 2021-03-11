@@ -11,7 +11,7 @@ public interface StudentService {
 
     int insertStudentAndLogin(Student student);
 
-    Student stuChecked(Integer id, String password);
+    Student stuChecked(String stuNumber, String password);
 
     Student getStuById(Integer id);
 

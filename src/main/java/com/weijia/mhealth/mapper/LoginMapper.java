@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface LoginMapper {
     //判断登录
-    @Select("select account_id from login where account_name=#{account_name} and password=#{password}")
+    @Select("select account_id from login where account_name=#{accountName} and password=#{password}")
     String justLogin(Login login);
     //根据账号查询用户ID
     @Select("select account_id from login where account_name=#{account_name}")

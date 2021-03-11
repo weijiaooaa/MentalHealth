@@ -67,8 +67,8 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-    public Student stuChecked(Integer id, String password) {
-        Student student = studentMapper.selectStu(id,password);
+    public Student stuChecked(String stuNumber, String password) {
+        Student student = studentMapper.selectStu(stuNumber,password);
         logger.info("get student is->{}", JSON.toJSON(student));
         return student;
     }
