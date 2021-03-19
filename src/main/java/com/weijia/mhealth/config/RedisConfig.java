@@ -17,7 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * @author: wangxiaoxi
+ * @author: weijia
  * @create: 2020-03-07 16:55
  **/
 @Configuration
@@ -86,6 +86,22 @@ public class RedisConfig {
     @Bean
     public RedisTemplate<String, Tag> tagRedisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Tag> template = new RedisTemplate<String, Tag>();
+        template.setConnectionFactory(factory);
+        // key采用String的序列化方式
+        template.setKeySerializer(new StringRedisSerializer());
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        // value序列化方式采用jackson
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // hash的value序列化方式采用jackson
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
+    }
+
+    @Bean
+    public RedisTemplate<String, Long> dateRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Long> template = new RedisTemplate<String, Long>();
         template.setConnectionFactory(factory);
         // key采用String的序列化方式
         template.setKeySerializer(new StringRedisSerializer());

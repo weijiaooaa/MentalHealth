@@ -53,7 +53,7 @@
                                 <h4 th:if="${session.doctor} != null">[[${session.doctor.username}]]</h4>
                                 <h4 th:if="${session.admin} != null">[[${session.admin.username}]]</h4>
                             </div>
-                            <p class="text-muted">16级-软件工程-8班</p>
+                            <p class="text-muted">西安邮电大学</p>
                             <div class="container">
                                 <div class="row clearfix">
                                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -83,7 +83,7 @@
                                     <div th:if="${session.student} != null" th:text="${session.student.email}"></div>
                                     <div th:if="${session.doctor} != null" th:text="${session.doctor.email}"></div>
                                 </div>
-                                <div id="edit1" class="col-lg-2 col-md-2 col-sm-2">
+                                <div id="edit2" class="col-lg-2 col-md-2 col-sm-2">
                                     <button id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color: #d3d3d3">修改</button>
                                 </div>
                             </div>
@@ -93,7 +93,8 @@
                         <div style="padding-left: 0px" class="container">
                             <div class="row no-gutters">
                                 <div id="edit1" class="col-lg-10 col-md-10 col-sm-10">
-                                    <div>17603621936</div>
+                                    <div th:if="${session.student} != null" th:text="${session.student.tel}"></div>
+                                    <div th:if="${session.doctor} != null" th:text="${session.doctor.tel}"></div>
                                 </div>
                                 <div id="edit1" class="col-lg-2 col-md-2 col-sm-2">
                                     <button id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color: #d3d3d3">修改</button>

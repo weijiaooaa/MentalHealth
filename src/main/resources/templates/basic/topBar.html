@@ -44,7 +44,7 @@
         <li>
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" th:if="${session.student} != null" th:href="@{/stu/toHomePage(id=${session.student.id})}" href="index.html"><img th:src="@{/assets/images/logo.svg}" src="/assets/images/logo.svg" width="30" alt="Oreo"><span class="m-l-10">MHeal</span></a>
+                <a class="navbar-brand" th:if="${session.student} != null" th:href="@{/stu/toHomePage(stuNumber=${session.student.stuNumber})}" href="index.html"><img th:src="@{/assets/images/logo.svg}" src="/assets/images/logo.svg" width="30" alt="Oreo"><span class="m-l-10">MHeal</span></a>
                 <a class="navbar-brand" th:if="${session.admin} != null" th:href="@{/admin/toHomePage(id=${session.admin.id})}" href="index.html"><img th:src="@{/assets/images/logo.svg}" src="/assets/images/logo.svg" width="30" alt="Oreo"><span class="m-l-10">MHeal</span></a>
                 <a class="navbar-brand" th:if="${session.doctor} != null" th:href="@{/doctor/toHomePage(id=${session.doctor.id})}" href="index.html"><img th:src="@{/assets/images/logo.svg}" src="/assets/images/logo.svg" width="30" alt="Oreo"><span class="m-l-10">MHeal</span></a>
             </div>

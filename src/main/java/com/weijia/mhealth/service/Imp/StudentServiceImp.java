@@ -102,4 +102,11 @@ public class StudentServiceImp implements StudentService {
         else
             return true;
     }
+
+    @Override
+    public Student getStuByQuestionId(Integer questionId) {
+        Integer stuId = studentMapper.getStuIdByQuestionId(questionId);
+        Student student = studentMapper.selectStuById(stuId);
+        return student;
+    }
 }

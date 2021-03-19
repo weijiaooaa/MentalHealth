@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <title>问答详页  </title>
     <!-- Favicon-->
     <link rel="icon" th:href="@{/favicon.ico}" href="favicon.ico" type="image/x-icon">
     <!-- Font Icon -->
@@ -133,7 +133,7 @@
 
                                                         <div class="media-body">
                                                             <div class="media-heading">
-                                                                <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.username}}</a>
+                                                                <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.name}}</a>
 
                                                                 <span v-for="questionAndTag in question.questionAndTags" class="badge bg-blue">
                                                                     {{questionAndTag.tag.tagName}}
@@ -278,7 +278,7 @@
 
                 //跳转到查询问题页面
                 toViewPage : function (questionParam) {
-                    location.href="/mheal/stu/toViewPage?id=" + questionParam.id;
+                    location.href="/mhealth/stu/toViewPage?id=" + questionParam.id;
                 },
 
                 dateSelect: async function (date) {
@@ -286,7 +286,7 @@
 
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByDate?datetime=" + this.dateTime).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByDate?datetime=" + this.dateTime).then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -305,8 +305,9 @@
                     this.tagName = tag.tagName;
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByTag?tag=" + this.t_id).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=" + this.t_id).then(res => {
                             _this.questions = res.data;
+                            console.log(res.data);
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
                             }else{
@@ -328,7 +329,7 @@
                     this.tagName = "焦虑"
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByTag?tag=" + 'a84a1d1f-73b0-4304-8e6e-5a1bc239f496').then(res => {
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=" + 'a84a1d1f-73b0-4304-8e6e-5a1bc239f496').then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -362,7 +363,7 @@
                     let temp = [];
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByDate?datetime=" + this.dateTime).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByDate?datetime=" + this.dateTime).then(res => {
                             _this.questions = res.data
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -385,7 +386,7 @@
                 try{
                     _this = this;
                     var temp = [];
-                    await axios.get("/mheal/stu/getQuesByTag?tag=" + 'a84a1d1f-73b0-4304-8e6e-5a1bc239f496').then(res => {
+                    await axios.get("/mhealth/stu/getQuesByTag?tag=" + 'a84a1d1f-73b0-4304-8e6e-5a1bc239f496').then(res => {
 //                        _this.questions = res.data;
                         temp = res.data;
                         if(!$.isEmptyObject(temp)){

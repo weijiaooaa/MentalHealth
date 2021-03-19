@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-<title>:: MHeal Bootstrap4 Admin ::</title>
+<title>学生提问页面</title>
 <!-- Favicon-->
 <link rel="icon" th:href="@{/favicon.ico}" href="favicon.ico" type="image/x-icon">
 <!-- Font Icon -->
@@ -141,7 +141,7 @@
                         <tbody>
                         <tr th:each="question : ${questions}">
                             <td>
-                                <span class="date">[[${question.updateTime}]]</span>
+                                <span class="date">[[${question.createTime}]]</span>
                             </td>
                             <td>
                                     <span class="tag" th:each="questionAndTag : ${question.questionAndTags}">

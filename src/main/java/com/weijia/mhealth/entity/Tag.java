@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Tag {
     Integer id;
-    String name;
+    String tagName;
 }

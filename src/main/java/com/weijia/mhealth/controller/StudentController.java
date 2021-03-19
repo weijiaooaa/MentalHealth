@@ -2,20 +2,17 @@ package com.weijia.mhealth.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
-import com.weijia.mhealth.entity.Doctor;
-import com.weijia.mhealth.entity.Login;
-import com.weijia.mhealth.entity.Student;
+import com.weijia.mhealth.entity.*;
 import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.LoginService;
+import com.weijia.mhealth.service.QuestionService;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
 import com.weijia.mhealth.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -41,6 +38,9 @@ public class StudentController {
 
     @Autowired
     private UserRedisService userRedisService;
+
+    @Autowired
+    private QuestionService questionService;
     /**
      * 跳转到登录页面
      * @param httpServletRequest
@@ -158,10 +158,16 @@ public class StudentController {
         //获取离线医生
         List<Doctor> doctorsOffline = doctorService.getDoctorState(false);
         logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
-        request.setAttribute("doctorsOffline",doctorsOffline);
+         request.setAttribute("doctorsOffline",doctorsOffline);
         return "stu/home";
     }
 
+    /**
+     * 学生注销登录
+     * @param student
+     * @param request
+     * @return
+     */
     @GetMapping(value = "/stu/return")
     public String returnPage(Student student,HttpServletRequest request){
         logger.info("删除redis中学生在线状态->{}",JSONUtils.toJSONString(student));
@@ -174,6 +180,75 @@ public class StudentController {
             logger.error("修改学生状态失败！");
             return "/error";
         }
+    }
+
+    /**
+     * 跳转到我的问题页面
+     * @return
+     */
+    @GetMapping(value = "/stu/toQuesPage")
+    public String toQuesPage(HttpServletRequest request){
+        Student student = (Student) request.getSession().getAttribute("student");
+        logger.info("student->{}",JSON.toJSON(student));
+
+        List<Question> questions = questionService.getQuestionByStu(student);
+        request.setAttribute("questions",questions);
+        logger.info("根据stuId查询出的question->{}",JSON.toJSON(questions));
+        return "/stu/question";
+    }
+
+    /**
+     * 提交问题
+     * @param question
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "/stu/question")
+    public String submitQuestion(Question question, HttpServletRequest request){
+        logger.info("提交的问题->{}",JSON.toJSON(question));
+        Student student = (Student) request.getSession().getAttribute("student");
+        try{
+            questionService.insertQues(question,student);
+        }catch (Exception e){
+            logger.error("插入信息失败！");
+            return "redirect:/error";
+        }
+        request.setAttribute("success","success");
+        return "redirect:/stu/toQuesPage";
+    }
+
+    /**
+     * 跳转到问答社区
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/stu/toAnsHood")
+    public String toAnsHood(HttpServletRequest request){
+        Student student = (Student) request.getSession().getAttribute("student");
+        System.out.println("toAnsHood " + student);
+//        request.setAttribute("student",student);
+        //问题日期
+        List<Long> dates = questionService. getDates();
+        request.setAttribute("dates",dates);
+
+        //标签
+        List<Tag> tags = questionService.getTags();
+        request.setAttribute("tags",tags);
+
+        return "/stu/answerHood";
+    }
+
+    /**
+     * 获取对应标签的已回答的问题
+     * @param tagId
+     * @return
+     */
+    @GetMapping("/stu/getQuesByTag")
+    @ResponseBody
+    public List<Question> getQuesByTag(@RequestParam(value="tag") Integer tagId){
+        List<Question> questions = questionService.getQuestionByTagId(tagId);
+        logger.info("根据tagId查出来的questions->{}",JSON.toJSON(questions));
+        return questions;
     }
 
 }

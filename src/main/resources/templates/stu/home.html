@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
-    <title>MHeal</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <title>学生主页</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"> <!-- Favicon-->
     <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
     <link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
@@ -63,7 +63,7 @@
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <h2>我的主页
-                    <small>欢迎来到MHeal</small>
+                    <small>欢迎来到MHealth</small>
                 </h2>
             </div>
             <div class="col-lg-7 col-md-7 col-sm-12 text-right">
@@ -78,7 +78,7 @@
                         <div class="row clearfix">
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
-                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="501" data-speed="1000" data-fresh-interval="700">501</p>
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="13" data-speed="1000" data-fresh-interval="700">501</p>
                                     <a th:href="@{/stu/toQuesPage}">
                                         <h2 style="font-size: 1.5rem" class="text-muted">我的提问</h2>
                                     </a>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
-                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="2501" data-speed="2000" data-fresh-interval="700">2501</p>
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="21" data-speed="2000" data-fresh-interval="700">2501</p>
                                     <a th:href="@{/stu/toAnsHood}">
                                         <h2 style="font-size: 1.5rem" class="text-muted ">问答社区</h2>
                                     </a>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
-                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="6051" data-speed="2000" data-fresh-interval="700">6051</p>
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="17" data-speed="2000" data-fresh-interval="700">6051</p>
                                     <a th:href="@{/stu/toAcitvities}">
                                         <h2 style="font-size: 1.5rem" class="text-muted">活动社区</h2>
                                     </a>

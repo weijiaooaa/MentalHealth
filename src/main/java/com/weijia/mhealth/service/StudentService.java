@@ -18,4 +18,6 @@ public interface StudentService {
     Student getStuByStuNumber(String stuNumber);
 
     Boolean updateStudentState(Student student);
+
+    Student getStuByQuestionId(Integer questionId);
 }

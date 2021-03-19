@@ -72,6 +72,8 @@ var app = new Vue({
         stuNumber: "",
         username: "",
         email: "",
+        tel: "",
+        age: "",
         password1: "",
         password2: "",
         text1: "",
@@ -79,6 +81,8 @@ var app = new Vue({
         text3: "",
         text4: "",
         text5: "",
+        text6: "",
+        text7: "",
         student: {}
     },
     methods:{
@@ -107,20 +111,34 @@ var app = new Vue({
                 this.text3 = ""
             }
 
-            if($.isEmptyObject(this.password1)){
-                this.text4 = "密码不能为空"
+            if($.isEmptyObject(this.tel)){
+                this.text4 = "电话不能为空"
             }else{
                 this.flag++;
                 this.text4 = ""
             }
 
+            if($.isEmptyObject(this.age)){
+                this.text5 = "年龄不能为空"
+            }else{
+                this.flag++;
+                this.text5 = ""
+            }
+
+            if($.isEmptyObject(this.password1)){
+                this.text6 = "密码不能为空"
+            }else{
+                this.flag++;
+                this.text6 = ""
+            }
+
             if(!(this.password1 === this.password2)){
-                this.text5 = "密码输入不正确"
+                this.text7 = "密码输入不正确"
             }else{
                 this.flag++
-                this.text5=""
+                this.text7=""
             }
-            if(this.flag == 5){
+            if(this.flag === 7){
 
                 _this = this
                 try{
@@ -148,6 +166,8 @@ var app = new Vue({
                     formdata.append("name",this.username)
                     formdata.append("password",this.password1)
                     formdata.append("email",this.email)
+                    formdata.append("tel",this.tel)
+                    formdata.append("age",this.age)
                     for (var value of formdata.values()) {
                         console.log(value);
                     }

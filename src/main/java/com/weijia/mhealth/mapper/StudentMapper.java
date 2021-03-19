@@ -4,6 +4,8 @@ import com.weijia.mhealth.entity.Student;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @Author Wei Jia
  * @Date 2021/2/4 21:42
@@ -27,4 +29,7 @@ public interface StudentMapper {
 
     @Select("select id from student where stu_number = #{stuNumber}")
     Integer selectIdByStuNumber(String stuNumber);
+
+    @Select("select distinct stu_id from ask_and_answer where quest_id = #{questionId}")
+    Integer getStuIdByQuestionId(Integer questionId);
 }
