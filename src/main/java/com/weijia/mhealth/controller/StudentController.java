@@ -13,8 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -136,6 +139,8 @@ public class StudentController {
         request.getSession().setAttribute("userid",userid);
         request.getSession().setAttribute("student",student);
 
+        studentService.updateStudentState(true,student);
+
         //个人信息注册到redis中
         try{
             if(!userRedisService.isStuExist(student)){
@@ -171,7 +176,7 @@ public class StudentController {
     @GetMapping(value = "/stu/return")
     public String returnPage(Student student,HttpServletRequest request){
         logger.info("删除redis中学生在线状态->{}",JSONUtils.toJSONString(student));
-        Boolean state = studentService.updateStudentState(student);
+        Boolean state = studentService.updateStudentState(false,student);
         if (state){
             request.getSession().setAttribute("student",null);
             logger.info("学生注销成功！");
@@ -228,7 +233,7 @@ public class StudentController {
         System.out.println("toAnsHood " + student);
 //        request.setAttribute("student",student);
         //问题日期
-        List<Long> dates = questionService. getDates();
+        List<String> dates = questionService. getDates();
         request.setAttribute("dates",dates);
 
         //标签
@@ -246,9 +251,47 @@ public class StudentController {
     @GetMapping("/stu/getQuesByTag")
     @ResponseBody
     public List<Question> getQuesByTag(@RequestParam(value="tag") Integer tagId){
-        List<Question> questions = questionService.getQuestionByTagId(tagId);
-        logger.info("根据tagId查出来的questions->{}",JSON.toJSON(questions));
-        return questions;
+        return questionService.getQuestionByTagId(tagId);
+    }
+
+    /**
+     *跳转到浏览问题详页
+     * @param question
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/stu/toViewPage")
+    public ModelAndView toAnsPage(Question question){
+        logger.info("开始跳转到浏览问题详页");
+
+        ModelAndView modelAndView = new ModelAndView();
+        question = questionService.getQuestionByIdV2(question.getId());
+        logger.info("question的id->{},查出的question->{}",question.getId(),JSON.toJSON(question));
+        String createTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(question.getGmtCreate()));
+
+        modelAndView.addObject("updateTime",createTime);
+        modelAndView.addObject("question",question);
+        modelAndView.addObject("student",question.getStudent());
+
+        modelAndView.addObject("askAndAns_s",question.getAskAndAnsList());
+        modelAndView.addObject("questionAndTags",question.getQuestionAndTags());
+        modelAndView.setViewName("/stu/viewQuestion");
+
+        return modelAndView;
+    }
+
+    /**
+     * 获取对应日期的已回答的问题
+     * @param dateTime
+     * @return
+     */
+    @GetMapping("/stu/getQuesByDate")
+    @ResponseBody
+    public List<Question> getQuesByDate(String dateTime){
+
+        List<Question> questionByDate = questionService.getQuestionByDate(dateTime);
+        logger.info("通过date->{}查询出的question->{}",dateTime,JSON.toJSON(questionByDate));
+        return questionByDate;
     }
 
 }

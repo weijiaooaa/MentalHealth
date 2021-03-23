@@ -1,9 +1,11 @@
 package com.weijia.mhealth.mapper;
 
+import com.weijia.mhealth.entity.AskAndAnswer;
 import com.weijia.mhealth.entity.Question;
+import com.weijia.mhealth.entity.QuestionAndTag;
 import com.weijia.mhealth.entity.Tag;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,37 @@ public interface QuestionMapper {
     @Select("select * from question where id = #{id}")
     Question getQuestionById(Integer id);
 
+    /**
+     * 根据问题id查找问题相关信息
+     * @param id
+     * @return
+     */
+    @Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "id",property = "student",one = @One(select = "com.weijia.mhealth.mapper.StudentMapper.getStuByQuesId",fetchType= FetchType.DEFAULT)),
+            @Result(column = "id",property = "askAndAnsList",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getAskAndAns",fetchType=FetchType.DEFAULT)),
+            @Result(column = "id",property = "questionAndTags",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getQuestionAndTagByQid",fetchType=FetchType.DEFAULT)),
+    })
+    @Select("select * from question where id = #{id}")
+    Question getQuestionByIdV2(Integer id);
+
+    //查询QuestionAndTag
+    @Results({
+            @Result(column = "tag_id",property = "tag",one = @One(select = "com.weijia.mhealth.mapper.QuestionMapper.getTagById",fetchType=FetchType.DEFAULT)),
+    })
+    @Select("select * from questions_and_tags where quest_id = #{questionId}")
+    List<QuestionAndTag> getQuestionAndTagByQid(Integer questionId);
+
+    //根据标签id查询标签
+    @Select("select * from tag where id = #{id}")
+    Tag getTagById(Integer id);
+
+    @Results({
+            @Result(column = "doctor_id",property = "doctor",one = @One(select = "com.weijia.mhealth.mapper.DoctorMapper.getDoctorNameById",fetchType=FetchType.DEFAULT))
+    })
+    @Select("select * from ask_and_answer where quest_id = #{questionId}")
+    List<AskAndAnswer> getAskAndAns(Integer questionId);
+
     @Insert("insert into question(content,view_count,likes,anonymous,status,gmt_create,gmt_Modified) values (#{content},#{viewCount},#{likes},#{anonymous},#{status},#{gmtCreate},#{gmtModified})")
     void insertQues(Question question);
 
@@ -30,7 +63,7 @@ public interface QuestionMapper {
     @Insert("insert into dates(time) values (#{time})")
     void insertDateTime(long time);
 
-    @Select("select time from dates")
+    @Select("select distinct time from dates")
     List<Long> getDates();
 
     @Select("select id from question where content = #{content} and gmt_create = #{gmtCreate}")
@@ -43,4 +76,14 @@ public interface QuestionMapper {
     //根据tagId找出所有的question集合
     @Select("select quest_id from questions_and_tags where tag_id = #{tagId}")
     List<Integer> getQuestionByTagId(Integer tagId);
+
+    @Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "id",property = "student",one = @One(select = "com.weijia.mhealth.mapper.StudentMapper.getStuByQuesId",fetchType= FetchType.DEFAULT)),
+            @Result(column = "id",property = "askAndAnsList",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getAskAndAns",fetchType=FetchType.DEFAULT)),
+            @Result(column = "id",property = "questionAndTags",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getQuestionAndTagByQid",fetchType=FetchType.DEFAULT)),
+    })
+    @Select("select * from question where gmt_create > #{startTime} and gmt_create < #{endTime}")
+    List<Question> getQuestionByDate(long startTime,long endTime);
+
 }

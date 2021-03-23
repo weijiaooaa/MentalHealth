@@ -5,7 +5,6 @@ import com.weijia.mhealth.entity.Question;
 import com.weijia.mhealth.entity.Student;
 import com.weijia.mhealth.entity.Tag;
 import com.weijia.mhealth.mapper.QuestionMapper;
-import com.weijia.mhealth.mapper.StudentMapper;
 import com.weijia.mhealth.service.QuestionService;
 import com.weijia.mhealth.service.RedisService.QuestRedisService;
 import com.weijia.mhealth.service.StudentService;
@@ -15,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class QuestionServiceImp implements QuestionService {
         List<Integer> questionsId = questionMapper.getQuestionByStuId(student.getId());
         logger.info("questionsId is ->{}", JSON.toJSON(questionsId));
         for(Integer id : questionsId){
-            Question question = questionMapper.getQuestionById(id);
+            Question question = questionMapper.getQuestionByIdV2(id);
             question.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.sql.Date(question.getGmtCreate())));
             questions.add(question);
         }
@@ -81,16 +83,28 @@ public class QuestionServiceImp implements QuestionService {
     }
 
     @Override
-    public List<Long> getDates() {
+    public List<String> getDates() {
+
+        HashSet<String> dateSet = new HashSet<>();
         //先从缓存中取
-        List<Long> dateList = questRedisService.getDateList();
-        if(dateList.size() != 0){
-            return dateList;
+        List<Long> dateLists = questRedisService.getDateList();
+        logger.info("从redis中取出的dateList->{}",JSON.toJSON(dateLists));
+        if(dateLists.size() != 0){
+            for (Long date : dateLists) {
+                String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date(date));
+                dateSet.add(format);
+            }
+            return new ArrayList<String>(dateSet);
         }else{
             List<Long> dates = questionMapper.getDates();
+            logger.info("从db中取出的dateList->{}",JSON.toJSON(dates));
             //将其写入到缓存中
             questRedisService.insertDates(dates);
-            return dates;
+            for (Long date : dates) {
+                String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date(date));
+                dateSet.add(format);
+            }
+            return new ArrayList<String>(dateSet);
         }
     }
 
@@ -109,11 +123,29 @@ public class QuestionServiceImp implements QuestionService {
         List<Integer> questionIds = questionMapper.getQuestionByTagId(tagId);
         logger.info("根据tagId查询出的questionIds->{}",JSON.toJSON(questionIds));
         for (Integer questionId : questionIds) {
-            Question question = questionMapper.getQuestionById(questionId);
-            Student stu = studentService.getStuByQuestionId(question.getId());
-            question.setStudent(stu);
+            Question question = questionMapper.getQuestionByIdV2(questionId);
+            question.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.sql.Date(question.getGmtCreate())));
             questions.add(question);
         }
         return questions;
+    }
+
+    @Override
+    public Question getQuestionByIdV2(Integer id) {
+        return questionMapper.getQuestionByIdV2(id);
+    }
+
+    @Override
+    public List<Question> getQuestionByDate(String dateTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            long startTime = sdf.parse(dateTime).getTime();
+            long endTime = startTime + 86399000;
+            return questionMapper.getQuestionByDate(startTime,endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            logger.error("时间转换失败！");
+            return null;
+        }
     }
 }

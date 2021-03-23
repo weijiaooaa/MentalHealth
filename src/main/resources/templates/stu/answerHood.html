@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>问答详页  </title>
+    <title>问答社区</title>
     <!-- Favicon-->
     <link rel="icon" th:href="@{/favicon.ico}" href="favicon.ico" type="image/x-icon">
     <!-- Font Icon -->
@@ -125,7 +125,6 @@
                                                 <div id="answer" class="mail_list list-group list-unstyled">
                                                     <div class="media">
                                                         <div class="pull-left">
-                                                            <small style="color: #0d97ff">{{question.updateTime}}</small>
                                                             <div class="thumb hidden-sm-down m-r-20"><img
                                                                     th:src="@{/assets/images/xs/avatar1.jpg}" class="rounded-circle" alt="">
                                                             </div>
@@ -141,6 +140,9 @@
                                                             </div>
                                                             <p class="msg">{{question.content}}</p>
                                                             <hr>
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <small style="color: #0d97ff">{{question.createTime}}</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,7 +216,7 @@
 
                                                             <div class="media-body">
                                                                 <div class="media-heading">
-                                                                    <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.username}}</a>
+                                                                    <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.name}}</a>
 
                                                                     <span v-for="questionAndTag in question.questionAndTags" class="badge bg-blue">
                                                                     {{questionAndTag.tag.tagName}}
@@ -286,7 +288,7 @@
 
                     try{
                         _this = this;
-                        await axios.get("/mhealth/stu/getQuesByDate?datetime=" + this.dateTime).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -329,7 +331,7 @@
                     this.tagName = "焦虑"
                     try{
                         _this = this;
-                        await axios.get("/mhealth/stu/getQuesByTag?tag=" + 'a84a1d1f-73b0-4304-8e6e-5a1bc239f496').then(res => {
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=1").then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -363,7 +365,7 @@
                     let temp = [];
                     try{
                         _this = this;
-                        await axios.get("/mhealth/stu/getQuesByDate?datetime=" + this.dateTime).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
                             _this.questions = res.data
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -386,7 +388,7 @@
                 try{
                     _this = this;
                     var temp = [];
-                    await axios.get("/mhealth/stu/getQuesByTag?tag=" + 'a84a1d1f-73b0-4304-8e6e-5a1bc239f496').then(res => {
+                    await axios.get("/mhealth/stu/getQuesByTag?tag=1").then(res => {
 //                        _this.questions = res.data;
                         temp = res.data;
                         if(!$.isEmptyObject(temp)){

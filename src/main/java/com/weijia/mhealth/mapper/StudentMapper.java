@@ -1,8 +1,8 @@
 package com.weijia.mhealth.mapper;
 
 import com.weijia.mhealth.entity.Student;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -22,7 +22,8 @@ public interface StudentMapper {
     @Select("select * from student where stu_number = #{stuNumber} and password = #{password}")
     Student selectStu(String stuNumber, String password);
 
-    Integer updateStudentState(Integer id);
+    @Update("update student set state = #{state} where id = #{id}")
+    Integer updateStudentState(Boolean state,Integer id);
 
     @Select("select * from student where stu_number = #{stuNumber}")
     Student selectStuByStuNumber(String stuNumber);
@@ -32,4 +33,15 @@ public interface StudentMapper {
 
     @Select("select distinct stu_id from ask_and_answer where quest_id = #{questionId}")
     Integer getStuIdByQuestionId(Integer questionId);
+
+    //根据questionId查询学生
+    @Results({
+            @Result(column = "stu_id",property = "id"),
+            @Result(column = "stu_id",property = "name",one = @One(select = "com.weijia.mhealth.mapper.StudentMapper.getUsernameById",fetchType = FetchType.DEFAULT))
+    })
+    @Select("select distinct stu_id from ask_and_answer where quest_id = #{questionId}")
+    Student getStuByQuesId(Integer questionId);
+
+    @Select("select name from student where id = #{stu_id}")
+    String getUsernameById(String stu_id);
 }

@@ -17,7 +17,7 @@ public interface StudentService {
 
     Student getStuByStuNumber(String stuNumber);
 
-    Boolean updateStudentState(Student student);
+    Boolean updateStudentState(Boolean state,Student student);
 
     Student getStuByQuestionId(Integer questionId);
 }

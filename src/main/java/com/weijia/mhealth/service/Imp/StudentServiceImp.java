@@ -86,7 +86,7 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-    public Boolean updateStudentState(Student student) {
+    public Boolean updateStudentState(Boolean state,Student student) {
         //先删除Redis中的在线状态
         try{
             userRedisService.removeStudentByValue(student);
@@ -96,7 +96,7 @@ public class StudentServiceImp implements StudentService {
 
         Integer id = student.getId();
         //再修改数据库中的状态为离线
-        Integer res = studentMapper.updateStudentState(id);
+        Integer res = studentMapper.updateStudentState(state,id);
         if (res == 0)
             throw new CMSException(ResultCodeEnum.UPDATE_STU_STATE_IN_DB);
         else

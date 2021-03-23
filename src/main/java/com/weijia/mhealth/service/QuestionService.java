@@ -18,9 +18,13 @@ public interface QuestionService {
 
     void insertQues(Question question, Student student);
 
-    List<Long> getDates();
+    List<String> getDates();
 
     List<Tag> getTags();
 
     List<Question> getQuestionByTagId(Integer tagId);
+
+    Question getQuestionByIdV2(Integer id);
+
+    List<Question> getQuestionByDate(String dateTime);
 }

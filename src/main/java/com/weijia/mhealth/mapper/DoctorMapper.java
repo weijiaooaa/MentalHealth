@@ -22,4 +22,8 @@ public interface DoctorMapper {
 
     @Select("select * from doctor where state = #{state}")
     List<Doctor> getDoctorState(Boolean state);
+
+    //查出id + username
+    @Select("select id, username from doctor where id = #{id}")
+    Doctor getDoctorNameById(Integer id);
 }
