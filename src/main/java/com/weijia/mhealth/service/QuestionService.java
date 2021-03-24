@@ -27,4 +27,6 @@ public interface QuestionService {
     Question getQuestionByIdV2(Integer id);
 
     List<Question> getQuestionByDate(String dateTime);
+
+    void insertViewCount(Integer id);
 }

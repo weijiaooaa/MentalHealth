@@ -54,7 +54,7 @@ public interface QuestionMapper {
     @Select("select * from ask_and_answer where quest_id = #{questionId}")
     List<AskAndAnswer> getAskAndAns(Integer questionId);
 
-    @Insert("insert into question(content,view_count,likes,anonymous,status,gmt_create,gmt_Modified) values (#{content},#{viewCount},#{likes},#{anonymous},#{status},#{gmtCreate},#{gmtModified})")
+    @Insert("insert into question(content,view_count,likes,anonymous,status,gmt_create,gmt_modified) values (#{content},#{viewCount},#{likes},#{anonymous},#{status},#{gmtCreate},#{gmtModified})")
     void insertQues(Question question);
 
     @Insert("insert into ask_and_answer (quest_id, stu_id) values (#{quesId}, #{stuId})")
@@ -86,4 +86,6 @@ public interface QuestionMapper {
     @Select("select * from question where gmt_create > #{startTime} and gmt_create < #{endTime}")
     List<Question> getQuestionByDate(long startTime,long endTime);
 
+    @Update("update question set view_count = view_count + #{viewCount} , gmt_modified = #{updateTime} where id = #{id}")
+    void insertViewCount(Integer id, int viewCount, long updateTime);
 }

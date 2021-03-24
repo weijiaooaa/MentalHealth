@@ -3,7 +3,9 @@ package com.weijia.mhealth.service.Imp;
 import com.alibaba.fastjson.JSON;
 import com.weijia.mhealth.controller.StudentController;
 import com.weijia.mhealth.entity.Doctor;
+import com.weijia.mhealth.entity.Student;
 import com.weijia.mhealth.mapper.DoctorMapper;
+import com.weijia.mhealth.mapper.StudentMapper;
 import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
 import org.slf4j.Logger;
@@ -27,6 +29,9 @@ public class DoctorServiceImp implements DoctorService {
     @Autowired
     private DoctorMapper doctorMapper;
 
+    @Autowired
+    private StudentMapper studentMapper;
+
     @Override
     public Doctor getDoctorById(Integer id) {
         Doctor doctor = doctorMapper.getDoctorById(id);
@@ -39,6 +44,30 @@ public class DoctorServiceImp implements DoctorService {
         List<Doctor> doctorList = doctorMapper.getDoctorState(state);
         logger.info("在线的医生列表->{}",JSON.toJSON(doctorList));
         return doctorList;
+    }
+
+    @Override
+    public Doctor getStuByStuNumber(String doctorNumber) {
+        Doctor doctor = doctorMapper.getDoctorByDoctorNumber(doctorNumber);
+        logger.info("根据doctorNumber从db中查出的doctor->{}",JSON.toJSON(doctor));
+        return doctor;
+    }
+
+    @Override
+    public void insertDoctor(Doctor doctor) {
+        doctorMapper.insertDoctor(doctor);
+    }
+
+    @Override
+    public List<Student> getStuState(boolean state) {
+        return studentMapper.getDoctorState(state);
+    }
+
+    @Override
+    public Doctor doctorChecked(String doctorNumber, String password) {
+        Doctor doctor = doctorMapper.getDoctorByDoctorNumberAndPassword(doctorNumber,password);
+        logger.info("get student is->{}", JSON.toJSON(doctor));
+        return doctor;
     }
 
     /**

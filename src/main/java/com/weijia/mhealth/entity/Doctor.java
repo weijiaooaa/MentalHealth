@@ -13,6 +13,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Doctor {
-    Integer id;
-    String name;
+
+    private Integer id;
+    private String doctorNumber;
+    private String name;
+    private String password;
+    private Integer gender;
+    private Integer age;
+    private Integer teachYears;
+    private String graduatedSchool;
+    private String tel;
+    private String email;
+    private Boolean state;
+    private Long gmtCreate;
+    private Long gmtModified;
+
 }

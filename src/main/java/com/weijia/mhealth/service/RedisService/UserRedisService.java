@@ -58,10 +58,24 @@ public class UserRedisService {
         return students.contains(student);
     }
 
+    //检查该医生是否在线
+    public Boolean isDoctorExist(Doctor doctor){
+        logger.info("Redis中检查是否在线doctor is->{}",JSON.toJSON(doctor));
+        List<Doctor> doctors= doctorRedisTemplate.opsForList().range("user:doctor", 0, -1);
+        assert doctors != null : "doctors is null";
+        return doctors.contains(doctor);
+    }
+
     //得到在线医生
     public List<Doctor> getDoctorsOnline() {
         List<Doctor> doctors = doctorRedisTemplate.opsForList().range("user:doctor", 0, 1);
         logger.info("所有在线医生列表->{}",JSON.toJSON(doctors));
         return doctors;
+    }
+
+    public List<Student> getStudentsOnline() {
+        List<Student> students = studentRedisTemplate.opsForList().range("user:stu", 0, 1);
+        logger.info("所有在线学生列表->{}",JSON.toJSON(students));
+        return students;
     }
 }

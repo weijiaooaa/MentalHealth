@@ -65,15 +65,6 @@ public class StudentController {
         return "/user/sign-up-stu";
     }
 
-//    /**
-//     * 重定向到注册页面
-//     * @return
-//     */
-//    @GetMapping(value = "/stu/toReg")
-//    public String toRegisterPage(){
-//        return "redirect:/stu/toRegister";
-//    }
-
     /**
      * 完成注册，跳转到登录页面
      * @param student
@@ -147,7 +138,7 @@ public class StudentController {
                 userRedisService.insertStu(student);
             }
         }catch (Exception e){
-            logger.error("个人信息存入Redis失败");
+            logger.error("学生个人信息存入Redis失败");
         }
 
         //获取在线医生,先在Redis中去拿，如果找不到，再去数据库拿
@@ -257,7 +248,6 @@ public class StudentController {
     /**
      *跳转到浏览问题详页
      * @param question
-     * @param request
      * @return
      */
     @GetMapping(value = "/stu/toViewPage")
@@ -266,6 +256,8 @@ public class StudentController {
 
         ModelAndView modelAndView = new ModelAndView();
         question = questionService.getQuestionByIdV2(question.getId());
+        //添加浏览数
+        questionService.insertViewCount(question.getId());
         logger.info("question的id->{},查出的question->{}",question.getId(),JSON.toJSON(question));
         String createTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(question.getGmtCreate()));
 
@@ -292,6 +284,15 @@ public class StudentController {
         List<Question> questionByDate = questionService.getQuestionByDate(dateTime);
         logger.info("通过date->{}查询出的question->{}",dateTime,JSON.toJSON(questionByDate));
         return questionByDate;
+    }
+
+    /**
+     * 跳转到活动页面
+     * @return
+     */
+    @GetMapping(value = "/stu/toActivities")
+    public String toActivityPage() {
+        return "/stu/activities";
     }
 
 }

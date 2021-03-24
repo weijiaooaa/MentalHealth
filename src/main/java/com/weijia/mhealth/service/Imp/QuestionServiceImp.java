@@ -148,4 +148,10 @@ public class QuestionServiceImp implements QuestionService {
             return null;
         }
     }
+
+    @Override
+    public void insertViewCount(Integer id) {
+        long updateTime = System.currentTimeMillis();
+        questionMapper.insertViewCount(id,1,updateTime);
+    }
 }

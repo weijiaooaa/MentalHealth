@@ -44,4 +44,7 @@ public interface StudentMapper {
 
     @Select("select name from student where id = #{stu_id}")
     String getUsernameById(String stu_id);
+
+    @Select("select * from student where state = #{state}")
+    List<Student> getDoctorState(boolean state);
 }

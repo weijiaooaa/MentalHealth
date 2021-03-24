@@ -156,8 +156,8 @@
                                 <small th:if="${question.status}== true" style="color: #3eacff;">已回答</small>
                             </td>
                             <td>
-                                <button th:if="${question.status}== false" id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color:orange;">催促</button>
-                                <a th:href="@{/stu/toAnsHood}"><button th:if="${question.status}== true" id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color:#3eacff;">发布</button></a>
+                                <a th:href="@{'/stu/toViewPage?id='+${question.id}}"><button th:if="${question.status}== true" id="buttonTop" class="btn btn-icon btn-neutral btn-icon-big" style="color:orange;width: auto;">查看详情</button></a>
+                                <a th:href="@{/stu/toAnsHood}"><button th:if="${question.status}== false" id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color:#3eacff;width: auto;">去社区转转</button></a>
                             </td>
                         </tr>
                         </tbody>

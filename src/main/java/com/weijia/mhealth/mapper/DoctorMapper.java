@@ -1,6 +1,7 @@
 package com.weijia.mhealth.mapper;
 
 import com.weijia.mhealth.entity.Doctor;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -26,4 +27,15 @@ public interface DoctorMapper {
     //查出id + username
     @Select("select id, username from doctor where id = #{id}")
     Doctor getDoctorNameById(Integer id);
+
+    @Select("select * from doctor where doctor_number = #{doctorNumber}")
+    Doctor getDoctorByDoctorNumber(String doctorNumber);
+
+    @Insert("insert into doctor(doctor_number,name,gender,age,teach_years,graduated_school,tel,email,password," +
+            "gmt_create) values (#{doctorNumber},#{name}, #{gender}, #{age},#{teachYears}, #{graduatedSchool}, #{tel}," +
+            "#{email},#{password},#{gmtCreate})")
+    void insertDoctor(Doctor doctor);
+
+    @Select("select * from doctor where doctor_number = #{doctorNumber} and password = #{password}")
+    Doctor getDoctorByDoctorNumberAndPassword(String doctorNumber, String password);
 }
