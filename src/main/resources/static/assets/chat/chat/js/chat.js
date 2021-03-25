@@ -99,64 +99,64 @@ function leftscroll(id) {
         document.getElementById("msgcontent").style.overflowX = "hidden";
     }
 }
-var info = new Vue({
-    el: '#userinfo',
-    data() {
-        return {
-            userinfo: []
-        }
-    },
-    mounted: function () {
-        window.setUserInfo = this.setUserInfo;
-    },
-    methods: {
-        /**添加好友查询用户信息*/
-        setUserInfo: function (info) {
-            var that = this;
-            that.userinfo = info;
-            $("#info").show();
-        },adduser:function (uid) {
-            $.ajax({
-                url: basePath + "/chat/adduser/" + uid,
-                data: "",
-                contentType: "application/json;charset=UTF-8", //发送数据的格式
-                type: "post",
-                dataType: "json", //回调
-                beforeSend: function () {
-                    layer.load(1, {
-                        content: '添加中...',
-                        success: function (layero) {
-                            layero.find('.layui-layer-content').css({
-                                'padding-top': '39px',
-                                'width': '60px'
-                            });
-                        }
-                    });
-                },
-                complete: function () {
-                    layer.closeAll('loading');
-                },
-                success: function (data) {
-                    if (data.status != 200) {
-                        layer.msg(data.message, {
-                            time: 1500,
-                            icon: 2,
-                            offset: '350px'
-                        });
-                    } else {
-                        layer.msg(data.message, {
-                            time: 1000,
-                            icon: 1,
-                            offset: '350px'
-                        }, function () {
-                            getlistnickname();//刷新好友列表
-                        });
-                    }
-                }
-            });
-        }
-    }
-})
+// var info = new Vue({
+//     el: '#userinfo',
+//     data() {
+//         return {
+//             userinfo: []
+//         }
+//     },
+//     mounted: function () {
+//         window.setUserInfo = this.setUserInfo;
+//     },
+//     methods: {
+//         /**添加好友查询用户信息*/
+//         setUserInfo: function (info) {
+//             var that = this;
+//             that.userinfo = info;
+//             $("#info").show();
+//         },adduser:function (uid) {
+//             $.ajax({
+//                 url: basePath + "/chat/adduser/" + uid,
+//                 data: "",
+//                 contentType: "application/json;charset=UTF-8", //发送数据的格式
+//                 type: "post",
+//                 dataType: "json", //回调
+//                 beforeSend: function () {
+//                     layer.load(1, {
+//                         content: '添加中...',
+//                         success: function (layero) {
+//                             layero.find('.layui-layer-content').css({
+//                                 'padding-top': '39px',
+//                                 'width': '60px'
+//                             });
+//                         }
+//                     });
+//                 },
+//                 complete: function () {
+//                     layer.closeAll('loading');
+//                 },
+//                 success: function (data) {
+//                     if (data.status != 200) {
+//                         layer.msg(data.message, {
+//                             time: 1500,
+//                             icon: 2,
+//                             offset: '350px'
+//                         });
+//                     } else {
+//                         layer.msg(data.message, {
+//                             time: 1000,
+//                             icon: 1,
+//                             offset: '350px'
+//                         }, function () {
+//                             getlistnickname();//刷新好友列表
+//                         });
+//                     }
+//                 }
+//             });
+//         }
+//     }
+// })
 var actuserid = null;
 var app = new Vue({
     el: '#vuechat',
@@ -229,13 +229,14 @@ var app = new Vue({
         getlistnickname: function () {
             var that = this;
             $.ajax({
-                url: basePath + "/chat/lkfriends",
+                url: basePath + "/chat/findUserFriends",
                 data: "",
                 contentType: "application/json;charset=UTF-8",
                 type: "post",
                 dataType: "json",
                 success: function (data) {
                     that.listnickname = data;
+                    console.log(data);
                     document.getElementById('leftc').style.display = 'block';
                     document.getElementById('appLoading').style.display = 'none';
                 },
@@ -252,7 +253,7 @@ var app = new Vue({
             var that = this;
             $.ajax({
                 type: 'post',
-                url: basePath + '/chat/lkuschatmsg/' + username,
+                url: basePath + '/chat/findUserChatMsg/' + username,
                 dataType: 'json',
                 contentType: "application/json;charset=UTF-8",
                 success: function (msg) {
@@ -279,7 +280,7 @@ var websocket = null;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
     //连接WebSocket节点
-    websocket = new WebSocket("ws://localhost:8080/mheal/websocket/" + userid);
+    websocket = new WebSocket("ws://localhost:8080/mhealth/websocket/" + userid);
 } else {
     alert('Not support websocket')
 }

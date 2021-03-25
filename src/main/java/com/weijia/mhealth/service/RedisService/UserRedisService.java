@@ -35,13 +35,13 @@ public class UserRedisService {
     //格式：user:stu,Student student
     public void insertStu(Student student){
         studentRedisTemplate.opsForList().leftPush("user:stu",student);
-        studentRedisTemplate.expire("user:stu",1, TimeUnit.DAYS);
+        studentRedisTemplate.expire("user:stu",3, TimeUnit.HOURS);
     }
 
     //格式：user:doctor,Doctor doctor
     public void insertDoctor(Doctor doctor){
         doctorRedisTemplate.opsForList().leftPush("user:doctor",doctor);
-        doctorRedisTemplate.expire("user:doctor",1, TimeUnit.DAYS);
+        doctorRedisTemplate.expire("user:doctor",3, TimeUnit.HOURS);
     }
 
     public void removeStudentByValue(Student student) {
@@ -77,5 +77,9 @@ public class UserRedisService {
         List<Student> students = studentRedisTemplate.opsForList().range("user:stu", 0, 1);
         logger.info("所有在线学生列表->{}",JSON.toJSON(students));
         return students;
+    }
+
+    public void removeDoctorByValue(Doctor doctor) {
+        studentRedisTemplate.opsForList().remove("user:doctor",0,doctor);
     }
 }

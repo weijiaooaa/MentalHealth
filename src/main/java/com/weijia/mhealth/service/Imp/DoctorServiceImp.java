@@ -8,6 +8,8 @@ import com.weijia.mhealth.mapper.DoctorMapper;
 import com.weijia.mhealth.mapper.StudentMapper;
 import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
+import com.weijia.mhealth.utils.exception.CMSException;
+import com.weijia.mhealth.utils.exception.ResultCodeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class DoctorServiceImp implements DoctorService {
 
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private UserRedisService userRedisService;
 
     @Override
     public Doctor getDoctorById(Integer id) {
@@ -68,6 +73,24 @@ public class DoctorServiceImp implements DoctorService {
         Doctor doctor = doctorMapper.getDoctorByDoctorNumberAndPassword(doctorNumber,password);
         logger.info("get student is->{}", JSON.toJSON(doctor));
         return doctor;
+    }
+
+    @Override
+    public Boolean updateDoctorState(boolean state, Doctor doctor) {
+        //先删除Redis中的在线状态
+        try{
+            userRedisService.removeDoctorByValue(doctor);
+        }catch (Exception e){
+            throw new CMSException(ResultCodeEnum.UPDATE_DOCTOR_STATE_IN_REDIS);
+        }
+
+        Integer id = doctor.getId();
+        //再修改数据库中的状态
+        Integer res = doctorMapper.updateDoctorState(state,id);
+        if (res == 0)
+            throw new CMSException(ResultCodeEnum.UPDATE_DOCTOR_STATE_IN_DB);
+        else
+            return true;
     }
 
     /**

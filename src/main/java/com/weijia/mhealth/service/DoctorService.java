@@ -24,4 +24,6 @@ public interface DoctorService {
     List<Student> getStuState(boolean state);
 
     Doctor doctorChecked(String doctorNumber,String password);
+
+    Boolean updateDoctorState(boolean state, Doctor doctor);
 }

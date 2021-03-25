@@ -75,7 +75,7 @@ public class StudentServiceImp implements StudentService {
 
     @Override
     public Student getStuById(Integer id) {
-        return null;
+        return studentMapper.getStuById(id);
     }
 
     @Override

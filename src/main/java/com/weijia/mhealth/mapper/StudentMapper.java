@@ -47,4 +47,7 @@ public interface StudentMapper {
 
     @Select("select * from student where state = #{state}")
     List<Student> getDoctorState(boolean state);
+
+    @Select("select * from student where id = #{id}")
+    Student getStuById(Integer id);
 }

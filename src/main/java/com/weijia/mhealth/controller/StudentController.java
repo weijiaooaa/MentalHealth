@@ -131,6 +131,7 @@ public class StudentController {
         request.getSession().setAttribute("student",student);
 
         studentService.updateStudentState(true,student);
+        student = studentService.getStuByStuNumber(stuNumber);
 
         //个人信息注册到redis中
         try{
@@ -144,7 +145,7 @@ public class StudentController {
         //获取在线医生,先在Redis中去拿，如果找不到，再去数据库拿
         List<Doctor> doctorsOnline = userRedisService.getDoctorsOnline();
         if (doctorsOnline.size() != 0){
-            logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
+            logger.info("Redis中在线医生->{}",JSON.toJSON(doctorsOnline));
             request.setAttribute("doctorsOnline",doctorsOnline);
         }else{
             logger.info("Redis查无结果，即将查询数据库");
@@ -153,21 +154,22 @@ public class StudentController {
 
         //获取离线医生
         List<Doctor> doctorsOffline = doctorService.getDoctorState(false);
-        logger.info("在线医生->{}",JSON.toJSON(doctorsOnline));
+        logger.info("离线医生->{}",JSON.toJSON(doctorsOffline));
          request.setAttribute("doctorsOffline",doctorsOffline);
         return "stu/home";
     }
 
     /**
      * 学生注销登录
-     * @param student
+     * @param id
      * @param request
      * @return
      */
     @GetMapping(value = "/stu/return")
-    public String returnPage(Student student,HttpServletRequest request){
-        logger.info("删除redis中学生在线状态->{}",JSONUtils.toJSONString(student));
-        Boolean state = studentService.updateStudentState(false,student);
+    public String returnPage(Integer id,HttpServletRequest request){
+        logger.info("删除redis中学生在线状态id为->{}",id);
+        Student stu = studentService.getStuById(id);
+        Boolean state = studentService.updateStudentState(false,stu);
         if (state){
             request.getSession().setAttribute("student",null);
             logger.info("学生注销成功！");

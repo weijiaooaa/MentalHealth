@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 <title>MHeal</title>
-<link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"> <!-- Favicon-->
 <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
 <link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
@@ -271,17 +271,15 @@
 //            alert("你好")
             try{
                 _this = this
-                await axios.get("http://wthrcdn.etouch.cn/weather_mini?city=哈尔滨",datatype="json")
+                await axios.get("http://wthrcdn.etouch.cn/weather_mini?city=西安")
                     .then(res => {_this.weather = res.data.data})
             }catch (err){
                 console.log(err)
             }
 
-//            alert(this.weather.city)
-
             let temp = this.weather.forecast[0].fengli
 
-            this.fengli = temp.substring(10,12)
+            this.fengli = temp.substring(9,11)
             console.log(this.weather)
         }
     })

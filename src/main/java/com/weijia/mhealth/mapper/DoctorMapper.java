@@ -3,6 +3,7 @@ package com.weijia.mhealth.mapper;
 import com.weijia.mhealth.entity.Doctor;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -38,4 +39,7 @@ public interface DoctorMapper {
 
     @Select("select * from doctor where doctor_number = #{doctorNumber} and password = #{password}")
     Doctor getDoctorByDoctorNumberAndPassword(String doctorNumber, String password);
+
+    @Update("update doctor set state = #{state} where id = #{id}")
+    Integer updateDoctorState(boolean state, Integer id);
 }

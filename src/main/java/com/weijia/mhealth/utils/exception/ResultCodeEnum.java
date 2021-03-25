@@ -15,6 +15,8 @@ public enum ResultCodeEnum {
     HTTP_CLIENT_ERROR(false,205,"数组下标越界"),
     UPDATE_STU_STATE_IN_DB(false,206,"修改数据库学生在线状态错误"),
     UPDATE_STU_STATE_IN_REDIS(false,206,"Redis修改学生在线状态错误"),
+    UPDATE_DOCTOR_STATE_IN_REDIS(false,207,"Redis修改医生在线状态错误"),
+    UPDATE_DOCTOR_STATE_IN_DB(false,207,"db修改医生在线状态错误"),
     ;
 
     // 响应是否成功

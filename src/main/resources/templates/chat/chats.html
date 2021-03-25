@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <title>在线聊天</title>
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     <!-- Favicon-->
     <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
@@ -83,12 +83,12 @@
                                         </div>
                                         <ol id="leftc" style="display: none;">
                                             <li v-for="(item,index) in listnickname" :key="index"
-                                                @click="selectStyle (item,item.userid)"
+                                                @click="selectStyle (item,item.userId)"
                                                 :class="{'active':item.active,'unactive':!item.active,'leftnickename':true}">
                                                 <p>
-                                                    <img :src=item.uimg style="border-radius:50%;height:60px;">
+                                                    <img :src=item.userImg style="border-radius:50%;height:50px;">
                                                     <span :class="{'layui-badge-dot':item.newnote,'':!item.newnote,'newnoteid':true}"></span>
-                                                    {{item.nickname}}
+                                                    &nbsp&nbsp&nbsp&nbsp{{item.nickName}}
                                                 </p>
                                             </li>
                                         </ol>
@@ -111,14 +111,26 @@
                                             <div class="talk_show talkimg" id="msgcontent" onmouseover="leftscroll(3)"
                                                  onmouseleave="leftscroll(4)">
                                                 <div v-for="(msg,index) in listmessage" :key="index">
-                                                    <div v-if="msg.senduserid === loginusername">
+<!--                                                    <div v-if="msg.sendUserId === loginusername">-->
+<!--                                                        <div>-->
+<!--                                                            -->
+<!--                                                        </div>-->
+<!--                                                        <span v-html="msg.sendTime"></span>-->
+<!--                                                    </div>-->
+                                                    <div v-if="msg.sendUserId === loginusername">
                                                         <div class="rtalk" :id="index" @click="openimg(index)">
-                                                            <span v-html="msg.sendtext"></span>
+                                                            <div>
+                                                                <span style="background: #FFFFFF;color: black;font-size: 14px;padding: 0" v-html="msg.sendTimeToString"></span>
+                                                            </div>
+                                                            <span v-html="msg.sendText"></span>
                                                         </div>
                                                     </div>
-                                                    <div v-if="msg.senduserid != loginusername">
+                                                    <div v-if="msg.sendUserId != loginusername">
                                                         <div class="ltalk" :id="index" @click="openimg(index)">
-                                                            <span v-html="msg.sendtext"></span>
+                                                            <div>
+                                                                <span style="background: #FFFFFF;color: black;font-size: 14px;padding: 0" v-html="msg.sendTimeToString"></span>
+                                                            </div>
+                                                            <span v-html="msg.sendText"></span>
                                                         </div>
                                                     </div>
                                                 </div>

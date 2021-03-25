@@ -5,6 +5,7 @@ import com.weijia.mhealth.entity.Doctor;
 import com.weijia.mhealth.entity.Student;
 import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
+import com.weijia.mhealth.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class DoctorController {
 
     @Autowired
     private UserRedisService userRedisService;
+
+    @Autowired
+    private StudentService studentService;
 
     /**
      * 医生登录页面
@@ -88,11 +92,10 @@ public class DoctorController {
         logger.info("跳转到医生主页,doctorNumber->{}",doctorNumber);
         Doctor doctor = doctorService.getStuByStuNumber(doctorNumber);
         request.getSession().setAttribute("doctor",doctor);
-
-        //往session中存入医生聊天帐号
-//        Login login = loginService.getLoginFromDoctor(doctor);
-//        String userid = loginService.justLogin(login);
         request.getSession().setAttribute("userid",doctor.getId());
+
+        doctorService.updateDoctorState(true,doctor);
+        doctor = doctorService.getStuByStuNumber(doctorNumber);
 
         //个人信息注册到redis中
         try{
@@ -132,5 +135,17 @@ public class DoctorController {
     public String returnPage(HttpServletRequest request){
         request.getSession().setAttribute("doctor",null);
         return "redirect:/doctor";
+    }
+
+    @GetMapping(value = "/doctor/toChatPage")
+    public String toChatPage(HttpServletRequest request){
+        Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+
+        //获取聊天学生id 和 图像编号
+        String stuId = request.getParameter("studentId");
+        request.setAttribute("student",studentService.getStuById(Integer.valueOf(stuId)));
+        request.setAttribute("iconNum",request.getParameter("iconNum"));
+
+        return "/chat/chats";
     }
 }
