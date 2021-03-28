@@ -37,5 +37,6 @@ public class Question {
     private List<QuestionAndTag> questionAndTags;
 
     private String createTime;
+    private String updateTime;
 
 }

@@ -261,13 +261,20 @@ public class StudentController {
         //添加浏览数
         questionService.insertViewCount(question.getId());
         logger.info("question的id->{},查出的question->{}",question.getId(),JSON.toJSON(question));
-        String createTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(question.getGmtCreate()));
+        String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(question.getGmtCreate()));
+
+        List<AskAndAnswer> answers = question.getAskAndAnsList();
+
+        for (AskAndAnswer answer :answers){
+            if (answer.getGmtModified() != null)
+                answer.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(answer.getGmtModified())));
+        }
 
         modelAndView.addObject("updateTime",createTime);
         modelAndView.addObject("question",question);
         modelAndView.addObject("student",question.getStudent());
 
-        modelAndView.addObject("askAndAns_s",question.getAskAndAnsList());
+        modelAndView.addObject("askAndAns_s",answers);
         modelAndView.addObject("questionAndTags",question.getQuestionAndTags());
         modelAndView.setViewName("/stu/viewQuestion");
 

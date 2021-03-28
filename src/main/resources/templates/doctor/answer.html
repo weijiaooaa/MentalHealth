@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:class="http://www.w3.org/1999/xhtml" class="no-js " lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <title>医生回答问题页面</title>
     <!-- Favicon-->
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     <!-- Font Icon -->
@@ -177,14 +177,14 @@
 
                                     <div class="media-body">
                                         <div class="media-heading">
-                                            <a th:href="@{/mail-single.html}" class="m-r-10">[[${student.username}]]</a>
+                                            <a th:href="@{/mail-single.html}" class="m-r-10" style="color: red;font-family: 'Material-Design-Iconic-Font'">[[${student.name}]]</a>
 
                                             <span th:if="${questionAndTag} != null" th:each="questionAndTag : ${questionAndTags}" class="badge bg-blue">
                                                 [[${questionAndTag.tag.tagName}]]
                                             </span>
 
                                             <small class="float-right text-muted"><time class="hidden-sm-down"
-                                                    datetime="2017">[[${question.updateTime}]]</time><i
+                                                    datetime="2017">[[${question.createTime}]]</time><i
                                                     class="zmdi zmdi-attachment-alt"></i> </small>
                                         </div>
                                             <p class="msg">[[${question.content}]]</p>
@@ -208,7 +208,7 @@
                                     </div>
 
                                     <div class="media-body">
-                                       <small style="color: #3eacff;">你的回答</small>
+                                       <small style="color: #3eacff;font-size: 20px;">你的回答</small>
                                     </div>
                                 </div>
                             </li>
@@ -236,7 +236,7 @@
                     <!-- 已回答 -->
                     <div id="answer"class="body col-lg-12 col-md-12 col-sm-12" th:each="askAndAns : ${askAndAns_s}">
                         <!--若doctor非空，才遍历-->
-                        <div th:if="${askAndAns.doctor} != null">
+                        <div th:if="${askAndAns.doctor} != null" style="margin-left: 55px">
                                 <!-- 问 -->
                                 <ul class="mail_list list-group list-unstyled">
                                     <li class="list-group-item">
@@ -249,7 +249,8 @@
 
                                             <div class="media-body">
                                                 <div class="media-heading">
-                                                    <a href="#" class="m-r-10">[[${askAndAns.doctor.username}]]的回答</a>
+                                                    <a href="#"  style="color: red;font-family: 'Material-Design-Iconic-Font'">[[${askAndAns.doctor.name}]]医生</a>
+                                                    <a>的回答</a>
                                                     <!--<span class="badge bg-blue">压力</span>-->
                                                     <small class="float-right text-muted"><time class="hidden-sm-down"
                                                                                                 datetime="2017">[[${askAndAns.updateTime}]]</time><i
@@ -299,7 +300,7 @@
             //得到tags信息
             created : async function () {
                 _this = this;
-                await axios.get("/mheal/question/getTags").then(res => {
+                await axios.get("/mhealth/question/getTags").then(res => {
                     _this.tags = res.data;
                     //console.log(_this.tags);
                 })
@@ -324,14 +325,13 @@
 
                         //异步提交表单，即使有返回页面，也不会实现页面跳转
                         try{
-                            await axios.post('/mheal/doctor/submitAns',formdata,config).then(res => {
-                                alert("提交回答")
+                            await axios.post('/mhealth/doctor/submitAns',formdata,config).then(res => {
                             })
                         }catch (err){
                             console.log(err)
                         }
 
-                        location.href="/mheal/doctor/toQuesHood";
+                        location.href="/mhealth/doctor/toQuesHood";
                     }else{
                         this.msg1 = '回答不能为空';
                     }
@@ -356,7 +356,7 @@
                         //检测该label名是否存在
                         let temp  = "";
                         try{
-                            await axios.get('/mheal/question/getTagByName?tagName=' + _this.label).then(res=>{
+                            await axios.get('/mhealth/question/getTagByName?tagName=' + _this.label).then(res=>{
                                 temp = res.data;
                             })
                         }catch(err){
@@ -374,15 +374,14 @@
                                 }
                             }
                             try{
-                                axios.post('/mheal/question/submitTag',formdata,config).then(res=>{
-                                        alert("提交标签");
+                                axios.post('/mhealth/question/submitTag',formdata,config).then(res=>{
                                     }
                                 )
                             }catch (err){
                                 console.log(err);
                             }
                             this.show = false;
-                            location.href = "/mheal/doctor/toAnsPage?id=" + this.question_id;
+                            location.href = "/mhealth/doctor/toAnsPage?id=" + this.question_id;
                         }else{
                             this.msg = "标签名已存在"
                         }

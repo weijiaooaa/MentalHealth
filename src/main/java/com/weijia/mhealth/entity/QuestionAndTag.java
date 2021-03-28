@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestionAndTag {
     private int id;
-    private String quest_id;
+    private Integer questId;
     private Tag tag;
 }

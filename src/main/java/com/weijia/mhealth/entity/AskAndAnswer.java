@@ -14,11 +14,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AskAndAnswer {
     private Integer id;
-    private String quest_id;
+    private Integer questId;
     private Doctor doctor;
     private Student student;
     private String answer;
     private Long gmtCreate;
 
     private Long gmtModified;
+
+    private String createTime;
+    private String updateTime;
 }

@@ -82,7 +82,7 @@
         <div class="block-header">
             <div class="row">
                 <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2>在线问答</h2>
+                    <h2>问题详页</h2>
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
 
                                     <div class="media-body">
                                         <div class="media-heading">
-                                            <a th:href="@{/mail-single.html}" class="m-r-10">[[${student.name}]]</a>
+                                            <a th:href="@{/mail-single.html}" class="m-r-10" style="color: red;font-family: 'Material-Design-Iconic-Font'">[[${student.name}]]</a>
 
                                             <span th:if="${questionAndTag} != null" th:each="questionAndTag : ${questionAndTags}" class="badge bg-blue">
                                                 [[${questionAndTag.tag.tagName}]]
@@ -199,7 +199,7 @@
                     <!-- 已回答 -->
                     <div id="answer"class="body col-lg-12 col-md-12 col-sm-12" th:each="askAndAns : ${askAndAns_s}">
                         <!--若doctor非空，才遍历-->
-                        <div th:if="${askAndAns.doctor} != null">
+                        <div th:if="${askAndAns.doctor} != null" style="margin-left: 65px">
                                 <!-- 问 -->
                                 <ul class="mail_list list-group list-unstyled">
                                     <li class="list-group-item">
@@ -212,7 +212,8 @@
 
                                             <div class="media-body">
                                                 <div class="media-heading">
-                                                    <a href="#" class="m-r-10">[[${askAndAns.doctor.username}]]的回答</a>
+                                                    <a href="#"  style="color: red;font-family: 'Material-Design-Iconic-Font'">[[${askAndAns.doctor.name}]]</a>
+                                                    <a>的回答</a>
                                                     <!--<span class="badge bg-blue">压力</span>-->
                                                     <small class="float-right text-muted"><time class="hidden-sm-down"
                                                                                                 datetime="2017">[[${askAndAns.updateTime}]]</time><i

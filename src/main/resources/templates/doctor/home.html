@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
-<title>MHeal</title>
+<title>MHealth</title>
 <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"> <!-- Favicon-->
 <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
@@ -78,7 +78,7 @@
                         <div class="row clearfix">
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
-                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="501" data-speed="1000" data-fresh-interval="700">501</p>
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="31" data-speed="1000" data-fresh-interval="700">31</p>
                                     <a th:href="@{/doctor/toContactPage(id=${session.doctor.id})}">
                                         <h2 style="font-size: 1.5rem" class="text-muted">我的回答</h2>
                                     </a>
@@ -87,8 +87,8 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
-                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="2501" data-speed="2000" data-fresh-interval="700">2501</p>
-                                    <a th:href="@{/question/toQuesHoodPage(id=${session.doctor.id})}">
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="25" data-speed="2000" data-fresh-interval="700">25</p>
+                                    <a th:href="@{/doctor/toQuesHood(id=${session.doctor.id})}">
                                         <h2 style="font-size: 1.5rem" class="text-muted ">问题空间</h2>
                                     </a>
                                     <span id="linecustom2">2,9,5,5,8,5,4,2,6</span>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
-                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="6051" data-speed="2000" data-fresh-interval="700">6051</p>
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="17" data-speed="2000" data-fresh-interval="700">17</p>
                                     <a th:href="@{/doctor/toAnsHood(id=${session.doctor.id})}">
                                         <h2 style="font-size: 1.5rem" class="text-muted">问答社区</h2>
                                     </a>
@@ -135,10 +135,10 @@
                                 <td>
                                     <img class="rounded-circle" th:src="@{'/assets/images/xs/avatar' + (${studentStat.count} % 10) + '.jpg'}" src="/assets/images/xs/avatar1.jpg" alt="user" width="40"> </td>
                                 <td>
-                                    <a href="javascript:;">[[${student.name}]]</a>
+                                    <a href="javascript:;" style="font-size: 14px">[[${student.name}]]</a>
                                 </td>
                                 <td>
-                                    <a href="javascript:;">[[${student.stuNumber}]]</a>
+                                    <a href="javascript:;" style="color: black">[[${student.stuNumber}]]</a>
                                 </td>
                                 <td th:if="${student.gender} == 0">男</td>
                                 <td th:if="${student.gender} == 1">女</td>
@@ -147,7 +147,7 @@
                                     <small>[[${student.tel}]]</small>
                                 </td>
                                 <td>
-                                    <small style="color: #00ff00">在线</small>
+                                    <small style="font-size:15px;color: #00ff00">在线</small>
                                 </td>
                                 <td>
                                     <a th:href="@{/doctor/toChatPage} + '?studentId=' + ${student.id} + '&iconNum=' + ${studentStat.count}">
@@ -159,10 +159,10 @@
                                 <td>
                                     <img class="rounded-circle" th:src="@{'/assets/images/xs/avatar' + (${studentStat.count} % 10) + '.jpg'}" src="/assets/images/xs/avatar1.jpg" alt="user" width="40"> </td>
                                 <td>
-                                    <a href="javascript:;">[[${student.name}]]</a>
+                                    <a href="javascript:;" style="font-size: 14px">[[${student.name}]]</a>
                                 </td>
                                 <td>
-                                    <a href="javascript:;">[[${student.stuNumber}]]</a>
+                                    <a href="javascript:;" style="color: black">[[${student.stuNumber}]]</a>
                                 </td>
                                 <td th:if="${student.gender} == 0">男</td>
                                 <td th:if="${student.gender} == 1">女</td>
@@ -268,7 +268,6 @@
 
         created : async function () {
 
-//            alert("你好")
             try{
                 _this = this
                 await axios.get("http://wthrcdn.etouch.cn/weather_mini?city=西安")

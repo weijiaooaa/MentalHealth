@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <title>问答社区</title>
     <!-- Favicon-->
     <link rel="icon" th:href="@{/favicon.ico}" href="favicon.ico" type="image/x-icon">
     <!-- Font Icon -->
@@ -306,7 +306,7 @@
 
                 //跳转到查询问题页面
                 toViewPage : function (questionParam) {
-                    location.href="/mheal/stu/toViewPage?id=" + questionParam.id;
+                    location.href="/mhealth/stu/toViewPage?id=" + questionParam.id;
                 },
 
                 dateSelect: async function (date) {
@@ -314,7 +314,7 @@
 
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -328,12 +328,11 @@
                 },
                 //选择标签
                 tagSelected : async function (tag) {
-//                    alert(tag.id)
                     this.t_id = tag.id;
                     this.tagName = tag.tagName;
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByTag?tag=" + this.t_id).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=" + this.t_id).then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -356,7 +355,7 @@
                     this.tagName = "焦虑"
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByTag?tag=1").then(res => {
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=1").then(res => {
                             _this.questions = res.data;
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -385,13 +384,11 @@
 
                     this.dateTime = date.year + "-" + date.month + "-" +date.date;
                     console.log(this.dateTime);
-
-                    this.dateTime="2020-03-17"
                     //默认今天
                     let temp = [];
                     try{
                         _this = this;
-                        await axios.get("/mheal/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
+                        await axios.get("/mhealth/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
                             _this.questions = res.data
                             if(!$.isEmptyObject(_this.questions)){
                                 this.flag = false;
@@ -414,7 +411,7 @@
                 try{
                     _this = this;
                     var temp = [];
-                    await axios.get("/mheal/stu/getQuesByTag?tag=1").then(res => {
+                    await axios.get("/mhealth/stu/getQuesByTag?tag=1").then(res => {
 //                        _this.questions = res.data;
                         temp = res.data;
                         if(!$.isEmptyObject(temp)){

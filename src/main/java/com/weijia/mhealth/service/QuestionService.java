@@ -1,8 +1,6 @@
 package com.weijia.mhealth.service;
 
-import com.weijia.mhealth.entity.Question;
-import com.weijia.mhealth.entity.Student;
-import com.weijia.mhealth.entity.Tag;
+import com.weijia.mhealth.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,4 +27,14 @@ public interface QuestionService {
     List<Question> getQuestionByDate(String dateTime);
 
     void insertViewCount(Integer id);
+
+    PageData<Question> getPageData(PageData<Question> pageData);
+
+    List<Question> getQuestions(PageData<Question> pageData, int begin, int end);
+
+    Question getQuestionById(Integer questionId);
+
+    void setQuesStatus(Integer questionId,Long updateTime);
+
+    void updateAskAndAns(AskAndAnswer askAndAns, QuestionAndTag questionAndTag);
 }
