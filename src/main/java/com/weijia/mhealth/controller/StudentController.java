@@ -3,11 +3,8 @@ package com.weijia.mhealth.controller;
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
 import com.weijia.mhealth.entity.*;
-import com.weijia.mhealth.service.DoctorService;
-import com.weijia.mhealth.service.LoginService;
-import com.weijia.mhealth.service.QuestionService;
+import com.weijia.mhealth.service.*;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
-import com.weijia.mhealth.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +41,9 @@ public class StudentController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private ChatFriendsService chatFriendsService;
     /**
      * 跳转到登录页面
      * @param httpServletRequest
@@ -127,7 +127,7 @@ public class StudentController {
         Login login = loginService.getLoginFromStu(student);
         logger.info("login from Stu->{}",JSON.toJSON(login) );
         String userid = loginService.justLogin(login);
-        request.getSession().setAttribute("userid",userid);
+        request.getSession().setAttribute("userid",Integer.valueOf(userid));
         request.getSession().setAttribute("student",student);
 
         studentService.updateStudentState(true,student);
@@ -302,6 +302,35 @@ public class StudentController {
     @GetMapping(value = "/stu/toActivities")
     public String toActivityPage() {
         return "/stu/activities";
+    }
+
+    /**
+     * 跳转到在线聊天系统
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/stu/toChatPage")
+    public String toChatPage(HttpServletRequest request){
+        Student student = (Student) request.getSession().getAttribute("student");
+
+        //获取聊天医生id 和 图像编号
+        String doctorId = request.getParameter("doctorId");
+        Doctor doctor = doctorService.getDoctorById(Integer.valueOf(doctorId));
+        request.setAttribute("doctor",doctor);
+        request.setAttribute("iconNum",request.getParameter("iconNum"));
+
+        //得到学生和所有医生的聊天关系
+        List<Integer> chatFriendsId = chatFriendsService.getFriendsId(student.getId());
+        //判断该医生是否和学生已经建立聊天关系
+        for (Integer id :chatFriendsId) {
+            if(id.equals(Integer.valueOf(doctorId))){
+                return "/chat/chats";
+            }
+        }
+        //建立学生和医生之间的聊天关系
+        chatFriendsService.setChatFriends(student.getId(),Integer.valueOf(doctorId));
+
+        return "/chat/chats";
     }
 
 }

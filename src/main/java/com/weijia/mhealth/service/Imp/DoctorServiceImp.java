@@ -1,7 +1,6 @@
 package com.weijia.mhealth.service.Imp;
 
 import com.alibaba.fastjson.JSON;
-import com.weijia.mhealth.controller.StudentController;
 import com.weijia.mhealth.entity.Doctor;
 import com.weijia.mhealth.entity.Student;
 import com.weijia.mhealth.mapper.DoctorMapper;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

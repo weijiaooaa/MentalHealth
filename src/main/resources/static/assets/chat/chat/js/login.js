@@ -24,7 +24,7 @@ function submitlogin() {
         return false;
     }
     var object = new Object(); //创建一个存放数据的对象
-    object["username"] = username;
+    object["accountName"] = username;
     object["password"] = password;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({

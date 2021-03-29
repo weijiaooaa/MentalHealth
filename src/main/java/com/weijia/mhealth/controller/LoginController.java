@@ -41,7 +41,7 @@ public class LoginController {
         if(userId==null){
             return R.error().message("账号或者密码错误");
         }
-        session.setAttribute("userId",userId);
+        session.setAttribute("userId",Integer.valueOf(userId));
         return R.ok().message("登录成功");
     }
 

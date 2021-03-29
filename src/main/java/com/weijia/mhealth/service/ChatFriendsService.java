@@ -15,4 +15,10 @@ public interface ChatFriendsService {
     Object LkUserinfoByUserid(String uid);
 
     List<ChatFriends> findUserAllFriends(Integer userId);
+
+    List<Integer> getFriendsId(Integer id);
+
+    void setChatFriends(Integer userId, Integer doctorId);
+
+    List<ChatFriends> findUserAllFriendsInStu(Integer id);
 }
