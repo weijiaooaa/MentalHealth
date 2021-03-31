@@ -51,7 +51,7 @@
                         <strong style="color: #0d97ff">专栏：</strong>
                     </a>
                     <div class="card">
-                        <div class="body">
+                        <a th:href="@{/study/toStudyPage}"><div class="body">
                             <div class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item text-center active">
@@ -92,93 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-12">
-            <div class="row clearfix">
-                <div class="col-sm-12">
-                    <strong style="color: #0d97ff">排行榜：</strong>
-                    <table class="table table-striped m-b-0">
-                        <tbody>
-                        <tr>
-                            <td><strong style="color: red">1</strong></td>
-                            <a href="#"><td class="font-medium">我想要的东西更贵，想去的地方更远</td></a>
-                        </tr>
-                        <tr>
-                            <td><strong style="color:orange">2</strong></td>
-                            <td class="font-medium"></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: yellow">3</strong></td>
-                            <td class="font-medium"></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color:purple">4</strong></td>
-                            <td class="font-medium"></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color:black">5</strong></td>
-                            <td class="font-medium"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8 col-md-12">
-            <div class="row clearfix">
-                <div class="col-sm-12">
-                    <a th:href="@{/study/toStudyPage}">
-                        <strong style="color: #0d97ff">视频：</strong>
-                    </a>
-                    <div class="card">
-                        <div class="body">
-                            <div class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item text-center active">
-                                        <div class="col-12">
-                                            <ul class="row days-list list-unstyled">
-                                                <li class="day col-4">
-                                                    <p>doc1</p>
-                                                    <img th:src="@{/assets/images/image-gallery/1.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc2</p>
-                                                    <img th:src="@{/assets/images/image-gallery/2.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc3</p>
-                                                    <img th:src="@{/assets/images/image-gallery/3.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item text-center">
-                                        <div class="col-12">
-                                            <ul class="row days-list list-unstyled">
-                                                <li class="day col-4">
-                                                    <p>doc4</p>
-                                                    <img th:src="@{/assets/images/image-gallery/4.jpg}" src="../html/assets/images/image-gallery/4.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc5</p>
-                                                    <img th:src="@{/assets/images/image-gallery/5.jpg}" src="../html/assets/images/image-gallery/5.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc6</p>
-                                                    <img th:src="@{/assets/images/image-gallery/3.jpg}" src="../html/assets/images/image-gallery/6.jpg" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div></a>
                     </div>
                 </div>
             </div>
@@ -215,93 +129,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-8 col-md-12">
-            <div class="row clearfix">
-                <div class="col-sm-12">
-                    <a th:href="@{/study/toStudyPage}">
-                        <strong style="color: #0d97ff">音乐：</strong>
-                    </a>
-                    <div class="card">
-                        <div class="body">
-                            <div class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item text-center active">
-                                        <div class="col-12">
-                                            <ul class="row days-list list-unstyled">
-                                                <li class="day col-4">
-                                                    <p>doc1</p>
-                                                    <img th:src="@{/assets/images/image-gallery/1.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc2</p>
-                                                    <img th:src="@{/assets/images/image-gallery/2.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc3</p>
-                                                    <img th:src="@{/assets/images/image-gallery/3.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item text-center">
-                                        <div class="col-12">
-                                            <ul class="row days-list list-unstyled">
-                                                <li class="day col-4">
-                                                    <p>doc4</p>
-                                                    <img th:src="@{/assets/images/image-gallery/4.jpg}" src="../html/assets/images/image-gallery/4.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc5</p>
-                                                    <img th:src="@{/assets/images/image-gallery/5.jpg}" src="../html/assets/images/image-gallery/5.jpg" alt="">
-                                                </li>
-                                                <li class="day col-4">
-                                                    <p>doc6</p>
-                                                    <img th:src="@{/assets/images/image-gallery/3.jpg}" src="../html/assets/images/image-gallery/6.jpg" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-12">
-            <div class="row clearfix">
-                <div class="col-sm-12">
-                    <strong style="color: #0d97ff">排行榜：</strong>
-                    <table class="table table-striped m-b-0">
-                        <tbody>
-                        <tr>
-                            <td><strong style="color: red">1</strong></td>
-                            <a href="#"><td class="font-medium">For you</td></a>
-                        </tr>
-                        <tr>
-                            <td><strong style="color:orange">2</strong></td>
-                            <a href="#"><td class="font-medium">命ばっかり</td></a>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: yellow">3</strong></td>
-                            <a href="#"><td class="font-medium">冠世一战</td></a>
-                        </tr>
-                        <tr>
-                            <td><strong style="color:purple">4</strong></td>
-                            <a href="#"><td class="font-medium">The Biggest Dreamer</td></a>
-                        </tr>
-                        <tr>
-                            <td><strong style="color:black">5</strong></td>
-                            <a href="#"><td class="font-medium">keep on</td></a>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </aside>

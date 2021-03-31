@@ -42,4 +42,7 @@ public interface DoctorMapper {
 
     @Update("update doctor set state = #{state} where id = #{id}")
     Integer updateDoctorState(boolean state, Integer id);
+
+    @Select("select * from doctor")
+    List<Doctor> getAllDoctor();
 }

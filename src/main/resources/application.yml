@@ -56,6 +56,13 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
 logging:
   level:
     com.weijia.mhealth.mapper: debug

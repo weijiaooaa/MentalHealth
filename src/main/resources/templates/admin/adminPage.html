@@ -1,0 +1,56 @@
+<div id="admin_page" class="col-lg-12">
+    <div class="card">
+        <div class="header">
+            <h2><strong>管理员信息</strong></h2>
+        </div>
+        <div class="body">
+            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                <thead>
+                <tr>
+                    <th>工号</th>
+                    <th>用户名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>电话</th>
+                    <th>邮箱</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody th:each="admin:${admPageInfo.list}">
+                <tr>
+                    <td th:text="${admin.id}"></td>
+                    <td th:text="${admin.name}"></td>
+                    <td th:if="${admin.gender}==0">男</td>
+                    <td th:if="${admin.gender}==1">女</td>
+                    <td th:text="${admin.age}+'岁'"></td>
+                    <td th:text="${admin.tel}"></td>
+                    <td th:text="${admin.email}"></td>
+                    <td>
+                        <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                        <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="body">
+            <ul class="pagination pagination-primary m-b-0">
+                <li class="page-item" th:if="${admPageInfo.hasPreviousPage == true}">
+                    <a class="page-link" href="javascript:void(0);" th:onclick="|getAdminPage(${admPageInfo.prePage})|">
+                        <i class="zmdi zmdi-arrow-left"></i></a></li>
+                <div th:each="nav:${admPageInfo.navigatepageNums}">
+                    <li class="page-item "  th:if="${nav != admPageInfo.pageNum}">
+                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getAdminPage(${admPageInfo.prePage})|" ></a></li>
+                    <li class="page-item active"  th:if="${nav == admPageInfo.pageNum}">
+                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getAdminPage(${admPageInfo.prePage})|" ></a></li>
+                </div>
+
+                <li class="page-item" th:if="${admPageInfo.hasNextPage == true}">
+                    <a class="page-link" href="javascript:void(0);" th:onclick="|getAdminPage(${admPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

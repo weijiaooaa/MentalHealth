@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <title>文章编辑</title>
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     <!-- Favicon-->
     <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2>&nbsp;</h2>
-                    <h2>文件上传</h2>
+                    <h2>编辑文章</h2>
                 </div>
             </div>
         </div>
@@ -78,14 +78,14 @@
                         <div id="header_Padding" class="header">
                             <h2><strong>基本信息</strong></h2>
                             <div class="header">
-                                <h2><strong>专栏</strong></h2>
+                                <h2><strong>作者</strong></h2>
                             </div>
                         </div>
 
                         <div id="upload_Img" class="body">
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <form method="post" enctype="multipart/form-data">
-                                    <input v-model="url" name="file" type="file" @click="preview"/>
+                                    <input v-model="creator" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
                                 </form>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8">
@@ -96,7 +96,7 @@
 
                 <!-- 标题 -->
                 <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 10px;">
                         <div class="card">
                             <div id="header_Padding" class="header">
                                 <div id="header_Padding" class="header">
@@ -114,11 +114,50 @@
                     </div>
                 </div>
 
+                <!--内容-->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 10px;">
+                        <div class="card">
+                            <div id="header_Padding" class="header">
+                                <div id="header_Padding" class="header">
+                                    <h2><strong>内容</strong></h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <textarea v-model="content" class="form-control" id="exampleInputEmail3" rows="5"></textarea>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 10px;">
+                        <div class="card">
+                            <div id="header_Padding" class="header">
+                                <div id="header_Padding" class="header">
+                                    <h2><strong>图片地址</strong></h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <input v-model="url" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
                 <!-- 标签 -->
                 <div id="upload_Padding" class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 20px;">
                         <div class="card">
                             <div id="header_Padding" class="header">
                                     <h2><strong>标签</strong></h2>
@@ -237,6 +276,8 @@
             el:"#app",
             data:{
                 title:'',
+                creator:"",
+                content:"",
                 //注意vue中可以写thymeleaf的插值表达式
                 question_id:"",
                 student_id:"",
@@ -255,7 +296,7 @@
             //得到tags信息
             created : async function () {
                 _this = this;
-                await axios.get("/mheal/question/getTags").then(res => {
+                await axios.get("/mhealth/question/getTags").then(res => {
                     _this.tags = res.data;
                     console.log(_this.tags);
                 })
@@ -310,16 +351,18 @@
                 //提交回答，并向后台发送问题id和医生id
                 submitFile: async function () {
 
-                    alert(this.url);
 //                    alert(this.title);
-                    if(!$.isEmptyObject(this.title) && !$.isEmptyObject(this.tagSelected)){
+                    if(!$.isEmptyObject(this.title) && !$.isEmptyObject(this.tagSelected) && !$.isEmptyObject(this.content)){
                         let formdata = new FormData();
+                        formdata.append("creator",this.creator);
                         formdata.append("url",this.url);
                         console.log(this.url);
                         formdata.append("title",this.title);
                         console.log(this.title);
                         formdata.append("tags",this.tagSelected);
                         console.log(this.tagSelected);
+                        formdata.append("content",this.content);
+                        console.log(this.content);
 
                         let config = {
                             headers: {
@@ -329,14 +372,14 @@
 
                         //异步提交表单，即使有返回页面，也不会实现页面跳转
                         try{
-                            await axios.post('/mheal/admin/postFile',formdata,config).then(res => {
+                            await axios.post('/mhealth/admin/postDocument',formdata,config).then(res => {
                                 alert("提交回答")
                             })
                         }catch (err){
                             console.log(err)
                         }
 
-                        location.href="/mheal/admin/toResourceManager";
+                        location.href="/mhealth/admin/toResourceManager";
                     }else{
                         this.msg1 = '回答不能为空';
                     }
@@ -381,7 +424,7 @@
                         //检测该label名是否存在
                         let temp  = "";
                         try{
-                            await axios.get('/mheal/question/getTagByName?tagName=' + _this.label).then(res=>{
+                            await axios.get('/mhealth/question/getTagByName?tagName=' + _this.label).then(res=>{
                                 temp = res;
                             })
                         }catch(err){
@@ -407,7 +450,7 @@
                                 console.log(err);
                             }
                             this.show = false;
-                            location.href = "/mheal/doctor/toAnsPage?id=" + this.question_id;
+                            location.href = "/mhealth/doctor/toAnsPage?id=" + this.question_id;
                         }else{
                             this.msg = "标签名已存在"
                         }

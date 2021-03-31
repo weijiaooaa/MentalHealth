@@ -118,4 +118,13 @@ public interface QuestionMapper {
 
     @Insert("insert into questions_and_tags(quest_id, tag_id) values (#{questId}, #{tagId})")
     void insertQuesWithTag(Integer questId, Integer tagId);
+
+    @Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "id",property = "student",one = @One(select = "com.weijia.mhealth.mapper.StudentMapper.getStuByQuesId",fetchType= FetchType.DEFAULT)),
+            @Result(column = "id",property = "askAndAnsList",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getAskAndAns",fetchType=FetchType.DEFAULT)),
+            @Result(column = "id",property = "questionAndTags",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getQuestionAndTagByQid",fetchType=FetchType.DEFAULT)),
+    })
+    @Select("select * from question where status = '1'")
+    List<Question> getAllQuestion();
 }

@@ -69,7 +69,7 @@ public class UserRedisService {
     //得到在线医生
     public List<Doctor> getDoctorsOnline() {
         List<Doctor> doctors = doctorRedisTemplate.opsForList().range("user:doctor", 0, 1);
-        logger.info("所有在线医生列表->{}",JSON.toJSON(doctors));
+        logger.info("Redis中在线医生列表->{}",JSON.toJSON(doctors));
         return doctors;
     }
 

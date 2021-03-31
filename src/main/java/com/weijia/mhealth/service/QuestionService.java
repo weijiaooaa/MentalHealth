@@ -1,5 +1,6 @@
 package com.weijia.mhealth.service;
 
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.*;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,6 @@ public interface QuestionService {
     void setQuesStatus(Integer questionId,Long updateTime);
 
     void updateAskAndAns(AskAndAnswer askAndAns, QuestionAndTag questionAndTag);
+
+    PageInfo<Question> getAllQuestion(Integer pageNum, Integer pageSize);
 }

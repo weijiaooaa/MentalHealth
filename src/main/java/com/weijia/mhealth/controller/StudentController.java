@@ -44,6 +44,9 @@ public class StudentController {
 
     @Autowired
     private ChatFriendsService chatFriendsService;
+
+    @Autowired
+    private ResourcesService resourcesService;
     /**
      * 跳转到登录页面
      * @param httpServletRequest
@@ -127,8 +130,10 @@ public class StudentController {
         Login login = loginService.getLoginFromStu(student);
         logger.info("login from Stu->{}",JSON.toJSON(login) );
         String userid = loginService.justLogin(login);
+        List<Document> documents = resourcesService.getAllDocument();
         request.getSession().setAttribute("userid",Integer.valueOf(userid));
         request.getSession().setAttribute("student",student);
+        request.getSession().setAttribute("documents",documents);
 
         studentService.updateStudentState(true,student);
         student = studentService.getStuByStuNumber(stuNumber);
@@ -149,7 +154,8 @@ public class StudentController {
             request.setAttribute("doctorsOnline",doctorsOnline);
         }else{
             logger.info("Redis查无结果，即将查询数据库");
-            doctorService.getDoctorState(true);
+            List<Doctor> doctorList = doctorService.getDoctorState(true);
+            request.setAttribute("doctorsOnline",doctorList);
         }
 
         //获取离线医生

@@ -1,5 +1,6 @@
 package com.weijia.mhealth.service;
 
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.Doctor;
 import com.weijia.mhealth.entity.Student;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,6 @@ public interface DoctorService {
     Doctor doctorChecked(String doctorNumber,String password);
 
     Boolean updateDoctorState(boolean state, Doctor doctor);
+
+    PageInfo<Doctor> getAllDoctor(Integer pageNum, Integer pageSize);
 }

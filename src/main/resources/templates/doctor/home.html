@@ -76,7 +76,7 @@
                 <div class="card">
                     <div class="body">
                         <div class="row clearfix">
-                            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
                                 <div class="body">
                                     <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="31" data-speed="1000" data-fresh-interval="700">31</p>
                                     <a th:href="@{/doctor/toContactPage(id=${session.doctor.id})}">
@@ -85,7 +85,7 @@
                                     <span id="linecustom1">1,4,2,6,5,2,3,8,5,2</span>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
                                 <div class="body">
                                     <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="25" data-speed="2000" data-fresh-interval="700">25</p>
                                     <a th:href="@{/doctor/toQuesHood(id=${session.doctor.id})}">
@@ -94,13 +94,22 @@
                                     <span id="linecustom2">2,9,5,5,8,5,4,2,6</span>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
                                 <div class="body">
                                     <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="17" data-speed="2000" data-fresh-interval="700">17</p>
                                     <a th:href="@{/doctor/toAnsHood(id=${session.doctor.id})}">
                                         <h2 style="font-size: 1.5rem" class="text-muted">问答社区</h2>
                                     </a>
                                     <span id="linecustom3">1,5,3,6,6,3,6,8,4,2</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                                <div class="body">
+                                    <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="17" data-speed="2000" data-fresh-interval="700">17</p>
+                                    <a th:href="@{/admin/toDocumentUpload}">
+                                        <h2 style="font-size: 1.5rem" class="text-muted">创建美文</h2>
+                                    </a>
+                                    <span id="linecustom4">1,5,3,6,6,3,6,8,4,2</span>
                                 </div>
                             </div>
                         </div>

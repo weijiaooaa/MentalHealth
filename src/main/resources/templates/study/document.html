@@ -5,8 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+<meta name="referrer" content="no-referrer"/>
 
-<title>:: MHeal Bootstrap4 Admin ::</title>
+<title>文章详页</title>
 <!-- Favicon-->
 <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
 <!-- Font Icon -->
@@ -164,7 +165,7 @@
                     <div class="body">
                         <div class="row">
                             <div class="col-md-12">
-                                <h4 class="m-t-0 m-b-20">Your updated item adminX</h4>
+                                <h4 class="m-t-0 m-b-20" th:text="${document.title}"></h4>
                                 <hr>
                                 <!-- <div class="media">
                                     <div class="float-left">
@@ -187,13 +188,11 @@
                                 </div> -->
                                 <!-- <hr> -->
                             </div>
-                            <div class="col-md-12">
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                                <p>printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrnturies, but also the leap into electronic typesetting, remaining essentially unchanged.</p>                                
+                            <div class="col-md-12" style="width: 90%;word-wrap: break-word;white-space:normal">
+                                <pre th:text="${document.getContent()}" style="white-space: pre-wrap; white-space: -moz-pre-wrap;  white-space: -pre-wrap; white-space: -o-pre-wrap;    word-wrap: break-word; "></pre>
                             </div>
                             <div class="col-md-12">
-                                <span><img th:src="@{/assets/images/image2.jpg}" class="img-thumbnail m-t-10" width="250" alt=""></span>
-                                <span><img th:src="@{/assets/images/image3.jpg}" class="img-thumbnail m-t-10" width="250" alt=""></span>
+                                <span><img th:src="@{${document.getUrl()}}" class="img-thumbnail m-t-10" width="400" alt=""></span>
                             </div>                   
                         </div>
                     </div>
@@ -206,15 +205,7 @@
                     <strong>标签</strong>
                     <div class="body">
                         <div class="tag-list">
-                            <a href="javascript:void(0);" class="btn btn-raised btn-primary btn-simple btn-round">Animals</a>
-                            <a href="javascript:void(0);" class="btn btn-raised btn-success btn-simple btn-round">fashion</a>
-                            <a href="javascript:void(0);" class="btn btn-raised btn-info btn-simple btn-round">Lifestyle</a>
-                            <a href="javascript:void(0);" class="btn btn-raised bg-black btn-round">bootstrap</a>
-                            <a href="javascript:void(0);" class="btn btn-raised btn-warning btn-simple btn-round">politics</a>
-                            <a href="javascript:void(0);" class="btn btn-raised bg-blush btn-round">photography</a>
-                            <a href="javascript:void(0);" class="btn btn-raised btn-simple btn-round">Music</a>
-                            <a href="javascript:void(0);" class="btn btn-raised bg-orange btn-round">Food &amp; drink</a>
-                            <a href="javascript:void(0);" class="btn btn-raised bg-purple btn-round">Car</a>
+                            <a href="javascript:void(0);" class="btn btn-raised bg-blush btn-round" th:each="tag:${tags}" th:text="${tag.getTagName()}">photography</a>
                         </div>
                     </div>
     

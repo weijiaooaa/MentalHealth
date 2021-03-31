@@ -1,6 +1,9 @@
 package com.weijia.mhealth.service;
 
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.Student;
+
+import java.util.List;
 
 /**
  * @Author Wei Jia
@@ -20,4 +23,6 @@ public interface StudentService {
     Boolean updateStudentState(Boolean state,Student student);
 
     Student getStuByQuestionId(Integer questionId);
+
+    PageInfo<Student> getAllStudent(Integer pageNum, Integer pageSize);
 }

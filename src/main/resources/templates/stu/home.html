@@ -286,6 +286,7 @@
         data :{
             weather: [],
             fengli:{},
+            essays:[],
         },
         created : async function () {
 
@@ -299,13 +300,21 @@
                 console.log(err)
             }
 
-            let temp = this.weather.forecast[0].fengli
+            let temp = this.weather.forecast[0].fengli;
 
-            this.fengli = temp.substring(9,11)
-            console.log(this.weather)
+            this.fengli = temp.substring(9,11);
+            console.log(this.weather);
+
+            try{
+                _this = this;
+                await axios.get("/mhealth/document/getAll")
+                    .then(res => {_this.essays = res.data});
+                console.log(_this.essays);
+            }catch (err){
+                console.log(err)
+            }
         }
     })
 </script>
-
 </body>
 </html>

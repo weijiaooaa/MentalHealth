@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>:: MHeal Bootstrap4 Admin ::</title>
+    <title>资源管理</title>
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     <!-- Favicon-->
     <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
@@ -92,49 +92,20 @@
                                         <tr>
                                             <th>#ID</th>
                                             <th>标题</th>
-                                            <th>格式</th>
-                                            <th>大小</th>
+                                            <th>作者</th>
                                             <th>创建时间</th>
-                                            <th>浏览数</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody th:each="document:${documents}">
                                         <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
+                                            <td th:text="${document.id}"></td>
+                                            <td th:text="${document.title}"></td>
+                                            <td th:text="${document.creator}"></td>
+                                            <td th:text="${#dates.format(document.getGmtCreate(),'yyyy-MM-dd')}"></td>
                                             <td>
                                                 <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-
-                                         <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
+                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -282,7 +253,6 @@
                     </div>
                 </div>
             </div>
-            <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->
         </div>
 
 

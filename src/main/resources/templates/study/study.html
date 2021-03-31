@@ -5,10 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+<meta name="referrer" content="no-referrer"/>
 
-<title>:: MHeal Bootstrap4 Admin ::</title>
+<title>文章列表</title>
 <!-- Favicon-->
-<link rel="icon" th:href="@{favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
 <!-- Font Icon -->
 <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
 <!-- Custom Css -->
@@ -64,21 +65,11 @@
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-5 col-sm-12">
-                <!-- <h2>Documents
-                <small>Welcome to MHeal</small>
-                </h2> -->
+                </h2>
                 <h2>&nbsp;</h2>
                 <h2>&nbsp;</h2>
             </div>
             <div class="col-lg-5 col-md-7 col-sm-12">
-                <!-- <button class="btn btn-white btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
-                    <i class="zmdi zmdi-upload"></i>bread
-                </button>
-                <ul class="breadcrumb float-md-right">
-                    <li class="breadcrumb-item"><a th:href="index.html"><i class="zmdi zmdi-home"></i> MHeal</a></li>
-                    <li class="breadcrumb-item"><a th:href="file-dashboard.html">File Manager</a></li>
-                    <li class="breadcrumb-item active">Documents</li>                    
-                </ul> -->
             </div>
         </div>
     </div>
@@ -88,14 +79,12 @@
                 <div class="card">
                     <ul class="nav nav-tabs">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#doc">文章</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#video">视频</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#music">音乐</a></li>
                     </ul>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" id="doc">
                         <div class="row clearfix">
-                            <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="col-lg-3 col-md-4 col-sm-12" th:each="document:${documents}">
                                 <div class="card">
                                     <div class="file">
                                         <a href="javascript:void(0);">
@@ -105,98 +94,18 @@
                                                 </button>
                                             </div>
                                             <div class="icon">
-                                                <a th:href="@{/document/toDocPage}">
-                                                    <img  th:src="@{/assets/images/image-gallery/1.jpg}" alt="">
+                                                <a th:href="@{'/document/toDocPage/'+${document.getId()}}">
+                                                    <img  th:src="@{${document.url}}" alt="">
                                                 </a>
                                             </div>
                                             <div class="file-name">
-                                                <p class="m-b-5 text-muted">Document_2017.doc</p>
-                                                <small>Size: 42KB <span class="date text-muted">Nov 02, 2017</span></small>
+                                                <p class="m-b-5 text-muted" th:text="${document.title}"></p>
+                                                <small><span th:text="${document.creator}"></span><span class="date text-muted" th:text="${#dates.format(document.getGmtCreate(),'yyyy-MM-dd')}"></span></small>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane" id="video">
-                        <div class="row clearfix">
-                            <div v-for="video in videos">
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card" style="width: auto">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <!--视频封面-->
-                                                <a th:href="@{/video/toVideoPage}">
-                                                    <iframe :src="video.href"  scrolling="no" border="0" frameborder="no"
-                                                            style="width:300px;height:180px;align:center;" framespacing="0" allowfullscreen="true"> </iframe>
-                                                </a>
-
-                                                <!--视频标题-->
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted" v-text="video.title"></p>
-                                                </div>
-
-                                                <!--视频作者-->
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <small v-text="video.author"></small>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <span class="date text-muted" v-text="video.updateTime"></span>
-                                                    </div>
-                                                </div>
-
-                                                <!--点击观看-->
-                                                <div class="file-name">
-                                                    <a href="#" @click="viewVideo(video.id)">点击观看</a>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="tab-pane" id="music">
-                        <div class="row clearfix">
-                            <div v-for="music in musics">
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card" style="width: auto">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <!--音乐播放器-->
-                                                <audio :src="music.bgm" controls="controls">
-                                                    Your browser does not support the audio element.
-                                                </audio>
-
-                                                <!--音乐标题-->
-                                                <p class="m-b-5 text-muted" v-text="music.title"></p>
-
-                                                <!--音乐作者-->
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <small v-text="music.author"></small>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <span class="date text-muted" v-text="music.updateTime"></span>
-                                                    </div>
-                                                </div>
-
-                                                <!--音乐原链接-->
-                                                <div class="file-name">
-                                                    <a :href="music.href">音乐原链接</a>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--href: https://music.163.com/#/song?id=1368371706-->
-                            <!--src:  music.163.com/song/media/outer/url?id=1345368792.mp3-->
-
                         </div>
                     </div>
                 </div>

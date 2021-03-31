@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body class="theme-cyan">
+<body class="theme-cyan ls-toggle-menu">
 <!-- Page Loader -->
 <div th:replace="/basic/pageLoader :: pageLoader"></div>
 
@@ -139,138 +139,6 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="header">
-                        <h2><strong>未回答</strong></h2>
-                    </div>
-                    <div class="body table-responsive">
-                        <table class="table table-hover m-b-0 c_list">
-                            <thead>
-                                <tr>
-                                    <th>姓名</th>                                    
-                                    <th data-breakpoints="xs">日期</th>                                    
-                                    <th data-breakpoints="xs">标签</th>
-                                    <th data-breakpoints="xs">操作</th>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                 <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar1.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小红 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar2.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小黑 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span>
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar3.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小罗 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar4.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小白 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar5.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小美 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="body">                            
-                        <ul class="pagination pagination-primary m-b-0">
-                            <li class="page-item"><a class="page-link" href="#"><i class="zmdi zmdi-arrow-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="zmdi zmdi-arrow-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-
-    <div class="container-fluid"> 
-        <div class="row clearfix">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="header">
                         <h2><strong>已回答</strong></h2>
                     </div>
                     <div class="body table-responsive">
@@ -279,102 +147,32 @@
                                 <tr>
                                     <th>姓名</th>                                    
                                     <th data-breakpoints="xs">日期</th>                                    
+                                    <th data-breakpoints="xs">内容</th>
                                     <th data-breakpoints="xs">标签</th>
-                                    <th data-breakpoints="xs">操作</th>
+                                    <th >操作</th>
                                 </tr>
                             </thead>
                                 <tbody>
-                                 <tr>
+                                 <tr th:each="question:${pageInfo.list}">
                                     <td>
                                         <img th:src="@{/assets/images/xs/avatar1.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小红 </p>
+                                        <p class="c_name" th:text="${question.student.name}">小红 </p>
                                     </td>
                                     <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
+                                        <span class="date" th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd')}"></span>
+                                    </td>
+                                     <td>
+                                         <span class="date" th:text="${question.content}"></span>
+                                     </td>
+                                     <td>
+                                        <span class="tag" th:each="questionAndTag:${question.questionAndTags}">
+                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down" th:text="${questionAndTag.tag.tagName}">压力</span>
                                         </span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar2.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小黑 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span>
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar3.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小罗 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar4.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小白 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img th:src="@{/assets/images/xs/avatar5.jpg}" class="rounded-circle avatar" alt="">
-                                        <p class="c_name">小美 </p>
-                                    </td>
-                                    <td>
-                                        <span class="date">2020.1.22</span>
-                                    </td>                                   
-                                    <td>
-                                        <span class="tag">
-                                            <span class="badge badge-default btn-round m-l-10 hidden-sm-down">压力</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">查看</button>
-                                        <button class="btn btn-icon btn-neutral btn-icon-mini">删除</button>
+                                        <a th:href="@{'/doctor/toAnsPage?id='+${question.id}}">
+                                            <button class="btn btn-default btn-simple btn-round waves-effect" >查看</button>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -384,12 +182,18 @@
                 <div class="card">
                     <div class="body">                            
                         <ul class="pagination pagination-primary m-b-0">
-                            <li class="page-item"><a class="page-link" href="#"><i class="zmdi zmdi-arrow-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                            <li class="page-item" th:if="${pageInfo.hasPreviousPage == true}">
+                                <a class="page-link" th:href="@{'/doctor/toContactPage?pageNum='+${pageInfo.prePage}}">
+                                    <i class="zmdi zmdi-arrow-left"></i></a></li>
+                            <div th:each="nav:${pageInfo.navigatepageNums}">
+                                <li class="page-item "  th:if="${nav != pageInfo.pageNum}">
+                                    <a class="page-link" th:href="@{'/doctor/toContactPage?pageNum='+${nav}}" th:text="${nav}" ></a></li>
+                                <li class="page-item active"  th:if="${nav == pageInfo.pageNum}">
+                                    <a class="page-link" th:href="@{'/doctor/toContactPage?pageNum='+${nav}}" th:text="${nav}" ></a></li>
+                            </div>
+
+                            <li class="page-item" th:if="${pageInfo.hasNextPage == true}">
+                                <a class="page-link" th:href="@{'/doctor/toContactPage?pageNum='+${pageInfo.nextPage}}"><i class="zmdi zmdi-arrow-right"></i></a></li>
                         </ul>
                     </div>
                 </div>

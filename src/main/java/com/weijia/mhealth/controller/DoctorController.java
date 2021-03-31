@@ -1,6 +1,7 @@
 package com.weijia.mhealth.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.*;
 import com.weijia.mhealth.service.DoctorService;
 import com.weijia.mhealth.service.QuestionService;
@@ -11,8 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -172,14 +175,14 @@ public class DoctorController {
 
     /**
      * 跳转到我的回答页面
-     * @param doctor
-     * @param request
      * @return
      */
     @GetMapping(value = "/doctor/toContactPage")
-    public String toContactPage(Doctor doctor,HttpServletRequest request){
-
-        doctor = doctorService.getDoctorById(doctor.getId());
+    public String getAllQuestion(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                 @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize, Model model){
+        PageInfo<Question> allQuestion = questionService.getAllQuestion(pageNum, pageSize);
+        logger.info("分页查出来的question->{}",JSON.toJSON(allQuestion));
+        model.addAttribute("pageInfo",allQuestion);
         return "/doctor/contact";
     }
 
