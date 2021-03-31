@@ -1,0 +1,134 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>学生登录</title>
+    <!-- Favicon-->
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/authentication.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <!--注意引入axios的cdn源-->
+    <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+</head>
+
+<body class="theme-purple authentication sidebar-collapse">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img class="zmdi-hc-spin" th:src="@{/assets/images/logo.svg}" src="assets/images/logo.svg" width="48" height="48" alt="MHealth"></div>
+        <p th:if="${success} == null">Please wait...</p>
+        <p th:if="${success} != null">注册成功</p>
+    </div>
+</div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent">
+    <div class="container">
+        <div class="navbar-translate n_logo">
+            <a class="navbar-brand" href="javascript:void(0);" title="" target="_blank"><h4>MHealth</h4></a>
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav">
+                <!--学生注册-->
+                <li class="nav-item">
+                    <h4></h4>
+                    <a class="nav-link btn btn-white btn-round" th:href="@{/stu/toRegister}">注册</a>
+                </li>
+                <!--医生登录-->
+                <li class="nav-item">
+                    <h4></h4>
+                    <a class="nav-link btn btn-white btn-round" th:href="@{/doctor}" href="sign-up.html">医生入口</a>
+                </li>
+                <!--管理员登录-->
+                <li class="nav-item">
+                    <h4></h4>
+                    <a class="nav-link btn btn-white btn-round" th:href="@{/admin}" href="sign-up.html">管理员入口</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navbar -->
+<div class="page-header">
+    <div class="page-header-image" style="background-image:url(/mhealth/assets/images/login.jpg)"></div>
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div id="sign_in" class="card-plain">
+                <form method="post" th:action="@{/stu/toHomePage}">
+                    <div class="header">
+                        <div class="logo-container">
+                            <img th:src="@{/assets/images/logo.svg}" src="assets/images/logo.svg" alt="">
+                        </div>
+                        <h5>学生登录</h5>
+                    </div>
+                    <div class="content">
+                        <div class="input-group input-lg">
+                            <input id="stuNumber" type="text" class="form-control" placeholder="请输入学生号" v-model="stuNumber"/>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-account-circle"></i>
+                            </span>
+                        </div>
+                        <div class="input-group input-lg">
+                            <input id="password" type="password" placeholder="请输入密码" class="form-control" v-model="password"/>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                        </div>
+                        <div style="color:#ff7878;" v-text="content"></div>
+                    </div>
+                    <div class="footer text-center">
+                        <b-button id="submitStu" class="btn btn-primary btn-round btn-lg btn-block " @click="submitForm">登录</b-button>
+                        <h5><a href="forgot-password.html" class="link">忘记密码?</a></h5>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="http://thememakker.com/contact/" target="_blank">Contact Us</a></li>
+                    <li><a href="http://thememakker.com/about/" target="_blank">About Us</a></li>
+                    <li><a href="javascript:void(0);">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>,
+                <span><a href="#" target="_blank">网工1703魏佳</a>&nbsp设计</span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}"></script>
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script>
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script>
+<script th:src="@{/doc/js/stu.js}"></script>
+
+</body>
+</html>

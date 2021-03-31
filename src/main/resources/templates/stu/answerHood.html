@@ -1,0 +1,410 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>问答社区</title>
+    <!-- Favicon-->
+    <link rel="icon" th:href="@{/favicon.ico}" href="favicon.ico" type="image/x-icon">
+    <!-- Font Icon -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" href="assets/css/main.css">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}" href="assets/css/color_skins.css">
+
+    <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+
+    <style>
+        #problem {
+            font-size: 15px;
+            color: #3eacff;
+        }
+
+        #answer {
+            padding: 0px;
+        }
+
+        #buttonTop{
+             top:0px;
+         }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+</head>
+
+<body class="theme-purple ls-toggle-menu">
+<!-- Page Loader -->
+<div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+<!--Main Content-->
+<section class="content">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-5 col-sm-12">
+                <h2>问答社区</h2>
+            </div>
+            <div class="col-lg-5 col-md-7 col-sm-12">
+            </div>
+        </div>
+    </div>
+    <div id="answerHood" class="container-fluid">
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row card">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tag" @click="tagChange">标签</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#date" @click="dateChange">日期</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="row tab-content">
+
+                    <!-- 标签 -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 tab-pane active" id="tag">
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <strong style="color: #0d97ff">标签：{{tagName}}</strong>
+                                <div class="card">
+                                    <table class="table table-striped m-b-0">
+                                        <tbody>
+                                        <tr v-for="tag in tags">
+                                            <td><a href="#" style="color: #010101" @click="tagSelected(tag)">{{tag.tagName}}</a></td>
+                                            <td class="font-medium"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+
+                                <a href="#">
+                                    <strong style="color: #0d97ff">问题：</strong>
+                                </a>
+                                <div class="card">
+                                    <div class="body">
+                                        <div class="row" v-for="question in questions">
+                                            <ul class="col-lg-10 col-md-10 col-sm-10">
+                                                <div id="answer" class="mail_list list-group list-unstyled">
+                                                    <div class="media">
+                                                        <div class="pull-left">
+                                                            <div class="thumb hidden-sm-down m-r-20"><img
+                                                                    th:src="@{/assets/images/xs/avatar1.jpg}" class="rounded-circle" alt="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="media-body">
+                                                            <div class="media-heading">
+                                                                <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.name}}</a>
+
+                                                                <span v-for="questionAndTag in question.questionAndTags" class="badge bg-blue">
+                                                                    {{questionAndTag.tag.tagName}}
+                                                                </span>
+                                                            </div>
+                                                            <p class="msg">{{question.content}}</p>
+                                                            <hr>
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <small style="color: #0d97ff">{{question.createTime}}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ul>
+
+                                            <div class="col-lg-1 col-md-1 col-sm-1" style="padding: 14px;">
+                                                    <span id="buttonTop" style="color:#3eacff" @click="toViewPage(question)">
+                                                        浏览数:{{question.viewCount}}
+                                                    </span>
+                                            </div>
+
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <button id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" @click="toViewPage(question)">查看</button>
+                                            </div>
+                                        </div>
+
+                                        <div v-if="flag" class="row">
+                                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                                抱歉，该标签没有问答
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 时间 -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 tab-pane" id="date">
+                        <div class="tab-pane">
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="card">
+                                        <div class="header">
+                                            <h2><strong>日期</strong></h2>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="zmdi zmdi-label"></i>
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right pullDown">
+
+                                                    <!--遍历问题日期-->
+                                                    <div v-for="date in dates">
+                                                        <b-dropdown-item @click="dateSelect(date)">{{date}}</b-dropdown-item>
+                                                    </div>
+
+                                                </ul>
+                                                <button type="button" class="btn btn-neutral" aria-haspopup="true" aria-expanded="false">
+                                                    <a href="#">{{dateTime}}</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 问 -->
+                                    <div class="card">
+                                        <div v-for="question in questions">
+                                            <div class="row">
+                                                <ul class="col-lg-10 col-md-10 col-sm-10">
+                                                    <div id="answer" class="mail_list list-group list-unstyled">
+                                                        <div class="media">
+                                                            <div class="pull-left">
+                                                                <small style="color: #0d97ff">{{question.updateTime}}</small>
+                                                                <div class="thumb hidden-sm-down m-r-20"><img
+                                                                        th:src="@{/assets/images/xs/avatar1.jpg}" class="rounded-circle" alt="">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="media-body">
+                                                                <div class="media-heading">
+                                                                    <a href="#" class="m-r-10" @click="toAnsPage(question)">{{question.student.name}}</a>
+
+                                                                    <span v-for="questionAndTag in question.questionAndTags" class="badge bg-blue">
+                                                                    {{questionAndTag.tag.tagName}}
+                                                                </span>
+                                                                </div>
+                                                                <p class="msg">{{question.content}}</p>
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+
+                                                <div class="col-lg-1 col-md-1 col-sm-1" style="padding: 14px;">
+                                                    <span id="buttonTop" style="color:#3eacff" @click="toViewPage(question)">
+                                                        浏览数:{{question.viewCount}}
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                                    <button id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" @click="toViewPage(question)">查看</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-if="flag" class="row">
+                                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                                抱歉，当天没有问答
+                                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}" src="assets/bundles/libscripts.bundle.js"></script>
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="assets/bundles/vendorscripts.bundle.js"></script>
+
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="assets/bundles/mainscripts.bundle.js"></script>
+    <script th:src="@{/doc/js/stu.js}"></script>
+
+    <script th:inline="javascript">
+        //学生浏览问题社区
+        var app = new Vue({
+            el:"#answerHood",
+            data:{
+                dates:"",
+                tags:"",
+                dateTime:"",
+                questions:[],
+                t_id:"",
+                tagName:"焦虑",
+                flag:true
+            },
+            methods:{
+
+                //跳转到查询问题页面
+                toViewPage : function (questionParam) {
+                    location.href="/mhealth/stu/toViewPage?id=" + questionParam.id;
+                },
+
+                dateSelect: async function (date) {
+                    this.dateTime = date;
+
+                    try{
+                        _this = this;
+                        await axios.get("/mhealth/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
+                            _this.questions = res.data;
+                            if(!$.isEmptyObject(_this.questions)){
+                                this.flag = false;
+                            }else{
+                                this.flag = true;
+                            }
+                        })
+                    }catch (err){
+                        console.log(err);
+                    }
+                },
+                //选择标签
+                tagSelected : async function (tag) {
+//                    alert(tag.id)
+                    this.t_id = tag.id;
+                    this.tagName = tag.tagName;
+                    try{
+                        _this = this;
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=" + this.t_id).then(res => {
+                            _this.questions = res.data;
+                            console.log(res.data);
+                            if(!$.isEmptyObject(_this.questions)){
+                                this.flag = false;
+                            }else{
+                                this.flag = true;
+                            }
+                        })
+                    }catch (err){
+                        console.log(err);
+                    }
+                },
+
+                //跳转标签
+                tagChange : async function () {
+
+                    this.questions = "";
+                    this.flag = true;
+
+                    //默认"焦虑"
+                    this.tagName = "焦虑"
+                    try{
+                        _this = this;
+                        await axios.get("/mhealth/stu/getQuesByTag?tag=1").then(res => {
+                            _this.questions = res.data;
+                            if(!$.isEmptyObject(_this.questions)){
+                                this.flag = false;
+                            }else{
+                                this.flag = true;
+                            }
+                        })
+                    }catch (err){
+                        console.log(err);
+                    }
+                },
+
+                //跳转到日期
+                dateChange:async function () {
+
+                    this.flag = true;
+                    this.questions = "";
+
+                    //获得当前日期
+                    nowDate = new Date();
+                    let date = {
+                        year: nowDate.getFullYear(),
+                        month: nowDate.getMonth() + 1,
+                        date: nowDate.getDate(),
+                    }
+
+                    this.dateTime = date.year + "-" + date.month + "-" +date.date;
+                    console.log(this.dateTime);
+
+                    //默认今天
+                    let temp = [];
+                    try{
+                        _this = this;
+                        await axios.get("/mhealth/stu/getQuesByDate?dateTime=" + this.dateTime).then(res => {
+                            _this.questions = res.data
+                            if(!$.isEmptyObject(_this.questions)){
+                                this.flag = false;
+                            }else{
+                                this.flag = true;
+                            }
+                        })
+                    }catch (err){
+                        console.log(err);
+                    }
+                },
+            },
+
+            created: async function(){
+                this.dates = [[${dates}]];
+                this.tags = [[${tags}]];
+//                alert(this.dates + " " + this.tags)
+                //默认"焦虑"
+                this.tagName = "焦虑"
+                try{
+                    _this = this;
+                    var temp = [];
+                    await axios.get("/mhealth/stu/getQuesByTag?tag=1").then(res => {
+//                        _this.questions = res.data;
+                        temp = res.data;
+                        if(!$.isEmptyObject(temp)){
+                            this.flag = false;
+                            _this.questions = res.data;
+                        }else{
+                            this.flag = true;
+                        }
+                    })
+                }catch (err){
+                    console.log(err);
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

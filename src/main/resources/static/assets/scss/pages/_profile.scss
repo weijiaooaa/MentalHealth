@@ -1,0 +1,134 @@
+.profile-page{
+
+    .profile-header{
+        position: relative;
+        
+        .profile-image{
+            img{
+                border-radius:50%;
+                width:180px;
+                border:3px solid $white;
+                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            }
+        }
+        
+        .job_post{
+            @extend .displayblock;
+            @extend .m-b-10;
+        }
+        .social-icon{
+            a{
+                margin:0 5px;
+            }
+        }
+   }
+
+   .profile-sub-header{
+        min-height: 60px;
+        width: 100%;
+        @extend .m-b-0;
+        ul.box-list {
+
+            display: inline-table;                
+            @extend .margin-0;
+            @extend .padding-0;
+            table-layout: fixed;
+            width: 100%;
+            background:$grey-200;
+            
+            li{
+                border-right: 1px solid $grey-300;
+                display: table-cell;
+                list-style: none;
+                
+                &:last-child{
+                    border-right:none;
+                }
+
+                a{
+                    display:block;
+                    padding:15px 0;
+                    color:$grey-800;
+                }
+                p{
+                    @extend .margin-0;
+                }
+            }
+        }
+    }
+    
+    #timeline{
+
+        .timeline{
+            border-left: 1px solid $grey-400;
+            font-size: 14px;
+            position: relative;
+            
+            .border-info {
+                border-color:$brand-info;
+            }
+            .border-warning {
+                border-color:$brand-warning;
+            }
+            .border-danger {
+                border-color:$brand-danger;
+            }
+            
+            .timeline-item{
+                @extend .m-b-0;                
+                position: relative;                
+                
+                &:after{
+                    background-color: $white;
+                    border-color: inherit;
+                    border-radius: 50%;
+                    border-style: solid;
+                    border-width: 2px;                  
+                    content: "";
+                    height: 11px;
+                    left: 0;
+                    margin-left: -6px;
+                    position: absolute;
+                    width: 11px;
+                    bottom: auto;
+                    clear: both;
+                    top:4px;
+
+                }
+                
+                .item-content{
+                    margin-left: 24px;
+                    margin-top: 0;
+                    
+                    p{
+                        font-weight:400;
+                        color:#444;
+                    }
+                }
+            }
+         }
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .profile-page{
+        .nav-tabs{
+            padding-left: 0;
+            padding-right: 0;
+            .nav-item{
+                display: inline-block;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .profile-page{
+        .profile-header{
+            text-align: center;
+            .profile-image{
+                margin-bottom: 15px;
+            }
+        }
+    }
+}

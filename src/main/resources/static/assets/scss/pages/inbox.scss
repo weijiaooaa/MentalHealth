@@ -1,0 +1,110 @@
+﻿.inbox {
+    .action_bar{
+        .delete_all{
+            margin-bottom: 0;
+            margin-top: 8px;
+        }
+        .btn, .search{
+           margin: 0;
+        }
+    }
+    .mail_list {
+
+        .list-group-item {
+            border: 0;            
+            padding:15px;
+            margin-bottom: 1px;
+
+            &:hover{
+                background:#eceeef;
+            }
+
+            .media{
+                margin: 0;
+                width: 100%;
+            }
+
+            .controls {
+                display: inline-block;
+                margin-right: 10px;
+                vertical-align: top;
+                text-align: center;
+                margin-top: 11px;
+
+                .checkbox{
+                    display: inline-block;
+                    
+                    label{
+                        margin: 0;
+                        padding: 10px;
+                    }
+                }
+                .favourite{
+                    margin-left: 10px;
+                }
+            }
+
+            .thumb{
+                display: inline-block;
+
+                img{
+                    width: 40px;
+                }
+            }
+
+            .media-heading{
+                a{
+                    color: #555;
+                    font-weight: normal;
+
+                    &:hover, &:focus{
+                        text-decoration: none;
+                    }
+                }
+                time{
+                    font-size: 13px;
+                    margin-right: 10px;
+                }
+                .badge{
+                    margin-bottom: 0;
+                    border-radius: 50px;
+                    font-weight: normal;
+                }
+            }
+
+            .msg{
+                margin-bottom: 0px;               
+            }
+        }
+
+        .unread{
+            border-left:2px solid;
+            .media-heading{
+                a{
+                    color: #333;
+                    font-weight: 700;
+                }
+            } 
+        }
+    }
+
+    .btn-group{
+        box-shadow: none;
+    }
+
+    .bg-gray{
+        background: #e6e6e6;
+    }
+}
+
+@media only screen and (max-width:767px) {    
+    .inbox{
+        .mail_list{
+            .list-group-item{
+                .controls{
+                    margin-top: 3px;
+                }
+            }
+        }
+    }
+}

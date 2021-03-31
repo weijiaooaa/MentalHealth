@@ -1,0 +1,300 @@
+.page-calendar {    
+    .event-name {
+        padding: 10px;        
+        margin: 2px 0;               
+        border-left: 3px solid;        
+        &:hover {
+            background: $grey-200;
+        }
+        h6{
+            @extend .m-b-0;
+            text-transform: capitalize;
+        }
+        h4{
+            font-size: 25px;
+            line-height: 24px;
+            @extend .m-b-0;
+            @extend .m-t-0;
+
+            span{
+                @extend .displayblock;
+                font-size: 11px;
+                line-height: 16px;
+            }
+        }
+        p{
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            @extend .displayblock;
+            text-overflow: ellipsis;
+            @extend .m-b-0;
+        }
+        address{
+            font-size: 11px;
+            @extend .m-b-0;
+            @extend .m-t-5;
+            i{
+                font-size: 12px;
+                @extend .m-r-5;
+            }
+        }
+    }
+    .b-primary {
+        border-color: $blue !important;
+    }
+    .b-success {
+        border-color: $green !important;
+    }
+    .b-lightred {
+        border-color: $red !important;
+    }    
+    .b-greensea {
+        border-color: $green !important;
+    }
+
+    #calendar {
+		max-width: 900px;		
+	}
+}
+
+.event-control {
+    background-color: $grey-200;
+    font-size: 13px;
+    cursor: pointer;
+    &:hover {
+        background-color:$white;
+    }
+    a {
+        color: $black;
+        cursor: pointer;
+        opacity: .5;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    &[class*='bg-'] {
+        &:not(.bg-default):not(.bg-white) {
+            a {
+                color: $black !important;
+                opacity: 1;
+                &:hover {
+                    color:$white !important;
+                }
+            }
+        }
+    }
+}
+
+.fc-overlay {
+    display: none;
+    position: absolute;
+    min-width: 260px;
+    padding: 15px 0;
+    top: auto;
+    left: 50%;
+    margin-left: -150px;
+    z-index: 1000;
+    color: $black !important;
+    &.left {
+        left: 100%;
+        top: -15px;
+        padding: 0 10px;
+        margin: 0;
+    }
+    &.right {
+        left: auto;
+        right: 100%;
+        top: -15px;
+        padding: 0 10px;
+        @extend .margin-0;
+    }
+    .panel {
+        padding: 10px;
+    }
+}
+
+.fc {
+    .fc-toolbar {
+        height: 50px;        
+        color: $white;
+        background: $blue-grey-800;
+        border-radius: 0;
+        @extend .margin-0;
+        .fc-button {
+            color: $white;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            text-shadow: none;
+            margin: 0;
+            height: 50px;
+            line-height: 28px;
+            padding: 10px;
+            &:hover {
+                color:$white;
+            }
+        }
+        h2 {
+            font-size: 24px;
+            line-height: 50px;
+            @extend .margin-0;
+            text-transform: uppercase;
+            font-weight: 100;
+        }
+    }
+    .fc-view-container {
+        .fc-event {
+            padding: 3px 5px;
+            font-size: 12px;
+            border-radius: 0;
+            background-color: $white;
+            border: 0;
+            color: $grey-800;
+            border-left: 3px solid;
+            &.fc-event-end:not(.fc-event-start) {
+                border: 0!important;
+            }
+            &:focus,
+            &:hover,
+            &:active {
+                z-index: 1000;
+                .fc-overlay {
+                    display: block;
+                }
+            }
+        }
+        .fc-view {
+            &.fc-basic-view,
+            &.fc-agenda {
+                >table {
+                    >thead {
+                        tr {
+                            th,
+                            td {
+                                &.fc-widget-header {
+                                    border: 0;
+                                    background-color: #d2d2d2;
+                                    padding: 10px;
+                                    color: $black;
+                                    font-size: 12px;
+                                    font-weight: normal;
+                                }
+                                &.fc-agenda-gutter {
+                                    @extend .padding-0;
+                                }
+                            }
+                            td {
+                                &.fc-widget-header {
+                                    padding: 2px;
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            td {
+                                &.fc-widget-content {
+                                    border: 0;
+                                    border-bottom: 1px solid $grey-200;
+                                    border-right: 1px solid $grey-200;
+                                    &.fc-state-highlight {
+                                        background: $white;
+                                    }
+                                }
+                                &.fc-day-number {
+                                    padding: 5px 10px;
+                                    margin: 5px;
+                                    color: $black;
+                                    font-size: 15px;
+                                    &.fc-state-highlight {
+                                        background-color: red;
+                                        color: $white;
+                                        @include border-radius(50%);
+                                        padding: 4px 6px;
+                                        float: right;
+                                    }
+                                }
+                                &:first-child {
+                                    &.fc-widget-content {
+                                        border-left: 1px solid $grey-200;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .fc-body {
+                    .fc-row .fc-bg {
+                        border-bottom: 1px solid $grey-200;
+                    }
+                    .fc-row:last-of-type .fc-bg {                        
+                        border-bottom: 0;
+                    }
+                }
+            }
+            &.fc-agenda {
+                .fc-agenda-allday {
+                    .fc-agenda-axis,
+                    .fc-agenda-gutter {
+                        border-left: 1px solid $grey-300;
+                        border-right: 1px solid $grey-300;
+                        background-color: $grey-200;
+                        color: $black;
+                        font-size: 12px;
+                        font-weight: 100;
+                        padding: 10px 5px;
+                    }
+                }
+                >table {
+                    >tbody {
+                        >tr {
+                            >td {
+                                &.fc-state-highlight {
+                                    background: $grey-200;
+                                }
+                                &.fc-sat {
+                                    border-right: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+                .fc-agenda-slots {
+                    tr {
+                        line-height: 35px;
+                        th {
+                            border: 0;
+                            border-left: 1px solid $grey-300;
+                            border-right: 1px solid $grey-300;
+                            background-color: $grey-200;
+                            color: $black;
+                            font-size: 12px;
+                            font-weight: 100;
+                            padding-top: 10px;
+                        }
+                        td.fc-widget-content {
+                            border-bottom: 1px solid $grey-300;
+                            line-height: 50px;
+                            &:last-child {
+                                border-right: 0;
+                            }
+                        }
+                        &.fc-minor {
+                            td.fc-widget-content {
+                                border-bottom: 1px solid $grey-300;
+                            }
+                        }
+                    }
+                }
+                .fc-agenda-divider {
+                    border: 1px solid $grey-300;
+                    .fc-agenda-divider-inner {
+                        background-color: $grey-200;
+                        height: 3px;
+                    }
+                }
+            }
+        }
+    }
+}

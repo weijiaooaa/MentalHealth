@@ -1,0 +1,62 @@
+// import google fonts
+@import 'font/fonts';
+
+// UI Kit
+@import 'ui-kit';  // Material Kit
+
+/* Material Icons ============================== */
+@import 'icon/materialicons';
+
+// My variables, mixins and colors
+@import 'inc/mixins';
+@import 'inc/variables';
+
+// plugins
+@import 'plugins/waves';
+@import 'plugins/animate';
+
+// Sections
+@import 'components/colors.scss';
+@import 'components/pageloader.scss';
+@import 'components/navbar.scss';
+@import 'components/leftsidebaroverlay.scss';
+@import 'components/helpers.scss';
+@import 'components/media.scss';
+@import 'components/general.scss';
+@import 'components/dashboard.scss';
+@import 'components/tagsinput.scss';
+@import 'components/noUISlider.scss';
+@import 'components/multiselect.scss';
+@import 'components/card.scss';
+@import 'components/infobox.scss';
+@import 'components/alerts.scss';
+@import 'components/dialogs.scss';
+@import 'components/datetimepicker.scss';
+@import 'components/bootstrapselect.scss';
+@import 'components/collapse.scss';
+@import 'components/tables.scss';
+@import 'components/panels.scss';
+@import 'components/progressbars.scss';
+@import 'components/ionrangeslider.scss';
+@import 'components/colorpicker.scss';
+@import 'components/dropzone.scss';
+@import 'components/badgelistgroupitem.scss';
+@import 'components/mediaobject.scss';
+@import 'components/formwizard.scss';
+@import 'components/waveseffect.scss';
+@import 'components/dropdownmenu.scss';
+@import 'components/bootstrapnotify.scss';
+@import 'components/jquerynestable.scss';
+@import 'components/calendar.scss';
+@import 'components/maps.scss';
+@import 'components/charts.scss';
+@import 'components/searchbar.scss';
+@import 'components/jquerydatatable.scss';
+@import 'components/lightgallery.scss';
+
+@import 'pages/widget.scss';
+@import 'pages/contact.scss';
+@import 'pages/profile.scss';
+@import 'pages/pricing.scss';
+@import 'pages/invoice.scss';
+@import 'pages/file_manager.scss';

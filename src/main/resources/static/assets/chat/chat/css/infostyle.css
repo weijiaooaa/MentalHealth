@@ -1,0 +1,81 @@
+/*= common css to all effects =*/
+.single-member {
+    width: 280px;
+    float: left;
+    margin: 30px 2.5%;
+    background-color: #494A5F;
+    color: white;
+    text-align: center;
+    position: relative;
+    border: 1px solid #777777;
+    border-radius:5px;
+}
+
+.member-image img {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+.member-info h3 {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 10px 0 0;
+    text-transform: uppercase;
+}
+
+.member-info h5 {
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0 0 15px;
+    line-height: 22px;
+}
+
+.member-info p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 0 30px;
+    margin-bottom: 10px;
+}
+
+.fb-touch {
+    background-position: 0 0;
+}
+
+.tweet-touch {
+    background-position: -35px 0;
+}
+
+.linkedin-touch {
+    background-position: -71px 0;
+}
+
+.icon-colored .fb-touch {
+    background-position: 0 -27px;
+}
+
+.icon-colored .tweet-touch {
+    background-position: -35px -27px;
+}
+
+.icon-colored .linkedin-touch {
+    background-position: -71px -27px;
+}
+
+/*= common css to all effects end =*/
+
+/*= effect-1 css =*/
+.effect-1 {
+    border-radius: 5px 5px 0 0;
+    padding-bottom: 40px;
+}
+
+.effect-1 .member-image {
+    border: 2px solid #fff;
+    border-radius: 60px 0;
+    display: inline-block;
+    margin-top: -72px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+

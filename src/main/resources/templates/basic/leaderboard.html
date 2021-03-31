@@ -1,0 +1,147 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+    <title>MHeal</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/plugins/morrisjs/morris.min.css}" href="/assets/plugins/morrisjs/morris.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}" href="/assets/css/main.css">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}" href="/assets/css/color_skins.css">
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- Left Sidebar -->
+<aside th:fragment="leaderBoard" id="leaderBoard" class="leaderBoard">
+
+    <div class="row clearfix">
+
+        <div class="col-lg-8 col-md-12">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+                    <a th:href="@{/study/toStudyPage}">
+                        <strong style="color: #0d97ff">专栏：</strong>
+                    </a>
+                    <div class="card">
+                        <a th:href="@{/study/toStudyPage}"><div class="body">
+                            <div class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item text-center active">
+                                        <div class="col-12">
+                                            <ul class="row days-list list-unstyled">
+                                                <li class="day col-4">
+                                                    <p>doc1</p>
+                                                    <img th:src="@{/assets/images/image-gallery/1.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
+                                                </li>
+                                                <li class="day col-4">
+                                                    <p>doc2</p>
+                                                    <img th:src="@{/assets/images/image-gallery/2.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
+                                                </li>
+                                                <li class="day col-4">
+                                                    <p>doc3</p>
+                                                    <img th:src="@{/assets/images/image-gallery/3.jpg}" src="../html/assets/images/image-gallery/3.jpg" alt="">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item text-center">
+                                        <div class="col-12">
+                                            <ul class="row days-list list-unstyled">
+                                                <li class="day col-4">
+                                                    <p>doc4</p>
+                                                    <img th:src="@{/assets/images/image-gallery/4.jpg}" src="../html/assets/images/image-gallery/4.jpg" alt="">
+                                                </li>
+                                                <li class="day col-4">
+                                                    <p>doc5</p>
+                                                    <img th:src="@{/assets/images/image-gallery/5.jpg}" src="../html/assets/images/image-gallery/5.jpg" alt="">
+                                                </li>
+                                                <li class="day col-4">
+                                                    <p>doc6</p>
+                                                    <img th:src="@{/assets/images/image-gallery/3.jpg}" src="../html/assets/images/image-gallery/6.jpg" alt="">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+                    <strong style="color: #0d97ff">排行榜：</strong>
+                    <table class="table table-striped m-b-0">
+                        <tbody>
+                        <tr>
+                            <td><strong style="color: red">1</strong></td>
+                            <a href="#"><td class="font-medium">惊恐障碍是什么? </td></a>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:orange">2</strong></td>
+                            <a href="#"><td class="font-medium">总是情绪低落,该怎么办？</td></a>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: yellow">3</strong></td>
+                            <a href="#"><td class="font-medium">如何在压力下保持冷静？</td></a>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:purple">4</strong></td>
+                            <a href="#"><td class="font-medium">如何克服内心的空虚感？</td></a>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:black">5</strong></td>
+                            <a href="#"><td class="font-medium">意志消沉该怎么办？</td></a>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}" src="/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}" src="/assets/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+<script th:src="@{/assets/bundles/morrisscripts.bundle.js}" src="/assets/bundles/morrisscripts.bundle.js"></script><!-- Morris Plugin Js -->
+<script th:src="@{/assets/bundles/jvectormap.bundle.js}" src="/assets/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+<script th:src="@{/assets/bundles/knob.bundle.js}" src="/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}" src="/assets/bundles/mainscripts.bundle.js"></script>
+<script th:src="@{/assets/js/pages/index.js}" src="/assets/js/pages/index.js"></script>
+</body>
+</html>

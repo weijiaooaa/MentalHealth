@@ -1,0 +1,58 @@
+<div class="col-lg-12" >
+    <div class="card">
+        <div class="header">
+            <h2><strong>学生信息</strong></h2>
+        </div>
+        <div class="body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                    <thead>
+                    <tr>
+                        <th>学生号</th>
+                        <th>用户名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>电话</th>
+                        <th>邮箱</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="student:${stuPageInfo.list}">
+                    <tr>
+                        <td th:text="${student.stuNumber}"></td>
+                        <td th:text="${student.name}"></td>
+                        <td th:if="${student.gender}==0">男</td>
+                        <td th:if="${student.gender}==1">女</td>
+                        <td th:text="${student.age}+'岁'"></td>
+                        <td th:text="${student.tel}"></td>
+                        <td th:text="${student.email}"></td>
+                        <td>
+                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="body">
+            <ul class="pagination pagination-primary m-b-0">
+                <li class="page-item" th:if="${stuPageInfo.hasPreviousPage == true}">
+                    <a class="page-link"  th:onclick="|getStuPage(${stuPageInfo.prePage})|">
+                        <i class="zmdi zmdi-arrow-left"></i></a></li>
+                <div th:each="nav:${stuPageInfo.navigatepageNums}">
+                    <li class="page-item "  th:if="${nav != stuPageInfo.pageNum}">
+                        <a class="page-link"  th:text="${nav}" th:onclick="|getStuPage(${nav})|" ></a></li>
+                    <li class="page-item active"  th:if="${nav == stuPageInfo.pageNum}">
+                        <a class="page-link"  th:text="${nav}" th:onclick="|getStuPage(${nav})|"></a></li>
+                </div>
+
+                <li class="page-item" th:if="${stuPageInfo.hasNextPage == true}">
+                    <a class="page-link" th:onclick="|getStuPage(${stuPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿.progress {
+    @include border-radius(8px);
+    height: 8px;
+
+    .progress-bar {
+        line-height: 8px;
+        background-color: #1f91f3;
+    }
+
+    .progress-bar-success {
+        background-color: #2b982b;
+    }
+
+    .progress-bar-info {
+        background-color: #00b0e4;
+    }
+
+    .progress-bar-warning {
+        background-color: #ff9600;
+    }
+
+    .progress-bar-danger {
+        background-color: #fb483a;
+    }
+}

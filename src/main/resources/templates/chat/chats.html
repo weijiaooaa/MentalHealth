@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <base href="<%=basePath%>">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>在线聊天</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/chatapp.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/chat/layui/css/layui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/chat/chat/css/talk.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/chat/chat/css/infostyle.css}"/>
+    <script th:src="@{/assets/chat/layui/vue.js}"></script>
+    <script th:inline="javascript">
+        var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+        var userid = [[${session.userid}]];
+    </script>
+</head>
+
+<body class="theme-cyan ls-toggle-menu">
+
+<!--&lt;!&ndash; Page Loader &ndash;&gt;-->
+<!--<div th:replace="/basic/pageLoader :: pageLoader"></div>-->
+
+<!--&lt;!&ndash; Overlay For Sidebars &ndash;&gt;-->
+<!--<div class="overlay"></div>-->
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+<section class="content">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>在线咨询</h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-container" style="margin-top:10px;">
+        <div class="layui-row">
+            <div class="layui-col-md1" style="height:1px;">
+                <div class="grid-demo"></div>
+            </div>
+            <div class="layui-col-xs10" style="height:700px;box-shadow: 0px 1px 3px rgba(130, 85, 80, 0.5);">
+                <div class="grid-demo grid-demo-bg1">
+                    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">
+                                <i class="layui-icon layui-icon-dialogue" style="font-size: 20px;"></i>&nbsp;聊天
+                            </li>
+                        </ul>
+                        <div class="layui-tab-content" style="padding:0px;">
+                            <div class="layui-tab-item layui-show" id="vuechat">
+                                <div style="width: 100%;">
+                                    <div class="alluser" onmouseover="leftscroll(1)" onmouseleave="leftscroll(2)"
+                                         id="leftscroll">
+                                        <div id="appLoading">
+                                            <div class="spinner">
+                                                <div class="rect1"></div>
+                                                <div class="rect2"></div>
+                                                <div class="rect3"></div>
+                                                <div class="rect4"></div>
+                                                <div class="rect5"></div>
+                                            </div>
+                                        </div>
+                                        <ol id="leftc" style="display: none;">
+                                            <li v-for="(item,index) in listnickname" :key="index"
+                                                @click="selectStyle (item,item.userId)"
+                                                :class="{'active':item.active,'unactive':!item.active,'leftnickename':true}">
+                                                <p>
+                                                    <img :src=item.userImg style="border-radius:50%;height:50px;">
+                                                    <span :class="{'layui-badge-dot':item.newnote,'':!item.newnote,'newnoteid':true}"></span>
+                                                    &nbsp&nbsp&nbsp&nbsp{{item.nickName}}
+                                                </p>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <div style="width:84%;float: left;height:626px;">
+                                        <div id="appLoading2" style="display: none;">
+                                            <div class="spinner">
+                                                <div class="rect1"></div>
+                                                <div class="rect2"></div>
+                                                <div class="rect3"></div>
+                                                <div class="rect4"></div>
+                                                <div class="rect5"></div>
+                                            </div>
+                                        </div>
+                                        <div id="waits" style="text-align: center;margin-top:250px">
+                                            <h1>打开世界的另一扇窗</h1>
+                                            <span>主动一点，世界会更大。</span>
+                                        </div>
+                                        <div id="words" style="display: none">
+                                            <div class="talk_show talkimg" id="msgcontent" onmouseover="leftscroll(3)"
+                                                 onmouseleave="leftscroll(4)">
+                                                <div v-for="(msg,index) in listmessage" :key="index">
+<!--                                                    <div v-if="msg.sendUserId === loginusername">-->
+<!--                                                        <div>-->
+<!--                                                            -->
+<!--                                                        </div>-->
+<!--                                                        <span v-html="msg.sendTime"></span>-->
+<!--                                                    </div>-->
+                                                    <div v-if="msg.sendUserId === loginusername">
+                                                        <div class="rtalk" :id="index" @click="openimg(index)">
+                                                            <div>
+                                                                <span style="background: #FFFFFF;color: black;font-size: 14px;padding: 0" v-html="msg.sendTimeToString"></span>
+                                                            </div>
+                                                            <span v-html="msg.sendText"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div v-if="msg.sendUserId != loginusername">
+                                                        <div class="ltalk" :id="index" @click="openimg(index)">
+                                                            <div>
+                                                                <span style="background: #FFFFFF;color: black;font-size: 14px;padding: 0" v-html="msg.sendTimeToString"></span>
+                                                            </div>
+                                                            <span v-html="msg.sendText"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="msg_end" style="height:0px; overflow:hidden"></div>
+                                            </div>
+                                            <div style="background-color:white;height:200px;">
+                                                <div class="layui-form-item layui-form-text" style="margin:0 auto;">
+                                                    <div class="layui-input-block" style="margin: 0 auto;">
+                                                    <textarea class="layui-textarea layui-hide" name="content"
+                                                              lay-verify="content" id="LAY_demo_editor"></textarea>
+                                                    </div>
+                                                </div>
+                                                <button class="layui-btn layui-btn-sm" data-type="reload"
+                                                        style="float: right;position: relative;" onclick="send()">发送
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md1" style="height:1px;">
+                <div class="grid-demo"></div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</body>
+<script type="application/javascript" th:src="@{/assets/chat/layui/layui.js}"></script>
+<script type="application/javascript" th:src="@{/assets/chat/layui/jquery.min.js}"></script>
+<script type="application/javascript" th:src="@{/assets/chat/chat/js/chat.js}"></script>
+</html>

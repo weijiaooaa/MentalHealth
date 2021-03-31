@@ -1,0 +1,330 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>用户管理</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- JQuery DataTable Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+    </style>
+</head>
+
+<body class="theme-purple ls-toggle-menu">
+    <!-- Page Loader -->
+    <div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+
+    <!-- Top Bar -->
+    <div th:replace="/basic/topBar :: topBar"></div>
+
+    <!-- Left Sidebar -->
+    <div th:replace="/basic/leftBar :: leftBar"></div>
+
+    <!-- Right Sidebar -->
+    <div th:replace="/basic/rightBar :: rightBar"></div>
+    
+     <!--Main Content-->
+    <section class="content">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>&nbsp;</h2>
+                    <h2>用户个人信息管理</h2>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                </div>
+            </div>
+        </div>
+
+            <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div id="stu_page" class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>学生信息</strong></h2>
+                        </div>
+                        <div class="body">
+                             <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>学生号</th>
+                                            <th>用户名</th>
+                                            <th>性别</th>
+                                            <th>年龄</th>
+                                            <th>电话</th>
+                                            <th>邮箱</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="student:${stuPageInfo.list}">
+                                        <tr>
+                                            <td th:text="${student.stuNumber}"></td>
+                                            <td th:text="${student.name}"></td>
+                                            <td th:if="${student.gender}==0">男</td>
+                                            <td th:if="${student.gender}==1">女</td>
+                                            <td th:text="${student.age}+'岁'"></td>
+                                            <td th:text="${student.tel}"></td>
+                                            <td th:text="${student.email}"></td>
+                                            <td>
+                                                <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <ul class="pagination pagination-primary m-b-0">
+                                <li class="page-item" th:if="${stuPageInfo.hasPreviousPage == true}">
+                                    <a class="page-link" href="javascript:void(0);"  th:onclick="|getStuPage(${stuPageInfo.prePage})|">
+                                        <i class="zmdi zmdi-arrow-left"></i></a></li>
+                                <div th:each="nav:${stuPageInfo.navigatepageNums}">
+                                    <li class="page-item "  th:if="${nav != stuPageInfo.pageNum}">
+                                        <a class="page-link"  th:text="${nav}" href="javascript:void(0);" th:onclick="|getStuPage(${nav})|" ></a></li>
+                                    <li class="page-item active"  th:if="${nav == stuPageInfo.pageNum}">
+                                        <a class="page-link"  th:text="${nav}" href="javascript:void(0);" th:onclick="|getStuPage(${nav})|"></a></li>
+                                </div>
+
+                                <li class="page-item" th:if="${stuPageInfo.hasNextPage == true}">
+                                    <a class="page-link" href="javascript:void(0);" th:onclick="|getStuPage(${stuPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #END# Basic Examples -->
+            <!-- Exportable Table -->
+            <div   class="row clearfix">
+                <div id="doctor_page" class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>医生信息</strong></h2>
+                        </div>
+                        <div  class="body">
+
+                            <table  class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                <tr>
+                                    <th>工号</th>
+                                    <th>用户名</th>
+                                    <th>性别</th>
+                                    <th>年龄</th>
+                                    <th>电话</th>
+                                    <th>邮箱</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <div class="container-fluid">
+                                    <tbody th:each="doctor:${docPageInfo.list}">
+                                    <tr>
+                                        <td th:text="${doctor.doctorNumber}"></td>
+                                        <td th:text="${doctor.name}"></td>
+                                        <td th:if="${doctor.gender}==0">男</td>
+                                        <td th:if="${doctor.gender}==1">女</td>
+                                        <td th:text="${doctor.age}+'岁'"></td>
+                                        <td th:text="${doctor.tel}"></td>
+                                        <td th:text="${doctor.email}"></td>
+                                        <td>
+                                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <ul class="pagination pagination-primary m-b-0">
+                                <li class="page-item" th:if="${docPageInfo.hasPreviousPage == true}">
+                                    <a class="page-link" href="javascript:void(0);" th:onclick="|getDoctorPage(${docPageInfo.prePage})|">
+                                        <i class="zmdi zmdi-arrow-left"></i></a></li>
+                                <div th:each="nav:${docPageInfo.navigatepageNums}">
+                                    <li class="page-item "  th:if="${nav != docPageInfo.pageNum}">
+                                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getDoctorPage(${nav})|" ></a></li>
+                                    <li class="page-item active"  th:if="${nav == docPageInfo.pageNum}">
+                                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getDoctorPage(${nav})|" ></a></li>
+                                </div>
+
+                                <li class="page-item" th:if="${docPageInfo.hasNextPage == true}">
+                                    <a class="page-link" href="javascript:void(0);" th:onclick="|getDoctorPage(${docPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div id="admin_page" class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>管理员信息</strong></h2>
+                        </div>
+                        <div class="body">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>工号</th>
+                                        <th>用户名</th>
+                                        <th>性别</th>
+                                        <th>年龄</th>
+                                        <th>电话</th>
+                                        <th>邮箱</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody th:each="admin:${admPageInfo.list}">
+                                    <tr>
+                                    <td th:text="${admin.id}"></td>
+                                    <td th:text="${admin.name}"></td>
+                                    <td th:if="${admin.gender}==0">男</td>
+                                    <td th:if="${admin.gender}==1">女</td>
+                                    <td th:text="${admin.age}+'岁'"></td>
+                                    <td th:text="${admin.tel}"></td>
+                                    <td th:text="${admin.email}"></td>
+                                        <td>
+                                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
+                                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <ul class="pagination pagination-primary m-b-0">
+                                <li class="page-item" th:if="${admPageInfo.hasPreviousPage == true}">
+                                    <a class="page-link" href="javascript:void(0);" th:onclick="|getAdminPage(${admPageInfo.prePage})|">
+                                        <i class="zmdi zmdi-arrow-left"></i></a></li>
+                                <div th:each="nav:${admPageInfo.navigatepageNums}">
+                                    <li class="page-item "  th:if="${nav != admPageInfo.pageNum}">
+                                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getAdminPage(${admPageInfo.prePage})|" ></a></li>
+                                    <li class="page-item active"  th:if="${nav == admPageInfo.pageNum}">
+                                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getAdminPage(${admPageInfo.prePage})|" ></a></li>
+                                </div>
+
+                                <li class="page-item" th:if="${admPageInfo.hasNextPage == true}">
+                                    <a class="page-link" href="javascript:void(0);" th:onclick="|getAdminPage(${admPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #END# Exportable Table -->
+    </section>
+
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script th:src="@{/assets/bundles/datatablescripts.bundle.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.print.min.js}"></script>
+
+    <!-- Custom Js -->
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script>
+    <!-- <script th:src="assets/js/pages/tables/jquery-datatable.js}"></script> -->
+    <script th:inline="javascript">
+        var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+    </script>
+    <script type="text/javascript">
+
+        function getDoctorPage(num) {
+            $.ajax({
+                url:basePath+"/admin/findDocPage",
+                type:'GET',
+                contentType: "application/json;charset=UTF-8",
+                data:{
+                    'pageNum':num,        //第几页
+                },
+
+                success:function(data){
+                     $("#doctor_page").empty();
+                    $("#doctor_page").append(data);
+                },
+            })
+
+        };
+        function getStuPage(num) {
+            $.ajax({
+                url:basePath+"/admin/findStuPage",
+                type:'GET',
+                contentType: "application/json;charset=UTF-8",
+                data:{
+                    'pageNum':num,        //第几页
+                },
+
+                success:function(data){
+                    $("#stu_page").empty();
+                    $("#stu_page").append(data);
+                },
+            })
+        }
+        function getAdminPage(num) {
+            $.ajax({
+                url:basePath+"/admin/findAdminPage",
+                type:'GET',
+                contentType: "application/json;charset=UTF-8",
+                data:{
+                    'pageNum':num,        //第几页
+                },
+
+                success:function(data){
+                    $("#admin_page").empty();
+                    $("#admin_page").append(data);
+                },
+            })
+        }
+    </script>
+</body>
+
+</html>

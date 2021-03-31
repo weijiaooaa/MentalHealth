@@ -1,0 +1,53 @@
+.contact{
+
+    .action_bar{
+        .delete_all{
+            @extend .m-b-0;
+            margin-top: 8px;
+        }
+        .btn, .search{
+            @extend .margin-0;
+        }
+    }
+
+    .c_list{
+
+        tr{
+            td{
+                vertical-align: middle;
+                .btn{
+                    @extend .margin-0;
+                }
+            }
+        }
+
+        .checkbox{
+            @extend .m-b-0;
+            @extend .m-t-0;
+            @extend .inlineblock;
+        }
+        
+        .c_name{
+            @extend .m-b-0;
+            @extend .m-l-10;
+            @extend .inlineblock;
+            font-weight: 600;
+            
+        }
+        .avatar{
+            width: 40px;
+            box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.2);
+            border: 1px solid $white;
+        }
+
+        address{
+            @extend .m-b-0;
+
+            i{
+                width: 25px;
+                font-size: 15px;
+                text-align: center;
+            }
+        }        
+    }
+}

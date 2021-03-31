@@ -1,0 +1,178 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+<title>学生提问页面</title>
+<!-- Favicon-->
+<link rel="icon" th:href="@{/favicon.ico}" href="favicon.ico" type="image/x-icon">
+<!-- Font Icon -->
+<link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+<!-- Custom Css -->
+<link rel="stylesheet" href="assets/css/main.css" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" href="assets/css/inbox.css" th:href="@{/assets/css/inbox.css}">
+<link rel="stylesheet" href="assets/css/color_skins.css" th:href="@{/assets/css/color_skins.css}">
+
+<style>
+    #header_Padding{
+        padding: 10px;
+    }
+
+    #labelTop{
+        top:12px;
+    }
+    #buttonTop{
+        top:-14px;
+    }
+
+    #rank{
+        position: relative;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+    }
+
+    #edit{
+        padding:1px;
+        display: inline-block;
+    }
+
+    #edit1{
+        height:15px;
+        padding-top: 2px;
+    }
+</style>
+
+</head>
+<body class="theme-blue ls-toggle-menu">
+
+<!-- Page Loader -->
+<div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<div th:replace="/basic/topBar :: topBar"></div>
+
+<!-- Left Sidebar -->
+<div th:replace="/basic/leftBar :: leftBar"></div>
+
+<!-- Right Sidebar -->
+<div th:replace="/basic/rightBar :: rightBar"></div>
+
+<!--Main Content-->
+<section class="content inbox">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>在线提问</h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- 封面 -->
+        <div class="card">
+            <form th:action="@{/stu/question}" method="post">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="header">
+                            <h2><strong>提出问题</strong></h2>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                    </div>
+
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <input class="form-control" id="exampleInputEmail1" placeholder="请用一句话完整描述你的问题" name="content"
+                               aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="row">
+                            <div class="controls col-lg-6 col-md-6 col-sm-6">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="basic_checkbox_1" name="anonymous">
+                                    <label id="labelTop" for="basic_checkbox_1">匿名</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <button class="btn btn-icon btn-neutral btn-icon-mini">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+        </div>
+
+        <div class="card">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="header">
+                        <h2><strong>我的提问</strong></h2>
+                    </div>
+                </div>
+
+                <div class="body table-responsive">
+                    <table class="table table-hover m-b-0 c_list">
+                        <thead>
+                        <tr>
+                            <th data-breakpoints="xs">日期</th>
+                            <th data-breakpoints="xs">标签</th>
+                            <th data-breakpoints="xs">内容</th>
+                            <th data-breakpoints="xs">状态</th>
+                            <th data-breakpoints="xs">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="question : ${questions}">
+                            <td>
+                                <span class="date">[[${question.createTime}]]</span>
+                            </td>
+                            <td>
+                                    <span class="tag" th:each="questionAndTag : ${question.questionAndTags}">
+                                        <span class="badge badge-default btn-round m-l-10 hidden-sm-down">[[${questionAndTag.tag.tagName}]]</span>
+                                    </span>
+                            </td>
+                            <td>
+                                [[${question.content}]]
+                            </td>
+                            <td>
+                                <small th:if="${question.status}== false" style="color: crimson;">未回答</small>
+                                <small th:if="${question.status}== true" style="color: #3eacff;">已回答</small>
+                            </td>
+                            <td>
+                                <a th:href="@{'/stu/toViewPage?id='+${question.id}}"><button th:if="${question.status}== true" id="buttonTop" class="btn btn-icon btn-neutral btn-icon-big" style="color:orange;width: auto;">查看详情</button></a>
+                                <a th:href="@{/stu/toAnsHood}"><button th:if="${question.status}== false" id="buttonTop" class="btn btn-icon btn-neutral btn-icon-mini" style="color:#3eacff;width: auto;">去社区转转</button></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<!-- Jquery Core Js -->
+<script th:src="@{/assets/bundles/libscripts.bundle.js}"></script>
+<script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script>
+
+<script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script>
+</body>
+</html>

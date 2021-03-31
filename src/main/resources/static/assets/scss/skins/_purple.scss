@@ -1,0 +1,94 @@
+﻿$white: #ffffff;
+$blue-grey-400: #78909c !default;
+$purple-400: #8c99e0 !default;
+$purple-500: #6572b8 !default;
+
+
+
+.theme-purple .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-purple .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $purple-400;
+}
+
+.theme-purple{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $purple-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $purple-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $purple-400;
+        }
+        &.btn-simple{
+            border-color: $purple-500;
+            color: $purple-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $purple-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$purple-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$purple-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$purple-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $purple-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $purple-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $purple-500;
+                }
+                strong{
+                    color: $purple-500;
+                }
+            }
+        }
+    }
+}

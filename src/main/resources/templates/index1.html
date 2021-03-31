@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>上传Demo</title>
+    <script th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <script th:src="@{js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{css/fileinput.css}">
+    <script th:src="@{js/fileinput.js}"></script>
+    <script th:src="@{js/theme.js}"></script>
+    <script th:src="@{js/zh.js}"></script>
+
+
+</head>
+<body>
+<img src="/img/pig.jpg" class="img-circle center-block"
+     alt="Cinque Terre" width="100" height="100">
+
+<button type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#exampleModal">
+    模态框内上传
+</button>
+<br>
+
+<form th:action="@{/admin/postFile}" method="post">
+    <!--<input type="hidden" name="_method" value="put">-->
+    <div class="form-group">
+        <label>LastName</label>
+        <input name="lastName" type="text" class="form-control" placeholder="zhangsan" th:value="${emp}!=null?${emp.lastName}:null">
+    </div>
+    <div  class="text-center">
+        <input id="simple" name="file"  type="file" multiple>
+    </div>
+    <button type="submit" class="btn btn-primary">提交</button>
+</form>
+
+<!--上传-隐藏预览框-->
+<h2 class="text-center">隐藏预览框+单文件上传</h2>
+<form enctype="multipart/form-data">
+<div style="width: 500px;" class="center-block">
+    <input id="upload" type="file" class="file text-center"  name="file"
+           data-show-preview="false"  style="width: 500px"/>
+</div>
+</form>
+
+<h2 class="text-center">拖放+多文件上传</h2>
+<form enctype="multipart/form-data">
+    <div class="form-group center-block" style="width: 800px;" >
+        <input id="file" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1"
+               data-max-file-count="10" name="file" accept="image/*" >
+    </div>
+</form>
+
+<h2 class="text-center">拖放+点击+多文件上传</h2>
+<form enctype="multipart/form-data">
+    <div class="form-group center-block" style="width: 800px;" >
+        <input id="test1" name="file" type="file" class="file" data-browse-on-zone-click="true">
+    </div>
+</form>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">上传文件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data">
+                    <div class="form-group center-block" style="width: 800px;" >
+                        <input id="modelInput" name="file" type="file" class="file" data-browse-on-zone-click="true">
+                    </div>
+                </form>
+                <div id="kartik-file-errors"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+               <!-- <button type="button" class="btn btn-primary" title="Your custom upload logic">保存</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/initFileInput.js"></script>
+<script>
+    //初始化单个按钮上传组件
+    $("#simple").fileinput({
+        language: 'zh',
+        showCaption: false,
+        dropZoneEnabled: false,
+        uploadUrl: '/uploadImg'
+    });
+    //初始化fileinput
+    initFileInput("upload","/uploadImg");
+    initFileInput("file","/uploadImg");
+    initFileInput("test1","/uploadImg");
+    initFileInput("modelInput","/uploadImg");
+
+</script>
+</body>
+</html>

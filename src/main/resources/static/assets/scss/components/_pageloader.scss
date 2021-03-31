@@ -1,0 +1,22 @@
+﻿.page-loader-wrapper {
+    z-index: 99999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;    
+    overflow: hidden;
+    text-align: center;
+
+    p {        
+        margin-top: 10px; 
+        color: $white;               
+    }
+
+    .loader {
+        position: relative;
+        top: calc(40% - 30px);
+    }
+}
