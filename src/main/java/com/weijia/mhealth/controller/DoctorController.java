@@ -98,7 +98,9 @@ public class DoctorController {
     }
 
     @GetMapping(value = "/doctor/toHomePage")
-    public String toHomePage(String doctorNumber,HttpServletRequest request){
+    public String toHomePage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "2",value = "pageSize") Integer pageSize,
+                             String doctorNumber,HttpServletRequest request,Model model){
         logger.info("跳转到医生主页,doctorNumber->{}",doctorNumber);
         Doctor doctor = doctorService.getStuByStuNumber(doctorNumber);
         request.getSession().setAttribute("doctor",doctor);
@@ -116,22 +118,10 @@ public class DoctorController {
             logger.error("医生个人信息存入Redis失败");
         }
 
+        PageInfo<Student> studentPageInfo = studentService.getStuPage(pageNum,pageSize);
+        logger.info("首页医生列表分页->{}",JSON.toJSON(studentPageInfo));
 
-        //获取在线学生,先在Redis中去拿，如果找不到，再去数据库拿
-        List<Student> studentsOnline = userRedisService.getStudentsOnline();
-        if (studentsOnline.size() != 0){
-            logger.info("Redis中在线学生->{}",JSON.toJSON(studentsOnline));
-            request.setAttribute("studentsOnline",studentsOnline);
-        }else{
-            logger.info("Redis查无结果，即将查询数据库");
-            studentsOnline = doctorService.getStuState(true);
-            request.setAttribute("studentsOnline",studentsOnline);
-        }
-
-        //获取离线学生
-        List<Student> studentsOffline = doctorService.getStuState(false);
-        logger.info("离线学生->{}",JSON.toJSON(studentsOffline));
-        request.setAttribute("studentsOffline",studentsOffline);
+        model.addAttribute("studentPageInfo",studentPageInfo);
 
         return "/doctor/home";
     }
@@ -179,7 +169,7 @@ public class DoctorController {
      */
     @GetMapping(value = "/doctor/toContactPage")
     public String getAllQuestion(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                                 @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize, Model model){
+                                 @RequestParam(defaultValue = "3",value = "pageSize") Integer pageSize, Model model){
         PageInfo<Question> allQuestion = questionService.getAllQuestion(pageNum, pageSize);
         logger.info("分页查出来的question->{}",JSON.toJSON(allQuestion));
         model.addAttribute("pageInfo",allQuestion);

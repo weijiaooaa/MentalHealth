@@ -21,6 +21,7 @@ public class Document {
     private String creator;
     private String content;
     private String url;
+    private Integer viewCount;
     private Long gmtCreate;
     private Long gmtModified;
     private List<Tag> tags;

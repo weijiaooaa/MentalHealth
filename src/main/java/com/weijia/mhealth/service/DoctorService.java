@@ -29,4 +29,6 @@ public interface DoctorService {
     Boolean updateDoctorState(boolean state, Doctor doctor);
 
     PageInfo<Doctor> getAllDoctor(Integer pageNum, Integer pageSize);
+
+    PageInfo<Doctor> getDoctorPage(Integer pageNum, Integer pageSize);
 }

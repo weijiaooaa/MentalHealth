@@ -45,4 +45,7 @@ public interface DoctorMapper {
 
     @Select("select * from doctor")
     List<Doctor> getAllDoctor();
+
+    @Select("select * from doctor order by state DESC")
+    List<Doctor> getDoctorPage();
 }

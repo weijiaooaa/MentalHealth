@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
-<title>MHealth</title>
+<title>医生主页</title>
 <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"> <!-- Favicon-->
 <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css}"  href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
@@ -140,7 +140,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="student,studentStat : ${studentsOnline}">
+                            <tr th:each="student,studentStat : ${studentPageInfo.list}">
                                 <td>
                                     <img class="rounded-circle" th:src="@{'/assets/images/xs/avatar' + (${studentStat.count} % 10) + '.jpg'}" src="/assets/images/xs/avatar1.jpg" alt="user" width="40"> </td>
                                 <td>
@@ -156,35 +156,36 @@
                                     <small>[[${student.tel}]]</small>
                                 </td>
                                 <td>
-                                    <small style="font-size:15px;color: #00ff00">在线</small>
+                                    <small th:if="${student.state}" style="font-size:15px;color: #00ff00">在线</small>
+                                    <small th:if="${!student.state}" style="font-size:15px;color: black">离线</small>
                                 </td>
                                 <td>
-                                    <a th:href="@{/doctor/toChatPage} + '?studentId=' + ${student.id} + '&iconNum=' + ${studentStat.count}">
-                                        <b-button class="btn btn-icon btn-neutral btn-icon-mini">点击</b-button>
+                                    <a th:if="${student.state}" th:href="@{/doctor/toChatPage} + '?studentId=' + ${student.id} + '&iconNum=' + ${studentStat.count}">
+                                        <b-button class="btn btn-danger btn-simple btn-round waves-effect">点击</b-button>
                                     </a>
-                                </td>
-                            </tr>
-                            <tr th:each="student,studentStat : ${studentsOffline}">
-                                <td>
-                                    <img class="rounded-circle" th:src="@{'/assets/images/xs/avatar' + (${studentStat.count} % 10) + '.jpg'}" src="/assets/images/xs/avatar1.jpg" alt="user" width="40"> </td>
-                                <td>
-                                    <a href="javascript:;" style="font-size: 14px">[[${student.name}]]</a>
-                                </td>
-                                <td>
-                                    <a href="javascript:;" style="color: black">[[${student.stuNumber}]]</a>
-                                </td>
-                                <td th:if="${student.gender} == 0">男</td>
-                                <td th:if="${student.gender} == 1">女</td>
-                                <td>[[${student.age}]]岁</td>
-                                <td>
-                                    <small>[[${student.tel}]]</small>
-                                </td>
-                                <td>
-                                    <small style="color: rgb(0,0,0)">离线</small>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="body">
+                        <ul class="pagination pagination-primary m-b-0">
+                            <li class="page-item" th:if="${studentPageInfo.hasPreviousPage == true}">
+                                <a class="page-link" th:href="@{'/doctor/toHomePage?pageNum='+${studentPageInfo.prePage}+'&doctorNumber='+${session.doctor.doctorNumber}}">
+                                    <i class="zmdi zmdi-arrow-left"></i></a></li>
+                            <div th:each="nav:${studentPageInfo.navigatepageNums}">
+                                <li class="page-item "  th:if="${nav != studentPageInfo.pageNum}">
+                                    <a class="page-link" th:href="@{'/doctor/toHomePage?pageNum='+${nav}+'&doctorNumber='+${session.doctor.doctorNumber}}" th:text="${nav}" ></a></li>
+                                <li class="page-item active"  th:if="${nav == studentPageInfo.pageNum}">
+                                    <a class="page-link" th:href="@{'/doctor/toHomePage?pageNum='+${nav}+'&doctorNumber='+${session.doctor.doctorNumber}}" th:text="${nav}" ></a></li>
+                            </div>
+
+                            <li class="page-item" th:if="${studentPageInfo.hasNextPage == true}">
+                                <a class="page-link" th:href="@{'/doctor/toHomePage?pageNum='+${studentPageInfo.nextPage}+'&doctorNumber='+${session.doctor.doctorNumber}}"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -53,4 +53,7 @@ public interface StudentMapper {
 
     @Select("select * from student")
     List<Student> getAllStudent();
+
+    @Select("select * from student order by state DESC")
+    List<Student> getStuPage();
 }

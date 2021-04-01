@@ -25,4 +25,6 @@ public interface StudentService {
     Student getStuByQuestionId(Integer questionId);
 
     PageInfo<Student> getAllStudent(Integer pageNum, Integer pageSize);
+
+    PageInfo<Student> getStuPage(Integer pageNum, Integer pageSize);
 }

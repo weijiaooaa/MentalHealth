@@ -175,6 +175,7 @@ public class AdminController {
         document.setContent(content);
         document.setCreator(creator);
         document.setUrl(url);
+        document.setViewCount(0);
         document.setGmtCreate(System.currentTimeMillis());
         document.setGmtModified(System.currentTimeMillis());
 

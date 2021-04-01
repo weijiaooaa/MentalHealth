@@ -1,7 +1,7 @@
 package com.weijia.mhealth.controller;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.*;
 import com.weijia.mhealth.service.*;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -122,7 +123,9 @@ public class StudentController {
      * @return
      */
     @GetMapping(value = "/stu/toHomePage")
-    public String toHomePage(String stuNumber, HttpServletRequest request){
+    public String toHomePage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,
+                             String stuNumber, HttpServletRequest request, Model model){
         logger.info("跳转到学生主页,student->{}",stuNumber);
         Student student = studentService.getStuByStuNumber(stuNumber);
 
@@ -147,21 +150,10 @@ public class StudentController {
             logger.error("学生个人信息存入Redis失败");
         }
 
-        //获取在线医生,先在Redis中去拿，如果找不到，再去数据库拿
-        List<Doctor> doctorsOnline = userRedisService.getDoctorsOnline();
-        if (doctorsOnline.size() != 0){
-            logger.info("Redis中在线医生->{}",JSON.toJSON(doctorsOnline));
-            request.setAttribute("doctorsOnline",doctorsOnline);
-        }else{
-            logger.info("Redis查无结果，即将查询数据库");
-            List<Doctor> doctorList = doctorService.getDoctorState(true);
-            request.setAttribute("doctorsOnline",doctorList);
-        }
+        PageInfo<Doctor> doctorPageInfo = doctorService.getDoctorPage(pageNum,pageSize);
+        logger.info("首页医生列表分页->{}",JSON.toJSON(doctorPageInfo));
 
-        //获取离线医生
-        List<Doctor> doctorsOffline = doctorService.getDoctorState(false);
-        logger.info("离线医生->{}",JSON.toJSON(doctorsOffline));
-         request.setAttribute("doctorsOffline",doctorsOffline);
+        model.addAttribute("doctorPageInfo",doctorPageInfo);
         return "stu/home";
     }
 

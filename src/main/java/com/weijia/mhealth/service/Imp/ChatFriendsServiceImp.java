@@ -58,9 +58,9 @@ public class ChatFriendsServiceImp implements ChatFriendsService {
     @Override
     public List<ChatFriends> findUserAllFriendsInStu(Integer id) {
         List<ChatFriends> chatFriends = new ArrayList<>();
-        ChatFriends chatFriend = new ChatFriends();
         List<Doctor> friends = chatFriendsMapper.findUserAllFriendsInStu(id);
         for (Doctor friend: friends){
+            ChatFriends chatFriend = new ChatFriends();
             chatFriend.setUserId(friend.getId());
             chatFriend.setNickName(friend.getName());
             chatFriends.add(chatFriend);

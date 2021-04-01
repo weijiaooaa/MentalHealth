@@ -28,7 +28,7 @@ public interface ResourcesMapper {
             @Result(column = "id",property = "id"),
             @Result(column = "id",property = "documentsAndTags",many = @Many(select = "com.weijia.mhealth.mapper.ResourcesMapper.getDocumentsAndTagByDocumentId",fetchType=FetchType.DEFAULT)),
     })
-    @Select("select * from documents ")
+    @Select("select * from documents order by gmt_create DESC")
     List<Document> getAllDocument();
 
     @Results({
@@ -43,4 +43,7 @@ public interface ResourcesMapper {
     })
     @Select("select * from documents where id = #{id}")
     Document getDocumentById(Integer id);
+
+    @Update("update documents set view_count = view_count + #{viewCount} , gmt_modified = #{updateTime} where id = #{id}")
+    void insertViewCount(Integer id, int viewCount, long updateTime);
 }
