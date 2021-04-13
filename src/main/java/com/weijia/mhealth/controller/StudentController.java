@@ -10,12 +10,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -222,7 +227,6 @@ public class StudentController {
     public String toAnsHood(HttpServletRequest request){
         Student student = (Student) request.getSession().getAttribute("student");
         System.out.println("toAnsHood " + student);
-//        request.setAttribute("student",student);
         //问题日期
         List<String> dates = questionService. getDates();
         request.setAttribute("dates",dates);
@@ -329,6 +333,75 @@ public class StudentController {
         chatFriendsService.setChatFriends(student.getId(),Integer.valueOf(doctorId));
 
         return "/chat/chats";
+    }
+
+    @GetMapping(value = "/stu/toAppointment")
+    public String toAppoint(Integer doctorId, Integer stuId,HttpServletRequest request){
+        Doctor doctor = doctorService.getDoctorById(doctorId);
+        Date tomorrow = new Date(System.currentTimeMillis() + 86399000);
+        Date tomorrow1 = new Date(System.currentTimeMillis() + 172798000);
+        Date tomorrow2 = new Date(System.currentTimeMillis() + 259197000);
+        List<String> dates = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date1 = sdf.format(tomorrow);
+        dates.add(date1);
+        String date2 = sdf.format(tomorrow1);
+        dates.add(date2);
+        String date3 = sdf.format(tomorrow2);
+        dates.add(date3);
+
+        String[] time = {"8:00-10:00","10:00-12:00","14:00-16:00","16:00-18:00"};
+        List<String> times = new ArrayList<>(Arrays.asList(time));
+
+        request.setAttribute("doctor",doctor);
+        request.setAttribute("stuId",stuId);
+        request.setAttribute("dates",dates);
+        request.setAttribute("times",times);
+
+        return "/stu/appointment";
+    }
+
+    @PostMapping(value = "/stu/postAppointment")
+    public String postAppointment(HttpServletRequest request){
+        String stuId = request.getParameter("stuId");
+        String doctorId = request.getParameter("doctorId");
+        String date = request.getParameter("dates2");
+        String time = request.getParameter("times2");
+        String content = request.getParameter("content");
+
+        Appointment appointment = new Appointment();
+        appointment.setStuId(Integer.valueOf(stuId));
+        appointment.setDoctorId(Integer.valueOf(doctorId));
+        appointment.setDates(date);
+        appointment.setTimes(time);
+        appointment.setState(0);
+        appointment.setContent(content);
+        appointment.setGmtCreate(System.currentTimeMillis());
+
+        try{
+            studentService.insertAppointment(appointment);
+        }catch (Exception e){
+            logger.info("插入预约表失败！");
+            e.printStackTrace();
+        }
+        return "200";
+    }
+
+    @GetMapping(value = "/stu/toMyAppointment")
+    public String toMyAppointment(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,Model model,HttpServletRequest request){
+        Student student = (Student) request.getSession().getAttribute("student");
+        logger.info("student->{}",JSON.toJSON(student));
+
+        PageInfo<Appointment> myAppointments = studentService.getMyAppointment(pageNum, pageSize,student.getId());
+        model.addAttribute("myAppointments",myAppointments);
+        return "/stu/myAppointment";
+    }
+
+    @GetMapping(value = "/stu/removeAppointment")
+    public String removeAppointment(Integer appointmentId){
+        studentService.removeAppointmentByAppId(appointmentId);
+        return "redirect:/stu/toMyAppointment";
     }
 
 }

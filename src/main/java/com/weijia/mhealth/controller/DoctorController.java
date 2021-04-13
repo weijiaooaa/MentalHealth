@@ -99,7 +99,7 @@ public class DoctorController {
 
     @GetMapping(value = "/doctor/toHomePage")
     public String toHomePage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                             @RequestParam(defaultValue = "2",value = "pageSize") Integer pageSize,
+                             @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,
                              String doctorNumber,HttpServletRequest request,Model model){
         logger.info("跳转到医生主页,doctorNumber->{}",doctorNumber);
         Doctor doctor = doctorService.getStuByStuNumber(doctorNumber);
@@ -169,8 +169,9 @@ public class DoctorController {
      */
     @GetMapping(value = "/doctor/toContactPage")
     public String getAllQuestion(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                                 @RequestParam(defaultValue = "3",value = "pageSize") Integer pageSize, Model model){
-        PageInfo<Question> allQuestion = questionService.getAllQuestion(pageNum, pageSize);
+                                 @RequestParam(defaultValue = "8",value = "pageSize") Integer pageSize,HttpServletRequest request, Model model){
+        Doctor doctor = (Doctor)request.getSession().getAttribute("doctor");
+        PageInfo<Question> allQuestion = questionService.getQuestionByDoctorId(pageNum, pageSize,doctor.getId());
         logger.info("分页查出来的question->{}",JSON.toJSON(allQuestion));
         model.addAttribute("pageInfo",allQuestion);
         return "/doctor/contact";
@@ -280,4 +281,26 @@ public class DoctorController {
 
         return "200";
     }
+
+    @GetMapping(value = "/doctor/toMyAppointment")
+    public String toMyAppointment(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,Model model,HttpServletRequest request){
+        Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+        logger.info("doctor->{}",JSON.toJSON(doctor));
+
+        PageInfo<Appointment> myAppointments = doctorService.getMyAppointment(pageNum, pageSize,doctor.getId());
+        model.addAttribute("myAppointments",myAppointments);
+        return "/doctor/myAppointment";
+    }
+
+    @PostMapping(value = "/doctor/submitCause")
+    public Integer submitCause(HttpServletRequest request){
+        String cause = request.getParameter("cause");
+        String appointmentId = request.getParameter("appointmentId");
+        Integer state = 2;//审核未通过状态为2
+        doctorService.insertAppointment(cause,state, Integer.valueOf(appointmentId));
+        return 200;
+
+    }
+
 }

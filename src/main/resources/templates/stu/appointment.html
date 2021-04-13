@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-    <title>文章编辑</title>
+    <title>预约医生</title>
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     <!-- Favicon-->
     <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2>&nbsp;</h2>
-                    <h2>编辑文章</h2>
+                    <h2>预约时间</h2>
                 </div>
             </div>
         </div>
@@ -78,15 +78,13 @@
                         <div id="header_Padding" class="header">
                             <h2><strong>基本信息</strong></h2>
                             <div class="header">
-                                <h2><strong>作者</strong></h2>
+                                <h2><strong>您即将预约的医生</strong></h2>
                             </div>
                         </div>
 
                         <div id="upload_Img" class="body">
                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                <form method="post" enctype="multipart/form-data">
-                                    <input v-model="creator" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
-                                </form>
+                                <span style="padding-left: 30px"><strong>{{doctor.name}}</strong></span>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8">
                             </div>
@@ -100,13 +98,80 @@
                         <div class="card">
                             <div id="header_Padding" class="header">
                                 <div id="header_Padding" class="header">
-                                    <h2><strong>标题</strong></h2>
+                                    <h2><strong>您希望预约的日期</strong></h2>
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-1">
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-10">
-                                <input v-model="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+                                <!-- 添加日期 -->
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="zmdi zmdi-view-week"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right pullDown">
+                                            <!--遍历标签-->
+                                            <div v-for="date in dates">
+                                                <b-dropdown-item @click="dateSelect(date)">{{date}}</b-dropdown-item>
+                                            </div>
+                                        </ul>
+
+                                        <div v-show="isShow">
+                                            <a href="#" class="btn btn-raised btn-primary btn-simple btn-round">
+                                                {{dates2}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 10px;">
+                        <div class="card">
+                            <div id="header_Padding" class="header">
+                                <div id="header_Padding" class="header">
+                                    <h2><strong>您希望预约的时间段</strong></h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+
+                                <!-- 添加时间段 -->
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="zmdi zmdi-time"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right pullDown">
+                                            <!--遍历时间段-->
+                                            <div v-for="time in times">
+                                                <b-dropdown-item @click="timeSelect(time)">{{time}}</b-dropdown-item>
+                                            </div>
+                                        </ul>
+
+                                        <div v-show="isShow2">
+                                            <a href="#" class="btn btn-raised btn-primary btn-simple btn-round">
+                                                {{times2}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                </div>
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-1">
                             </div>
@@ -120,13 +185,14 @@
                         <div class="card">
                             <div id="header_Padding" class="header">
                                 <div id="header_Padding" class="header">
-                                    <h2><strong>内容</strong></h2>
+                                    <h2><strong>简述您最近的心理状态</strong></h2>
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-1">
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-10">
-                                <textarea v-model="content" class="form-control" id="exampleInputEmail3" rows="5"></textarea>
+                                <input v-model="content" class="form-control" id="exampleInputEmail1" placeholder="请用一句话简单描述你的问题" name="content"
+                                       aria-describedby="emailHelp">
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-1">
                             </div>
@@ -134,107 +200,6 @@
                     </div>
                 </div>
 
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 10px;">
-                        <div class="card">
-                            <div id="header_Padding" class="header">
-                                <div id="header_Padding" class="header">
-                                    <h2><strong>图片地址</strong></h2>
-                                </div>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1">
-                            </div>
-                            <div class="col-lg-10 col-md-10 col-sm-10">
-                                <input v-model="url" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <!-- 标签 -->
-                <div id="upload_Padding" class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12" style=" margin-left: 20px;">
-                        <div class="card">
-                            <div id="header_Padding" class="header">
-                                    <h2><strong>标签</strong></h2>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1">
-                                <div>&nbsp;&nbsp;&nbsp;</div>
-                            </div>
-                            <div class="col-lg-10 col-md-10 col-sm-10">
-
-                                <!-- 添加标签 -->
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="zmdi zmdi-label"></i>
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-right pullDown">
-                                            <!--遍历标签-->
-                                            <div v-for="tag in tags">
-                                                <b-dropdown-item @click="tagSelect(tag.id,tag.tagName)">{{tag.tagName}}</b-dropdown-item>
-                                            </div>
-
-                                            <b-dropdown-item data-toggle="modal" data-target="#myModal" @click="openModal">创建标签</b-dropdown-item>
-                                        </ul>
-                                        <!--<button type="button" class="btn btn-neutral" aria-haspopup="true" aria-expanded="false">-->
-                                            <!--<a href="#" v-text="tagNames"></a>-->
-                                        <!--</button>-->
-                                        <div v-for="(tagName,index) in tagNames">
-                                            <a href="#" class="btn btn-raised btn-primary btn-simple btn-round" @click="del(index)">
-                                                {{tagName}}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--创建标签-->
-                                <div v-if="show" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-hidden="true">×
-                                                </button>
-                                                <h4 class="modal-title" id="myModalLabel">
-                                                    创建标签
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="text" autofocus class="form-control" v-model="label" placeholder="请输入标签名">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">关闭
-                                                </button>
-                                                <button type="button" class="btn btn-primary" @click="createLabel">
-                                                    更新
-                                                </button>
-                                                <div style="color:#ff7878;" v-text="msg"></div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-
-                                </div>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1">
-                            </div>
-
-                            <br>
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
                 <hr>
 
                 <!-- 提交，删除 -->
@@ -276,11 +241,12 @@
             el:"#app",
             data:{
                 title:'',
-                creator:"",
+                doctor:"",
+                doctor_id:[[${doctor.id}]],
                 content:"",
                 //注意vue中可以写thymeleaf的插值表达式
                 question_id:"",
-                student_id:"",
+                student_id:[[${stuId}]],
                 label:"",
                 tags:[],
                 msg:"",
@@ -291,10 +257,21 @@
                 tagSelected:[],
                 //选中的标签的名字
                 tagNames:[],
+                dates:[],
+                dates2:"",
+                isShow: false,
+                times:[],
+                times2:"",
+                isShow2: false
             },
 
             //得到tags信息
             created : async function () {
+                this.dates = [[${dates}]];
+                this.doctor = [[${doctor}]];
+                console.log(this.doctor_id);
+                console.log(this.student_id);
+                this.times = [[${times}]];
                 _this = this;
                 await axios.get("/mhealth/question/getTags").then(res => {
                     _this.tags = res.data;
@@ -303,38 +280,6 @@
             },
 
             methods:{
-
-                //上传前校验
-                beforeUpload:function(file){
-                    let _self=this;
-                    let fileName=file.name.split(".");
-                    let len=fileName.length;
-                    let xls=fileName[len-1]==='xls';
-                    let xlsx=fileName[len-1]==='xlsx';
-                    if(!xls&&!xlsx){
-                        _self.$message({message:'文件格式目前仅支持.xls或者.xlsx',type:'warning'});
-                        return false;
-                    }
-                },
-                //移除文件
-                handleRemove(file, fileList) {
-                    this.fileList=[];
-                    this.uploadBtn=false;
-                },
-                //自定义的上传方法
-                submitUpload: function(content) {
-                    let var_this = this;
-                    var_this.uploadFile=content.file;
-                    var_this.uploadBtn=true;
-                },
-
-                preview(event){
-                    var file = event.target.files;
-                    console.log(file)
-//                    let files = document.getElementById(this.id).files[0]
-//                    this.url =this.getObjectURL(files)
-//                    this.$emit('sendImgUrl',this.url,this.id)
-                },
                 getObjectURL (file) {
                     let url = null ;
                     if (window.createObjectURL!=undefined) { // basic
@@ -350,17 +295,14 @@
 
                 //提交回答，并向后台发送问题id和医生id
                 submitFile: async function () {
-
-//                    alert(this.title);
-                    if(!$.isEmptyObject(this.title) && !$.isEmptyObject(this.tagSelected) && !$.isEmptyObject(this.content)){
                         let formdata = new FormData();
-                        formdata.append("creator",this.creator);
-                        formdata.append("url",this.url);
-                        console.log(this.url);
-                        formdata.append("title",this.title);
-                        console.log(this.title);
-                        formdata.append("tags",this.tagSelected);
-                        console.log(this.tagSelected);
+                        formdata.append("doctorId",this.doctor_id);
+                        formdata.append("dates2",this.dates2);
+                        console.log(this.dates2);
+                        formdata.append("times2",this.times2);
+                        console.log(this.times2);
+                        formdata.append("stuId",this.student_id);
+                        console.log(this.student_id);
                         formdata.append("content",this.content);
                         console.log(this.content);
 
@@ -372,17 +314,14 @@
 
                         //异步提交表单，即使有返回页面，也不会实现页面跳转
                         try{
-                            await axios.post('/mhealth/admin/postDocument',formdata,config).then(res => {
+                            await axios.post('/mhealth//stu/postAppointment',formdata,config).then(res => {
                                 alert("提交回答")
                             })
                         }catch (err){
                             console.log(err)
                         }
 
-                        location.href="/mhealth/admin/toResourceManager";
-                    }else{
-                        this.msg1 = '回答不能为空';
-                    }
+                        location.href="/mhealth/stu/toMyAppointment";
                 },
 
                 //选定标签
@@ -400,9 +339,20 @@
                         this.tagSelected =  this.tagSelected.concat(t_id) ;
                         this.tagNames = this.tagNames.concat(tagName);
                     }
-//                    this.shows[index] = this.shows.concat(true);
-//                    alert(this.shows[index])
-//                    alert(this.tagNames)
+                },
+                dateSelect:function (date) {
+
+
+                        this.dates2 = date;
+                        this.isShow = true;
+                        console.log(this.dates)
+                },
+                timeSelect:function (time) {
+
+
+                    this.times2 = time;
+                    this.isShow2 = true;
+                    console.log(this.dates)
                 },
 
                 del:function(index){

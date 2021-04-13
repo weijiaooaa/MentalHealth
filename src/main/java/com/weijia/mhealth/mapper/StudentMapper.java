@@ -1,5 +1,6 @@
 package com.weijia.mhealth.mapper;
 
+import com.weijia.mhealth.entity.Appointment;
 import com.weijia.mhealth.entity.Student;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
@@ -56,4 +57,18 @@ public interface StudentMapper {
 
     @Select("select * from student order by state DESC")
     List<Student> getStuPage();
+
+    @Insert("insert into appointment(stu_id,doctor_id,dates,state,times,content,gmt_create) values (#{stuId},#{doctorId},#{dates},#{state},#{times},#{content},#{gmtCreate})")
+    void insertAppointment(Appointment appointment);
+
+    //根据questionId查询医生
+    @Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "doctor_id",property = "doctor",one = @One(select = "com.weijia.mhealth.mapper.DoctorMapper.getDoctorNameById",fetchType = FetchType.DEFAULT))
+    })
+    @Select("select * from appointment where stu_id = #{stuId} order by gmt_create DESC")
+    List<Appointment> getMyAppointment(Integer stuId);
+
+    @Delete("delete from appointment where id = #{appointmentId}")
+    void removeAppointmentByAppId(Integer appointmentId);
 }

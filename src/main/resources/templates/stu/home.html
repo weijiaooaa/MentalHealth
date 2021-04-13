@@ -97,8 +97,8 @@
                             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                                 <div class="body">
                                     <p class="number count-to m-t-0 m-b-5" data-from="0" data-to="17" data-speed="2000" data-fresh-interval="700">17</p>
-                                    <a th:href="@{/stu/toActivities}">
-                                        <h2 style="font-size: 1.5rem" class="text-muted">活动社区</h2>
+                                    <a th:href="@{/stu/toMyAppointment}">
+                                        <h2 style="font-size: 1.5rem" class="text-muted">我的预约</h2>
                                     </a>
                                     <span id="linecustom3">1,5,3,6,6,3,6,8,4,2</span>
                                 </div>
@@ -157,7 +157,7 @@
                                         <b-button th:if="${doctor.state}" class="btn btn-danger btn-simple btn-round waves-effect">点击</b-button>
                                     </a>
 
-                                    <a th:if="${!doctor.state}" th:href="@{/stu/toChatPage} + '?doctorId=' + ${doctor.id} + '&iconNum=' + ${doctorStat.count}">
+                                    <a th:if="${!doctor.state}" th:href="@{/stu/toAppointment} + '?doctorId=' +${doctor.id} +'&stuId='+${session.student.id}">
                                         <b-button th:if="${!doctor.state}" class="btn btn-default btn-simple btn-round waves-effect">预约</b-button>
                                     </a>
                                 </td>

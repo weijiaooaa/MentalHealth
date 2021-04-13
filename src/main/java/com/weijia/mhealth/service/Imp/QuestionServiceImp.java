@@ -291,15 +291,15 @@ public class QuestionServiceImp implements QuestionService {
     }
 
     @Override
-    public PageInfo<Question> getAllQuestion(Integer pageNum, Integer pageSize) {
+    public PageInfo<Question> getQuestionByDoctorId(Integer pageNum, Integer pageSize,Integer doctorId) {
         //使用分页插件,核心代码就这一行
         PageHelper.startPage(pageNum, pageSize);
         // 获取
-        PageInfo<Question> pageInfo = getPageInfo(pageNum, pageSize);
+        PageInfo<Question> pageInfo = getPageInfo(pageNum, pageSize,doctorId);
         return pageInfo;
     }
 
-    private PageInfo<Question> getPageInfo(Integer pageNum, Integer pageSize) {
+    private PageInfo<Question> getPageInfo(Integer pageNum, Integer pageSize,Integer doctorId) {
         //判断非空
         if (pageNum == null) {
             pageNum = 1; //设置默认当前页
@@ -314,7 +314,7 @@ public class QuestionServiceImp implements QuestionService {
         PageHelper.startPage(pageNum, pageSize);
         //2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
         try {
-            List<Question> questions = questionMapper.getAllQuestion();
+            List<Question> questions = questionMapper.getQuestionByDoctorId(doctorId);
             PageInfo<Question> pageInfo = new PageInfo<>(questions, pageSize);
             pageInfo.setList(questions);
             return pageInfo;

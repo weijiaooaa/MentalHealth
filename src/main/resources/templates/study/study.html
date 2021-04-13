@@ -79,6 +79,8 @@
                 <div class="card">
                     <ul class="nav nav-tabs">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#doc">文章</a></li>
+                        <li><a style="padding-left: 1300px" th:if="${session.doctor} != null" th:href="@{/admin/toDocumentUpload}">编辑美文</a></li>
+                        <li><a style="padding-left: 1300px" th:if="${session.admin} != null" th:href="@{/admin/toDocumentUpload}">编辑美文</a></li>
                     </ul>
                 </div>
                 <div class="tab-content">
