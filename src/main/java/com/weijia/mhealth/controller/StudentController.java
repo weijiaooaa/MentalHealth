@@ -1,6 +1,7 @@
 package com.weijia.mhealth.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.*;
 import com.weijia.mhealth.service.*;
@@ -10,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author Wei Jia
@@ -402,6 +401,41 @@ public class StudentController {
     public String removeAppointment(Integer appointmentId){
         studentService.removeAppointmentByAppId(appointmentId);
         return "redirect:/stu/toMyAppointment";
+    }
+
+    @GetMapping(value = "/stu/toPsychoTest")
+    public String toPsychoTest(){
+        return "study/psychologicalTest";
+    }
+
+    @GetMapping(value = "/stu/toPsychoTestV2")
+    public String toPsychoTest(Integer id){
+        String result = "study/result"+id;
+        return result;
+    }
+
+    @PostMapping(value = "/stu/compute")
+    @ResponseBody
+    public Integer compute(@RequestBody JSONArray data){
+        logger.info("分数数组->{}",data);
+        List<Object> list = JSONArray.parseArray(data.toJSONString());
+        Integer sc = 0;
+        for (Object score: list){
+            Integer sco= Integer.valueOf((String)score);
+            sc += sco;
+        }
+        Integer message=0;
+        if (sc<=10){
+            message=4;
+        }else if (sc <= 30){
+            message=3;
+        }else if (sc <= 50){
+            message=2;
+        }else if (sc <= 70){
+            message=1;
+        }
+        return message;
+
     }
 
 }
