@@ -59,4 +59,7 @@ public interface DoctorMapper {
 
     @Update("UPDATE appointment SET cause = #{cause},state = #{state} WHERE id = #{appointmentId}")
     void insertAppointment(String cause,Integer state, Integer appointmentId);
+
+    @Delete("delete from doctor where id = #{doctorId}")
+    void delectDoctorById(Integer doctorId);
 }

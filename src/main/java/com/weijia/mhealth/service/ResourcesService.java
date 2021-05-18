@@ -22,4 +22,6 @@ public interface ResourcesService {
     PageInfo<Document> getDocumentPage(Integer pageNum, Integer pageSize);
 
     void insertViewCount(Integer id);
+
+    void deleteDocById(Integer docId);
 }

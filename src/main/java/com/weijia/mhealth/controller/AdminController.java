@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -84,7 +81,7 @@ public class AdminController {
      */
     @GetMapping("/admin/toUserManager")
     public String toUserManager(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                                @RequestParam(defaultValue = "1",value = "pageSize") Integer pageSize, Model model){
+                                @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize, Model model){
 
         PageInfo<Student> students = studentService.getAllStudent(pageNum, pageSize);
         PageInfo<Doctor> doctors = doctorService.getAllDoctor(pageNum, pageSize);
@@ -98,7 +95,7 @@ public class AdminController {
 
     @GetMapping("/admin/findStuPage")
     public String stuPage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                          @RequestParam(defaultValue = "2",value = "pageSize") Integer pageSize,Model model){
+                          @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,Model model){
         PageInfo<Student> allStudent = studentService.getAllStudent(pageNum, pageSize);
         logger.info("分页查找->{}",JSON.toJSON(allStudent));
         model.addAttribute("stuPageInfo",allStudent);
@@ -107,7 +104,7 @@ public class AdminController {
 
     @GetMapping("/admin/findDocPage")
     public String docPage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                          @RequestParam(defaultValue = "1",value = "pageSize") Integer pageSize,Model model){
+                          @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,Model model){
         PageInfo<Doctor> docPageInfo = doctorService.getAllDoctor(pageNum, pageSize);
         logger.info("分页查找->{}",JSON.toJSON(docPageInfo));
         model.addAttribute("docPageInfo",docPageInfo);
@@ -116,7 +113,7 @@ public class AdminController {
 
     @GetMapping("/admin/findAdminPage")
     public String adminPage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                          @RequestParam(defaultValue = "1",value = "pageSize") Integer pageSize,Model model){
+                          @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,Model model){
         PageInfo<Admin> adminPageInfo = adminService.getAllAdmin(pageNum, pageSize);
         logger.info("分页查找->{}",JSON.toJSON(adminPageInfo));
         model.addAttribute("admPageInfo",adminPageInfo);
@@ -192,4 +189,30 @@ public class AdminController {
         resourcesService.insertDocument(document);
         return "200";
     }
+
+    @GetMapping(value = "/admin/delectDoctor/{doctorId}")
+    public String delectDoctor(@PathVariable Integer doctorId){
+        doctorService.delectDoctorById(doctorId);
+        return "redirect:/admin/toUserManager";
+    }
+
+    @GetMapping(value = "/admin/delectAdmin/{adminId}")
+    public String delectAdmin(@PathVariable Integer adminId){
+        adminService.deleteAdminById(adminId);
+        return "redirect:/admin/toUserManager";
+    }
+
+    @GetMapping(value = "/admin/delectStudent/{studentId}")
+    public String delectStudent(@PathVariable Integer studentId){
+        studentService.deleteStudentById(studentId);
+        return "redirect:/admin/toUserManager";
+    }
+
+    @GetMapping(value = "/admin/delectDoc//{docId}")
+    public String delectDoc(@PathVariable Integer docId){
+        resourcesService.deleteDocById(docId);
+        return "redirect:/admin/toResourceManager";
+    }
+
+
 }

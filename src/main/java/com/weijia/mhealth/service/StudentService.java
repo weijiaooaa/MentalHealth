@@ -34,4 +34,6 @@ public interface StudentService {
     PageInfo<Appointment> getMyAppointment(Integer pageNum, Integer pageSize, Integer id);
 
     void removeAppointmentByAppId(Integer appointmentId);
+
+    void deleteStudentById(Integer studentId);
 }

@@ -44,6 +44,11 @@ public class AdminServiceImp implements AdminService {
         return pageInfo;
     }
 
+    @Override
+    public void deleteAdminById(Integer adminId) {
+        adminMapper.deleteAdminById(adminId);
+    }
+
     private PageInfo<Admin> getPageInfo(Integer pageNum, Integer pageSize) {
         //判断非空
         if (pageNum == null) {

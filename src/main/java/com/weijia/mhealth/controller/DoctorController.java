@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -301,6 +298,20 @@ public class DoctorController {
         doctorService.insertAppointment(cause,state, Integer.valueOf(appointmentId));
         return 200;
 
+    }
+
+    @GetMapping(value = "/doctor/passAppointment/{appointmentId}")
+    public String passAppointment(@PathVariable Integer appointmentId,Model model,@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,HttpServletRequest request){
+        Integer state = 1;
+        doctorService.insertAppointment(null,state,appointmentId);
+
+        Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+        logger.info("doctor->{}",JSON.toJSON(doctor));
+
+        PageInfo<Appointment> myAppointments = doctorService.getMyAppointment(pageNum, pageSize,doctor.getId());
+        model.addAttribute("myAppointments",myAppointments);
+        return "/doctor/myAppointment";
     }
 
 }

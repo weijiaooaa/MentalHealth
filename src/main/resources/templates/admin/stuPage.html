@@ -1,4 +1,4 @@
-<div class="col-lg-12" >
+<div class="col-lg-12" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="card">
         <div class="header">
             <h2><strong>学生信息</strong></h2>
@@ -27,8 +27,8 @@
                         <td th:text="${student.tel}"></td>
                         <td th:text="${student.email}"></td>
                         <td>
-                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
-                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                            <a th:href="@{'/admin/delectStudent/'+${student.id}}">
+                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                         </td>
                     </tr>
                     </tbody>

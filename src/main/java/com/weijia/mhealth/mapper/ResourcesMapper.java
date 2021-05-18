@@ -46,4 +46,7 @@ public interface ResourcesMapper {
 
     @Update("update documents set view_count = view_count + #{viewCount} , gmt_modified = #{updateTime} where id = #{id}")
     void insertViewCount(Integer id, int viewCount, long updateTime);
+
+    @Delete("delete from documents where id = #{docId}")
+    void deleteDocById(Integer docId);
 }

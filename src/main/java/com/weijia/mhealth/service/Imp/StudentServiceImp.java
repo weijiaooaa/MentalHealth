@@ -147,6 +147,11 @@ public class StudentServiceImp implements StudentService {
         studentMapper.removeAppointmentByAppId(appointmentId);
     }
 
+    @Override
+    public void deleteStudentById(Integer studentId) {
+        studentMapper.deleteStudentById(studentId);
+    }
+
     private PageInfo<Appointment> getPageInfoV3(Integer pageNum, Integer pageSize, Integer stuId) {
         //判断非空
         if (pageNum == null) {

@@ -96,8 +96,10 @@
                                             <td th:text="${document.creator}"></td>
                                             <td th:text="${#dates.format(document.getGmtCreate(),'yyyy-MM-dd')}"></td>
                                             <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                                <a th:href="@{'/document/toDocPage/'+${document.id}}">
+                                                    <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button></a>
+                                                <a th:href="@{'/admin/delectDoc/'+${document.id}}">
+                                                    <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                                             </td>
                                         </tr>
                                     </tbody>

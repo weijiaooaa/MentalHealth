@@ -1,6 +1,7 @@
 package com.weijia.mhealth.mapper;
 
 import com.weijia.mhealth.entity.Admin;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface AdminMapper {
 
     @Select("select * from admin")
     List<Admin> getAllAdmin();
+
+    @Delete("delete from admin where id = #{adminId}")
+    void deleteAdminById(Integer adminId);
 }

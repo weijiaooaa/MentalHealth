@@ -71,4 +71,7 @@ public interface StudentMapper {
 
     @Delete("delete from appointment where id = #{appointmentId}")
     void removeAppointmentByAppId(Integer appointmentId);
+
+    @Delete("delete from student where id = #{studentId}")
+    void deleteStudentById(Integer studentId);
 }

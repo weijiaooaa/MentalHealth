@@ -28,8 +28,8 @@
                         <td th:text="${doctor.tel}"></td>
                         <td th:text="${doctor.email}"></td>
                         <td>
-                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
-                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                            <a th:href="@{'/admin/delectDoctor/'+${doctor.id}}">
+                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                         </td>
                     </tr>
                     </tbody>

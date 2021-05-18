@@ -62,6 +62,11 @@ public class ResourcesServiceImp implements ResourcesService {
         resourcesMapper.insertViewCount(id,1,updateTime);
     }
 
+    @Override
+    public void deleteDocById(Integer docId) {
+        resourcesMapper.deleteDocById(docId);
+    }
+
     private PageInfo<Document> getPageInfo(Integer pageNum, Integer pageSize) {
         //判断非空
         if (pageNum == null) {

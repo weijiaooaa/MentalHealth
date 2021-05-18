@@ -129,6 +129,11 @@ public class DoctorServiceImp implements DoctorService {
         doctorMapper.insertAppointment(cause,state,appointmentId);
     }
 
+    @Override
+    public void delectDoctorById(Integer doctorId) {
+        doctorMapper.delectDoctorById(doctorId);
+    }
+
     private PageInfo<Appointment> getPageInfoV3(Integer pageNum, Integer pageSize, Integer doctorId) {
         //判断非空
         if (pageNum == null) {

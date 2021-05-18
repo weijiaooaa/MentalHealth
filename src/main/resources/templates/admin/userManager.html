@@ -81,7 +81,7 @@
                                 <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <thead>
                                         <tr>
-                                            <th>学生号</th>
+                                            <th>学号</th>
                                             <th>用户名</th>
                                             <th>性别</th>
                                             <th>年龄</th>
@@ -100,8 +100,8 @@
                                             <td th:text="${student.tel}"></td>
                                             <td th:text="${student.email}"></td>
                                             <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
-                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                                <a th:href="@{'/admin/delectStudent/'+${student.id}}">
+                                                    <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -164,8 +164,8 @@
                                         <td th:text="${doctor.tel}"></td>
                                         <td th:text="${doctor.email}"></td>
                                         <td>
-                                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
-                                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                            <a th:href="@{'/admin/delectDoctor/'+${doctor.id}}">
+                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -224,8 +224,8 @@
                                     <td th:text="${admin.tel}"></td>
                                     <td th:text="${admin.email}"></td>
                                         <td>
-                                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
-                                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                                            <a th:href="@{'/admin/delectAdmin/'+${admin.id}}">
+                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                                         </td>
                                     </tr>
                                 </tbody>

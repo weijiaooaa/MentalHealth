@@ -36,4 +36,6 @@ public interface DoctorService {
     PageInfo<Appointment> getMyAppointment(Integer pageNum, Integer pageSize, Integer doctorId);
 
     void insertAppointment(String cause,Integer state, Integer appointmentId);
+
+    void delectDoctorById(Integer doctorId);
 }
