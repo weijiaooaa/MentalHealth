@@ -61,15 +61,7 @@
                         <div class="header">
                             <h2><strong>文件上传</strong></h2>
                             <a th:href="@{/admin/toDocumentUpload}">
-                                <small style="color: #ff6d27">专栏上传</small>
-                                &nbsp;&nbsp;
-                            </a>
-                            <a th:href="@{/admin/toVideoUpload}">
-                                <small style="color: #ff6d27">视频上传</small>
-                                &nbsp;&nbsp;
-                            </a>
-                            <a th:href="@{/admin/toMusicUpload}">
-                                <small style="color: #ff6d27">音乐上传</small>
+                                <small style="color: #ff6d27">文章上传</small>
                                 &nbsp;&nbsp;
                             </a>
                         </div>
@@ -99,151 +91,15 @@
                                     </thead>
                                     <tbody th:each="document:${documents}">
                                         <tr>
-                                            <td th:text="${document.id}"></td>
+                                            <td th:text="${documentStat.count}"></td>
                                             <td th:text="${document.title}"></td>
                                             <td th:text="${document.creator}"></td>
                                             <td th:text="${#dates.format(document.getGmtCreate(),'yyyy-MM-dd')}"></td>
                                             <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 视频管理 -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>视频管理</strong></h2>
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table
-                                    class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>#ID</th>
-                                            <th>标题</th>
-                                            <th>格式</th>
-                                            <th>大小</th>
-                                            <th>创建时间</th>
-                                            <th>浏览数</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-
-                                         <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 音乐管理 -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>音乐管理</strong></h2>
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table
-                                    class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>#ID</th>
-                                            <th>标题</th>
-                                            <th>格式</th>
-                                            <th>大小</th>
-                                            <th>创建时间</th>
-                                            <th>浏览数</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
-                                            </td>
-                                        </tr>
-
-                                         <tr>
-                                            <td>d0001</td>
-                                            <td>你好世界</td>
-                                            <td>doc</td>
-                                            <td>13.3KB</td>
-                                            <td>2020.1.26</td>
-                                            <td>31</td>
-                                            <td>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button>
-                                                <button class="btn btn-default btn-simple btn-round waves-effect">删除</button>
+                                                <a th:href="@{'/document/toDocPage/'+${document.id}}">
+                                                    <button class="btn btn-default btn-simple btn-round waves-effect">浏览</button></a>
+                                                <a th:href="@{'/admin/delectDoc/'+${document.id}}">
+                                                    <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -254,8 +110,6 @@
                 </div>
             </div>
         </div>
-
-
     </section>
 
     <!-- Jquery Core Js -->

@@ -4,26 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @Author Wei Jia
- * @Date 2021/3/29 18:09
+ * @Date 2021/4/12 16:45
  * @Version 1.0
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Document {
-
+public class Appointment {
     private Integer id;
-    private String title;
-    private String creator;
+    private Integer stuId;
+    private Integer doctorId;
+    private String dates;
+    private String times;
     private String content;
-    private String url;
-    private Integer viewCount;
+    private Integer state;
+    private String cause;
     private Long gmtCreate;
-    private Long gmtModified;
-    private List<Tag> tags;
-    private List<DocumentsAndTag> documentsAndTags;
+
+    private Doctor doctor;
+    private Student student;
 }

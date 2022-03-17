@@ -1,6 +1,7 @@
 package com.weijia.mhealth.service;
 
 import com.github.pagehelper.PageInfo;
+import com.weijia.mhealth.entity.Appointment;
 import com.weijia.mhealth.entity.Student;
 
 import java.util.List;
@@ -25,4 +26,14 @@ public interface StudentService {
     Student getStuByQuestionId(Integer questionId);
 
     PageInfo<Student> getAllStudent(Integer pageNum, Integer pageSize);
+
+    PageInfo<Student> getStuPage(Integer pageNum, Integer pageSize);
+
+    void insertAppointment(Appointment appointment);
+
+    PageInfo<Appointment> getMyAppointment(Integer pageNum, Integer pageSize, Integer id);
+
+    void removeAppointmentByAppId(Integer appointmentId);
+
+    void deleteStudentById(Integer studentId);
 }

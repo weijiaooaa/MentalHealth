@@ -1,6 +1,7 @@
 package com.weijia.mhealth.service;
 
 import com.github.pagehelper.PageInfo;
+import com.weijia.mhealth.entity.Appointment;
 import com.weijia.mhealth.entity.Doctor;
 import com.weijia.mhealth.entity.Student;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,12 @@ public interface DoctorService {
     Boolean updateDoctorState(boolean state, Doctor doctor);
 
     PageInfo<Doctor> getAllDoctor(Integer pageNum, Integer pageSize);
+
+    PageInfo<Doctor> getDoctorPage(Integer pageNum, Integer pageSize);
+
+    PageInfo<Appointment> getMyAppointment(Integer pageNum, Integer pageSize, Integer doctorId);
+
+    void insertAppointment(String cause,Integer state, Integer appointmentId);
+
+    void delectDoctorById(Integer doctorId);
 }

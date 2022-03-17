@@ -1,5 +1,6 @@
 package com.weijia.mhealth.service;
 
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.Document;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,10 @@ public interface ResourcesService {
     List<Document> getAllDocument();
 
     Document getDocumentById(Integer id);
+
+    PageInfo<Document> getDocumentPage(Integer pageNum, Integer pageSize);
+
+    void insertViewCount(Integer id);
+
+    void deleteDocById(Integer docId);
 }

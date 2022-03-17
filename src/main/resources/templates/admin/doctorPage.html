@@ -28,8 +28,8 @@
                         <td th:text="${doctor.tel}"></td>
                         <td th:text="${doctor.email}"></td>
                         <td>
-                            <button class="btn btn-default btn-simple btn-round waves-effect">修改</button>
-                            <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button>
+                            <a th:href="@{'/admin/delectDoctor/'+${doctor.id}}">
+                                <button class="btn btn-danger btn-simple btn-round waves-effect">删除</button></a>
                         </td>
                     </tr>
                     </tbody>
@@ -42,17 +42,17 @@
         <div class="body">
             <ul class="pagination pagination-primary m-b-0">
                 <li class="page-item" th:if="${docPageInfo.hasPreviousPage == true}">
-                    <a class="page-link" href="javascript:void(0);" th:onclick="|getStuPage(${docPageInfo.prePage})|">
+                    <a class="page-link" href="javascript:void(0);" th:onclick="|getDoctorPage(${docPageInfo.prePage})|">
                         <i class="zmdi zmdi-arrow-left"></i></a></li>
                 <div th:each="nav:${docPageInfo.navigatepageNums}">
                     <li class="page-item "  th:if="${nav != docPageInfo.pageNum}">
-                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getStuPage(${nav})|" ></a></li>
+                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getDoctorPage(${nav})|" ></a></li>
                     <li class="page-item active"  th:if="${nav == docPageInfo.pageNum}">
-                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getStuPage(${nav})|" ></a></li>
+                        <a class="page-link" href="javascript:void(0);" th:text="${nav}" th:onclick="|getDoctorPage(${nav})|" ></a></li>
                 </div>
 
                 <li class="page-item" th:if="${docPageInfo.hasNextPage == true}">
-                    <a class="page-link" href="javascript:void(0);" th:onclick="|getStuPage(${docPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                    <a class="page-link" href="javascript:void(0);" th:onclick="|getDoctorPage(${docPageInfo.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
             </ul>
         </div>
     </div>

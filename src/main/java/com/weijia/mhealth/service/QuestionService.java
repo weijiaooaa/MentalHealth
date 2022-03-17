@@ -39,5 +39,5 @@ public interface QuestionService {
 
     void updateAskAndAns(AskAndAnswer askAndAns, QuestionAndTag questionAndTag);
 
-    PageInfo<Question> getAllQuestion(Integer pageNum, Integer pageSize);
+    PageInfo<Question> getQuestionByDoctorId(Integer pageNum, Integer pageSize,Integer doctorId);
 }

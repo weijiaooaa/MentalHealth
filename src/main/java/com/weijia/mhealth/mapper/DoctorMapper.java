@@ -1,9 +1,9 @@
 package com.weijia.mhealth.mapper;
 
+import com.weijia.mhealth.entity.Appointment;
 import com.weijia.mhealth.entity.Doctor;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public interface DoctorMapper {
     List<Doctor> getDoctorState(Boolean state);
 
     //查出id + username
-    @Select("select id, name from doctor where id = #{id}")
+    @Select("select id,name from doctor where id = #{id}")
     Doctor getDoctorNameById(Integer id);
 
     @Select("select * from doctor where doctor_number = #{doctorNumber}")
@@ -45,4 +45,21 @@ public interface DoctorMapper {
 
     @Select("select * from doctor")
     List<Doctor> getAllDoctor();
+
+    @Select("select * from doctor order by state DESC")
+    List<Doctor> getDoctorPage();
+
+    //根据questionId查询医生
+    @Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "stu_id",property = "student",one = @One(select = "com.weijia.mhealth.mapper.StudentMapper.selectStuById",fetchType = FetchType.DEFAULT))
+    })
+    @Select("select * from appointment where doctor_id = #{doctorId} order by gmt_create DESC")
+    List<Appointment> getMyAppointment(Integer doctorId);
+
+    @Update("UPDATE appointment SET cause = #{cause},state = #{state} WHERE id = #{appointmentId}")
+    void insertAppointment(String cause,Integer state, Integer appointmentId);
+
+    @Delete("delete from doctor where id = #{doctorId}")
+    void delectDoctorById(Integer doctorId);
 }

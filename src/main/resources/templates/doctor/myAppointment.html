@@ -1,0 +1,268 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+    <title>预约管理</title>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+    <!-- JQuery DataTable Css -->
+    <link rel="stylesheet" th:href="@{/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/color_skins.css}">
+
+    <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.zhimg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.zhimg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <style>
+        #buttonTop{
+            top:-14px;
+        }
+
+        #rank{
+            position: relative;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        #edit{
+            padding:1px;
+            display: inline-block;
+        }
+
+        #edit1{
+            height:15px;
+            padding-top: 2px;
+        }
+
+        .modal-backdrop.show {
+            opacity: .0;
+        }
+
+        .modal-backdrop{
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body class="theme-purple ls-toggle-menu">
+    <!-- Page Loader -->
+    <div th:replace="/basic/pageLoader :: pageLoader"></div>
+
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+
+    <!-- Top Bar -->
+    <div th:replace="/basic/topBar :: topBar"></div>
+
+    <!-- Left Sidebar -->
+    <div th:replace="/basic/leftBar :: leftBar"></div>
+
+    <!-- Right Sidebar -->
+    <div th:replace="/basic/rightBar :: rightBar"></div>
+    
+     <!--Main Content-->
+    <section id="app" class="content">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>&nbsp;</h2>
+                    <h2>预约记录管理</h2>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                </div>
+            </div>
+        </div>
+
+            <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div id="stu_page" class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>您的预约</strong></h2>
+                        </div>
+                        <div class="body">
+                             <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#ID</th>
+                                            <th>学生姓名</th>
+                                            <th>预约日期</th>
+                                            <th>预约时间</th>
+                                            <th>心理状态描述</th>
+                                            <th>创建日期</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="myAppointment:${myAppointments.list}">
+                                        <tr>
+                                            <td th:text="${myAppointmentStat.count}"></td>
+                                            <td th:text="${myAppointment.student.name}"></td>
+                                            <td th:text="${myAppointment.dates}"></td>
+                                            <td th:text="${myAppointment.times}"></td>
+                                            <td th:text="${myAppointment.content}"></td>
+                                            <td th:text="${#dates.format(myAppointment.getGmtCreate(),'yyyy-MM-dd')}"></td>
+                                            <td th:if="${myAppointment.state ==0 }">
+                                                <a th:href="@{'/doctor/passAppointment/'+${myAppointment.id}}"><button class="btn btn-default btn-simple btn-round waves-effect">通过</button></a>
+                                                <a ><button data-toggle="modal" data-target="#myModal" th:@click="|openModal(${myAppointment.id})|" class="btn btn-danger btn-simple btn-round waves-effect">不通过</button></a>
+                                            </td>
+                                            <td th:if="${myAppointment.state == 1}">
+                                                <span style="color: #0f9d58">已接受</span>
+                                            </td>
+                                            <td th:if="${myAppointment.state == 2}">
+                                                <span style="color: red">已拒绝</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 模态框（Modal） -->
+                        <div v-if="show" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            审核不通过原因
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" autofocus class="form-control" v-model="cause" placeholder="请输入拒绝原因">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" class="btn btn-primary" @click="createCause">
+                                            确认
+                                        </button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="body">
+                            <ul class="pagination pagination-primary m-b-0">
+                                <li class="page-item" th:if="${myAppointments.hasPreviousPage == true}">
+                                    <a class="page-link" href="javascript:void(0);"  th:onclick="|getMyAppointmentPage(${myAppointments.prePage})|">
+                                        <i class="zmdi zmdi-arrow-left"></i></a></li>
+                                <div th:each="nav:${myAppointments.navigatepageNums}">
+                                    <li class="page-item "  th:if="${nav != myAppointments.pageNum}">
+                                        <a class="page-link"  th:text="${nav}" href="javascript:void(0);" th:onclick="|getMyAppointmentPage(${nav})|" ></a></li>
+                                    <li class="page-item active"  th:if="${nav == myAppointments.pageNum}">
+                                        <a class="page-link"  th:text="${nav}" href="javascript:void(0);" th:onclick="|getMyAppointmentPage(${nav})|"></a></li>
+                                </div>
+
+                                <li class="page-item" th:if="${myAppointments.hasNextPage == true}">
+                                    <a class="page-link" href="javascript:void(0);" th:onclick="|getMyAppointmentPage(${myAppointments.nextPage})|"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Exportable Table -->
+    </section>
+
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/assets/bundles/libscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+    <script th:src="@{/assets/bundles/vendorscripts.bundle.js}"></script> <!-- Lib Scripts Plugin Js -->
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script th:src="@{/assets/bundles/datatablescripts.bundle.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js}"></script>
+    <script th:src="@{/assets/plugins/jquery-datatable/buttons/buttons.print.min.js}"></script>
+
+    <!-- Custom Js -->
+    <script th:src="@{/assets/bundles/mainscripts.bundle.js}"></script>
+    <!-- <script th:src="assets/js/pages/tables/jquery-datatable.js}"></script> -->
+    <script th:inline="javascript">
+        var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+    </script>
+    <script type="text/javascript">
+
+        function getMyAppointmentPage(num) {
+            $.ajax({
+                url:basePath+"/stu/toMyAppointment",
+                type:'GET',
+                contentType: "application/json;charset=UTF-8",
+                data:{
+                    'pageNum':num,        //第几页
+                },
+
+                success:function(data){
+                    $("#stu_page").empty();
+                    $("#stu_page").append(data);
+                },
+            })
+        }
+    </script>
+
+    <script th:inline="javascript">
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                appointmentId:"",
+                //注意vue中可以写thymeleaf的插值表达式
+                cause: "",
+                msg: "",
+                msg1: "",
+                show: true,
+            },
+            methods:{
+
+                //打开modal框
+                openModal:function (id) {
+                    this.show = true;
+                    this.appointmentId = id;
+                },
+                //创建原因
+                createCause: async function (){
+
+                    if(!$.isEmptyObject(this.cause)){
+
+                            let formdata = new FormData();
+                            formdata.append("cause",this.cause);
+                            formdata.append("appointmentId",this.appointmentId)
+
+                            let config = {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }
+                            try{
+                                axios.post('/mhealth/doctor/submitCause',formdata,config).then(res=>{
+                                    }
+                                )
+                            }catch (err){
+                                console.log(err);
+                            }
+                            this.show = false;
+                            location.href = "/mhealth//doctor/toMyAppointment";
+                        }else{
+                            this.msg = "标签名已存在"
+                        }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

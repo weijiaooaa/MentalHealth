@@ -37,7 +37,6 @@ public class CorsFilter implements Filter {
         // 明确许可客户端发送Cookie，不允许删除字段即可
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-//        System.out.println("处理跨域问题");
         chain.doFilter(request, response);
     }
 

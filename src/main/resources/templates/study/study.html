@@ -79,12 +79,14 @@
                 <div class="card">
                     <ul class="nav nav-tabs">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#doc">文章</a></li>
+                        <li><a style="padding-left: 1300px" th:if="${session.doctor} != null" th:href="@{/admin/toDocumentUpload}">编辑美文</a></li>
+                        <li><a style="padding-left: 1300px" th:if="${session.admin} != null" th:href="@{/admin/toDocumentUpload}">编辑美文</a></li>
                     </ul>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" id="doc">
                         <div class="row clearfix">
-                            <div class="col-lg-3 col-md-4 col-sm-12" th:each="document:${documents}">
+                            <div class="col-lg-3 col-md-4 col-sm-12" th:each="document:${documentPageInfo.list}">
                                 <div class="card">
                                     <div class="file">
                                         <a href="javascript:void(0);">
@@ -107,6 +109,25 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="body">
+                        <ul class="pagination pagination-primary m-b-0">
+                            <li class="page-item" th:if="${documentPageInfo.hasPreviousPage == true}">
+                                <a class="page-link" th:href="@{'/study/toStudyPage?pageNum='+${documentPageInfo.prePage}}">
+                                    <i class="zmdi zmdi-arrow-left"></i></a></li>
+                            <div th:each="nav:${documentPageInfo.navigatepageNums}">
+                                <li class="page-item "  th:if="${nav != documentPageInfo.pageNum}">
+                                    <a class="page-link" th:href="@{'/study/toStudyPage?pageNum='+${nav}}" th:text="${nav}" ></a></li>
+                                <li class="page-item active"  th:if="${nav == documentPageInfo.pageNum}">
+                                    <a class="page-link" th:href="@{'/study/toStudyPage?pageNum='+${nav}}" th:text="${nav}" ></a></li>
+                            </div>
+
+                            <li class="page-item" th:if="${documentPageInfo.hasNextPage == true}">
+                                <a class="page-link" th:href="@{'/study/toStudyPage?pageNum='+${documentPageInfo.nextPage}}"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

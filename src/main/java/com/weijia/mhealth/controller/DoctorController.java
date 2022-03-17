@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,7 +95,9 @@ public class DoctorController {
     }
 
     @GetMapping(value = "/doctor/toHomePage")
-    public String toHomePage(String doctorNumber,HttpServletRequest request){
+    public String toHomePage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,
+                             String doctorNumber,HttpServletRequest request,Model model){
         logger.info("跳转到医生主页,doctorNumber->{}",doctorNumber);
         Doctor doctor = doctorService.getStuByStuNumber(doctorNumber);
         request.getSession().setAttribute("doctor",doctor);
@@ -116,22 +115,10 @@ public class DoctorController {
             logger.error("医生个人信息存入Redis失败");
         }
 
+        PageInfo<Student> studentPageInfo = studentService.getStuPage(pageNum,pageSize);
+        logger.info("首页医生列表分页->{}",JSON.toJSON(studentPageInfo));
 
-        //获取在线学生,先在Redis中去拿，如果找不到，再去数据库拿
-        List<Student> studentsOnline = userRedisService.getStudentsOnline();
-        if (studentsOnline.size() != 0){
-            logger.info("Redis中在线学生->{}",JSON.toJSON(studentsOnline));
-            request.setAttribute("studentsOnline",studentsOnline);
-        }else{
-            logger.info("Redis查无结果，即将查询数据库");
-            studentsOnline = doctorService.getStuState(true);
-            request.setAttribute("studentsOnline",studentsOnline);
-        }
-
-        //获取离线学生
-        List<Student> studentsOffline = doctorService.getStuState(false);
-        logger.info("离线学生->{}",JSON.toJSON(studentsOffline));
-        request.setAttribute("studentsOffline",studentsOffline);
+        model.addAttribute("studentPageInfo",studentPageInfo);
 
         return "/doctor/home";
     }
@@ -179,8 +166,9 @@ public class DoctorController {
      */
     @GetMapping(value = "/doctor/toContactPage")
     public String getAllQuestion(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
-                                 @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize, Model model){
-        PageInfo<Question> allQuestion = questionService.getAllQuestion(pageNum, pageSize);
+                                 @RequestParam(defaultValue = "8",value = "pageSize") Integer pageSize,HttpServletRequest request, Model model){
+        Doctor doctor = (Doctor)request.getSession().getAttribute("doctor");
+        PageInfo<Question> allQuestion = questionService.getQuestionByDoctorId(pageNum, pageSize,doctor.getId());
         logger.info("分页查出来的question->{}",JSON.toJSON(allQuestion));
         model.addAttribute("pageInfo",allQuestion);
         return "/doctor/contact";
@@ -290,4 +278,40 @@ public class DoctorController {
 
         return "200";
     }
+
+    @GetMapping(value = "/doctor/toMyAppointment")
+    public String toMyAppointment(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,Model model,HttpServletRequest request){
+        Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+        logger.info("doctor->{}",JSON.toJSON(doctor));
+
+        PageInfo<Appointment> myAppointments = doctorService.getMyAppointment(pageNum, pageSize,doctor.getId());
+        model.addAttribute("myAppointments",myAppointments);
+        return "/doctor/myAppointment";
+    }
+
+    @PostMapping(value = "/doctor/submitCause")
+    public Integer submitCause(HttpServletRequest request){
+        String cause = request.getParameter("cause");
+        String appointmentId = request.getParameter("appointmentId");
+        Integer state = 2;//审核未通过状态为2
+        doctorService.insertAppointment(cause,state, Integer.valueOf(appointmentId));
+        return 200;
+
+    }
+
+    @GetMapping(value = "/doctor/passAppointment/{appointmentId}")
+    public String passAppointment(@PathVariable Integer appointmentId,Model model,@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,HttpServletRequest request){
+        Integer state = 1;
+        doctorService.insertAppointment(null,state,appointmentId);
+
+        Doctor doctor = (Doctor) request.getSession().getAttribute("doctor");
+        logger.info("doctor->{}",JSON.toJSON(doctor));
+
+        PageInfo<Appointment> myAppointments = doctorService.getMyAppointment(pageNum, pageSize,doctor.getId());
+        model.addAttribute("myAppointments",myAppointments);
+        return "/doctor/myAppointment";
+    }
+
 }

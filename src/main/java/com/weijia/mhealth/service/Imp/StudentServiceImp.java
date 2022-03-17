@@ -3,10 +3,7 @@ package com.weijia.mhealth.service.Imp;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.weijia.mhealth.entity.Login;
-import com.weijia.mhealth.entity.Question;
-import com.weijia.mhealth.entity.Student;
-import com.weijia.mhealth.entity.UserInfo;
+import com.weijia.mhealth.entity.*;
 import com.weijia.mhealth.mapper.LoginMapper;
 import com.weijia.mhealth.mapper.StudentMapper;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
@@ -120,6 +117,94 @@ public class StudentServiceImp implements StudentService {
         // 获取
         PageInfo<Student> pageInfo = getPageInfo(pageNum, pageSize);
         return pageInfo;
+    }
+
+    @Override
+    public PageInfo<Student> getStuPage(Integer pageNum, Integer pageSize) {
+        //使用分页插件,核心代码就这一行
+        PageHelper.startPage(pageNum, pageSize);
+        // 获取
+        PageInfo<Student> pageInfo = getPageInfoV2(pageNum, pageSize);
+        return pageInfo;
+    }
+
+    @Override
+    public void insertAppointment(Appointment appointment) {
+        studentMapper.insertAppointment(appointment);
+    }
+
+    @Override
+    public PageInfo<Appointment> getMyAppointment(Integer pageNum, Integer pageSize, Integer stuId) {
+        //使用分页插件,核心代码就这一行
+        PageHelper.startPage(pageNum, pageSize);
+        // 获取
+        PageInfo<Appointment> pageInfo = getPageInfoV3(pageNum, pageSize,stuId);
+        return pageInfo;
+    }
+
+    @Override
+    public void removeAppointmentByAppId(Integer appointmentId) {
+        studentMapper.removeAppointmentByAppId(appointmentId);
+    }
+
+    @Override
+    public void deleteStudentById(Integer studentId) {
+        studentMapper.deleteStudentById(studentId);
+    }
+
+    private PageInfo<Appointment> getPageInfoV3(Integer pageNum, Integer pageSize, Integer stuId) {
+        //判断非空
+        if (pageNum == null) {
+            pageNum = 1; //设置默认当前页
+        }
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 5; //设置默认每页显示的数据数
+        }
+        //1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
+        PageHelper.startPage(pageNum, pageSize);
+        //2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
+        try {
+            List<Appointment> appointments = studentMapper.getMyAppointment(stuId);
+            PageInfo<Appointment> pageInfo = new PageInfo<>(appointments, pageSize);
+            pageInfo.setList(appointments);
+            return pageInfo;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            PageHelper.clearPage(); //清理 ThreadLocal 存储的分页参数,保证线程安全
+        }
+        return null;
+
+    }
+
+    private PageInfo<Student> getPageInfoV2(Integer pageNum, Integer pageSize) {
+        //判断非空
+        if (pageNum == null) {
+            pageNum = 1; //设置默认当前页
+        }
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 5; //设置默认每页显示的数据数
+        }
+        //1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
+        PageHelper.startPage(pageNum, pageSize);
+        //2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
+        try {
+            List<Student> students = studentMapper.getStuPage();
+            PageInfo<Student> pageInfo = new PageInfo<>(students, pageSize);
+            pageInfo.setList(students);
+            return pageInfo;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            PageHelper.clearPage(); //清理 ThreadLocal 存储的分页参数,保证线程安全
+        }
+        return null;
     }
 
     private PageInfo<Student> getPageInfo(Integer pageNum, Integer pageSize) {

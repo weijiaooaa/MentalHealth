@@ -125,6 +125,6 @@ public interface QuestionMapper {
             @Result(column = "id",property = "askAndAnsList",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getAskAndAns",fetchType=FetchType.DEFAULT)),
             @Result(column = "id",property = "questionAndTags",many = @Many(select = "com.weijia.mhealth.mapper.QuestionMapper.getQuestionAndTagByQid",fetchType=FetchType.DEFAULT)),
     })
-    @Select("select * from question where status = '1'")
-    List<Question> getAllQuestion();
+    @Select("SELECT * FROM question WHERE id IN (SELECT a.quest_id FROM ask_and_answer a WHERE a.doctor_id = #{doctorId})")
+    List<Question> getQuestionByDoctorId(Integer doctorId);
 }

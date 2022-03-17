@@ -1,7 +1,8 @@
 package com.weijia.mhealth.controller;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.PageInfo;
 import com.weijia.mhealth.entity.*;
 import com.weijia.mhealth.service.*;
 import com.weijia.mhealth.service.RedisService.UserRedisService;
@@ -9,13 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author Wei Jia
@@ -122,7 +127,9 @@ public class StudentController {
      * @return
      */
     @GetMapping(value = "/stu/toHomePage")
-    public String toHomePage(String stuNumber, HttpServletRequest request){
+    public String toHomePage(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "4",value = "pageSize") Integer pageSize,
+                             String stuNumber, HttpServletRequest request, Model model){
         logger.info("跳转到学生主页,student->{}",stuNumber);
         Student student = studentService.getStuByStuNumber(stuNumber);
 
@@ -147,21 +154,10 @@ public class StudentController {
             logger.error("学生个人信息存入Redis失败");
         }
 
-        //获取在线医生,先在Redis中去拿，如果找不到，再去数据库拿
-        List<Doctor> doctorsOnline = userRedisService.getDoctorsOnline();
-        if (doctorsOnline.size() != 0){
-            logger.info("Redis中在线医生->{}",JSON.toJSON(doctorsOnline));
-            request.setAttribute("doctorsOnline",doctorsOnline);
-        }else{
-            logger.info("Redis查无结果，即将查询数据库");
-            List<Doctor> doctorList = doctorService.getDoctorState(true);
-            request.setAttribute("doctorsOnline",doctorList);
-        }
+        PageInfo<Doctor> doctorPageInfo = doctorService.getDoctorPage(pageNum,pageSize);
+        logger.info("首页医生列表分页->{}",JSON.toJSON(doctorPageInfo));
 
-        //获取离线医生
-        List<Doctor> doctorsOffline = doctorService.getDoctorState(false);
-        logger.info("离线医生->{}",JSON.toJSON(doctorsOffline));
-         request.setAttribute("doctorsOffline",doctorsOffline);
+        model.addAttribute("doctorPageInfo",doctorPageInfo);
         return "stu/home";
     }
 
@@ -230,7 +226,6 @@ public class StudentController {
     public String toAnsHood(HttpServletRequest request){
         Student student = (Student) request.getSession().getAttribute("student");
         System.out.println("toAnsHood " + student);
-//        request.setAttribute("student",student);
         //问题日期
         List<String> dates = questionService. getDates();
         request.setAttribute("dates",dates);
@@ -337,6 +332,110 @@ public class StudentController {
         chatFriendsService.setChatFriends(student.getId(),Integer.valueOf(doctorId));
 
         return "/chat/chats";
+    }
+
+    @GetMapping(value = "/stu/toAppointment")
+    public String toAppoint(Integer doctorId, Integer stuId,HttpServletRequest request){
+        Doctor doctor = doctorService.getDoctorById(doctorId);
+        Date tomorrow = new Date(System.currentTimeMillis() + 86399000);
+        Date tomorrow1 = new Date(System.currentTimeMillis() + 172798000);
+        Date tomorrow2 = new Date(System.currentTimeMillis() + 259197000);
+        List<String> dates = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date1 = sdf.format(tomorrow);
+        dates.add(date1);
+        String date2 = sdf.format(tomorrow1);
+        dates.add(date2);
+        String date3 = sdf.format(tomorrow2);
+        dates.add(date3);
+
+        String[] time = {"8:00-10:00","10:00-12:00","14:00-16:00","16:00-18:00"};
+        List<String> times = new ArrayList<>(Arrays.asList(time));
+
+        request.setAttribute("doctor",doctor);
+        request.setAttribute("stuId",stuId);
+        request.setAttribute("dates",dates);
+        request.setAttribute("times",times);
+
+        return "/stu/appointment";
+    }
+
+    @PostMapping(value = "/stu/postAppointment")
+    public String postAppointment(HttpServletRequest request){
+        String stuId = request.getParameter("stuId");
+        String doctorId = request.getParameter("doctorId");
+        String date = request.getParameter("dates2");
+        String time = request.getParameter("times2");
+        String content = request.getParameter("content");
+
+        Appointment appointment = new Appointment();
+        appointment.setStuId(Integer.valueOf(stuId));
+        appointment.setDoctorId(Integer.valueOf(doctorId));
+        appointment.setDates(date);
+        appointment.setTimes(time);
+        appointment.setState(0);
+        appointment.setContent(content);
+        appointment.setGmtCreate(System.currentTimeMillis());
+
+        try{
+            studentService.insertAppointment(appointment);
+        }catch (Exception e){
+            logger.info("插入预约表失败！");
+            e.printStackTrace();
+        }
+        return "200";
+    }
+
+    @GetMapping(value = "/stu/toMyAppointment")
+    public String toMyAppointment(@RequestParam(required = false,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,Model model,HttpServletRequest request){
+        Student student = (Student) request.getSession().getAttribute("student");
+        logger.info("student->{}",JSON.toJSON(student));
+
+        PageInfo<Appointment> myAppointments = studentService.getMyAppointment(pageNum, pageSize,student.getId());
+        model.addAttribute("myAppointments",myAppointments);
+        return "/stu/myAppointment";
+    }
+
+    @GetMapping(value = "/stu/removeAppointment")
+    public String removeAppointment(Integer appointmentId){
+        studentService.removeAppointmentByAppId(appointmentId);
+        return "redirect:/stu/toMyAppointment";
+    }
+
+    @GetMapping(value = "/stu/toPsychoTest")
+    public String toPsychoTest(){
+        return "study/psychologicalTest";
+    }
+
+    @GetMapping(value = "/stu/toPsychoTestV2")
+    public String toPsychoTest(Integer id){
+        String result = "study/result"+id;
+        return result;
+    }
+
+    @PostMapping(value = "/stu/compute")
+    @ResponseBody
+    public Integer compute(@RequestBody JSONArray data){
+        logger.info("分数数组->{}",data);
+        List<Object> list = JSONArray.parseArray(data.toJSONString());
+        Integer sc = 0;
+        for (Object score: list){
+            Integer sco= Integer.valueOf((String)score);
+            sc += sco;
+        }
+        Integer message=0;
+        if (sc<=10){
+            message=4;
+        }else if (sc <= 30){
+            message=3;
+        }else if (sc <= 50){
+            message=2;
+        }else if (sc <= 70){
+            message=1;
+        }
+        return message;
+
     }
 
 }
